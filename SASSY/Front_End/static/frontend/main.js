@@ -1,0 +1,2 @@
+/*! For license information please see main.js.LICENSE.txt */
+(()=>{var __webpack_modules__={"./src/index.js":()=>{eval('const root = ReactDOM.createRoot(document.getElementById(\'root\'));\nroot.render( /*#__PURE__*/React.createElement("h1", null, "Test app"));\n\n//# sourceURL=webpack://front_end/./src/index.js?')}},__webpack_exports__={};__webpack_modules__["./src/index.js"]()})();

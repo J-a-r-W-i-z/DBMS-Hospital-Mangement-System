@@ -22,6 +22,7 @@ heading-font {
 	--font-base: "DM Sans", sans-serif;
 
 	--primary-color: #333;
+	--light-orange: #ff9f1c;
 	--orange: #ff8b1f;
 	--dark-orange: #cf9a6a;
 	--lesser-dark-color: #1f1f1f;
@@ -36,6 +37,7 @@ heading-font {
 	--background-color: #ece8e1;
 	--secondary-background-color: #f5f5f5;
 	--light-green: #b9f2b9;
+	--less-light-green: #a1ffa1;
 	--green: #07b907;
 	--dark-green: #78ab73;
 	--danger-color: #bb2124;

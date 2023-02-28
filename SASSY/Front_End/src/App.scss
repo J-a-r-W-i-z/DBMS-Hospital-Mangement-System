@@ -21,6 +21,10 @@ html {
 	}
 }
 
+body {
+	color: var(--primary-color);
+}
+
 .section {
 	padding: 1rem $padding-lg 0 $padding-lg;
 	@media screen and (max-width: $md) {
@@ -143,7 +147,6 @@ button {
 .btn-secondary-sm {
 	font-weight: bold;
 	text-transform: uppercase;
-	color: var(--primary-color);
 	transition: all 0.2s ease-in-out;
 }
 
@@ -164,18 +167,18 @@ button {
 	border: solid 1px var(--green);
 
 	&:hover {
-		background: var(--green);
+		background: var(--less-light-green);
 		border-color: var(--dark-green);
 	}
 }
 
 .btn-secondary,
 .btn-secondary-sm {
-	background: var(--orange);
-	border: solid 1px var(--dark-orange);
+	background: var(--light-orange);
+	border: solid 1px var(--orange);
 
 	&:hover {
-		background: var(--dark-orange);
+		background: var(--orange);
 		border-color: var(--dark-orange);
 	}
 }
@@ -193,7 +196,6 @@ button {
 	border-radius: $border-radius;
 	font-size: 1.2rem;
 	font-weight: 600;
-	color: var(--dark-color);
 	transition: all 0.2s ease-in-out;
 
 	&:focus {
@@ -209,7 +211,7 @@ select {
 	padding: 1rem 0.5rem;
 	border-radius: $border-radius;
 
-	border: 2px solid var(--dark-green);
+	border: 2px solid var(--green);
 	outline: none;
 	font-size: inherit;
 
@@ -217,16 +219,17 @@ select {
 	font-family: inherit;
 
 	&:focus {
-		border: 2px solid var(--orange);
+		border: 2px solid var(--dark-green);
 		box-shadow: 0px 0px 10px 0 var(--shadow-color);
 	}
 }
 
 table {
 	border-collapse: separate;
+	overflow: hidden;
 	width: 100%;
-	// border: 2px solid var(--light-color);
 	border-radius: $border-radius;
+
 	box-shadow: 0px 0px 10px 0 var(--shadow-color);
 
 	th,
@@ -237,7 +240,6 @@ table {
 
 	th {
 		background-color: var(--secondary-background-color);
-		color: var(--primary-color);
 		font-weight: bold;
 	}
 
@@ -253,10 +255,6 @@ table {
 			&.row-odd {
 				background-color: var(--light-color);
 			}
-		}
-
-		&:hover {
-			background-color: #ddd;
 		}
 	}
 }

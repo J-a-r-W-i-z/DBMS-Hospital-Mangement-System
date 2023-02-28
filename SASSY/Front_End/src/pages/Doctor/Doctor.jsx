@@ -1,4 +1,6 @@
 import React, { useState } from "react"
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
+import "react-tabs/style/react-tabs.css"
 import "./Doctor.scss"
 
 const DoctorDashboard = () => {
@@ -38,69 +40,89 @@ const DoctorDashboard = () => {
 		<div className="section s-wrapper">
 			<p className="primary-heading center-text">Doctor Dashboard</p>
 			<div className="margin-divider-sm" />
-			<h1 className="center-text doctor-subheading">Pending Appointments</h1>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{appointments.map((appointment) => (
-						<tr key={appointment.id}>
-							<td>{appointment.id}</td>
-							<td>{getPatientName(appointment.patientId)}</td>
-							<td>
-								<button
-									className="btn-primary-sm"
-									onClick={() => handleAppointmentClick(appointment.id)}
-								>
-									Complete
-								</button>
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-			<div className="margin-divider-sm" />
-			<h1 className="center-text doctor-subheading">Patients</h1>
-			<input
-				type="text"
-				placeholder="Search patients"
-				value={searchTerm}
-				onChange={handleSearch}
-			/>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Age</th>
-						<th>Gender</th>
-					</tr>
-				</thead>
-				<tbody>
-					{searchTerm === ""
-						? patients.map((patient) => (
-								<tr key={patient.id}>
-									<td>{patient.id}</td>
-									<td>{patient.name}</td>
-									<td>{patient.age}</td>
-									<td>{patient.gender}</td>
+			<Tabs
+				focusTabOnClick={false}
+				disableLeftRightKeys={true}
+				disableUpDownKeys={true}
+			>
+				<TabList>
+					<Tab>Appointments</Tab>
+					<Tab>Patients</Tab>
+				</TabList>
+				<TabPanel>
+					<h1 className="center-text doctor-subheading">
+						Pending Appointments
+					</h1>
+					<table>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{appointments.map((appointment) => (
+								<tr key={appointment.id}>
+									<td>{appointment.id}</td>
+									<td>{getPatientName(appointment.patientId)}</td>
+									<td style={{ paddingTop: 5, paddingBottom: 5 }}>
+										<button
+											className="btn-primary-sm"
+											onClick={() => handleAppointmentClick(appointment.id)}
+										>
+											Complete
+										</button>
+									</td>
 								</tr>
-						  ))
-						: filteredPatients.map((patient) => (
-								<tr key={patient.id}>
-									<td>{patient.id}</td>
-									<td>{patient.name}</td>
-									<td>{patient.age}</td>
-									<td>{patient.gender}</td>
-								</tr>
-						  ))}
-				</tbody>
-			</table>
+							))}
+						</tbody>
+					</table>
+				</TabPanel>
+
+				<TabPanel>
+					<h1 className="center-text doctor-subheading">Patients</h1>
+					<table>
+						<thead>
+							<tr>
+								<th colSpan="4">
+									<input
+										type="text"
+										placeholder="Search patients"
+										value={searchTerm}
+										onChange={handleSearch}
+									/>
+								</th>
+							</tr>
+							<tr>
+								<th>ID</th>
+								<th>Name</th>
+								<th>Age</th>
+								<th>Gender</th>
+							</tr>
+						</thead>
+						<tbody>
+							{searchTerm === ""
+								? patients.map((patient) => (
+										<tr key={patient.id}>
+											<td>{patient.id}</td>
+											<td>{patient.name}</td>
+											<td>{patient.age}</td>
+											<td>{patient.gender}</td>
+										</tr>
+								  ))
+								: filteredPatients.map((patient) => (
+										<tr key={patient.id}>
+											<td>{patient.id}</td>
+											<td>{patient.name}</td>
+											<td>{patient.age}</td>
+											<td>{patient.gender}</td>
+										</tr>
+								  ))}
+						</tbody>
+					</table>
+				</TabPanel>
+			</Tabs>
 		</div>
 	)
 }

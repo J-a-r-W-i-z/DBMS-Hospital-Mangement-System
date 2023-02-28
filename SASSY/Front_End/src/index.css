@@ -21,7 +21,7 @@ heading-font {
 :root {
 	--font-base: "DM Sans", sans-serif;
 
-	--primary-color: #030303;
+	--primary-color: #333;
 	--orange: #ff8b1f;
 	--dark-orange: #cf9a6a;
 	--lesser-dark-color: #1f1f1f;

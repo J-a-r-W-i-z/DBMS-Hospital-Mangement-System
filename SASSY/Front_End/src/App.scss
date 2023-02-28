@@ -9,6 +9,7 @@ $xl: 1600px;
 $app-margin-top: 2rem;
 $img-size-md: 50px;
 $img-size-lg: 60px;
+$border-radius-sm: 5px;
 $border-radius: 10px;
 $border-radius-lg: 1rem;
 
@@ -38,6 +39,10 @@ html {
 
 .p-wrapper {
 	max-width: $amd;
+}
+
+.dashboard {
+	margin-top: $app-margin-top;
 }
 
 .divider {
@@ -73,6 +78,8 @@ html {
 	letter-spacing: 0.1rem;
 	font-size: 5rem;
 	font-weight: 600;
+
+	margin-top: 1rem;
 
 	@media screen and (max-width: $lg) {
 		font-size: 4rem;
@@ -131,13 +138,18 @@ button {
 }
 
 .btn-primary,
-.btn-secondary {
-	padding: 1rem 2rem;
+.btn-secondary,
+.btn-primary-sm,
+.btn-secondary-sm {
 	font-weight: bold;
 	text-transform: uppercase;
 	color: var(--primary-color);
 	transition: all 0.2s ease-in-out;
+}
 
+.btn-primary,
+.btn-secondary {
+	padding: 1rem 2rem;
 	border-radius: $border-radius;
 	box-shadow: 0px 0px 10px 0 var(--shadow-color);
 
@@ -146,22 +158,105 @@ button {
 	}
 }
 
-.btn-primary {
+.btn-primary,
+.btn-primary-sm {
 	background: var(--light-green);
-	border: solid 1px var(--dark-green);
+	border: solid 1px var(--green);
 
 	&:hover {
-		background: var(--orange);
+		background: var(--green);
+		border-color: var(--dark-green);
+	}
+}
+
+.btn-secondary,
+.btn-secondary-sm {
+	background: var(--orange);
+	border: solid 1px var(--dark-orange);
+
+	&:hover {
+		background: var(--dark-orange);
 		border-color: var(--dark-orange);
 	}
 }
 
-.btn-secondary {
-	background: var(--orange);
-	border: solid 1px var(--orange);
+.btn-primary-sm,
+.btn-secondary-sm {
+	padding: 0.7rem 1rem;
+	border-radius: $border-radius-sm;
+}
 
-	&:hover {
-		background: var(--light-green);
-		border-color: var(--dark-green);
+.input-field {
+	width: 100%;
+	padding: 1rem 2rem;
+	border: solid 1px var(--dark-color);
+	border-radius: $border-radius;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: var(--dark-color);
+	transition: all 0.2s ease-in-out;
+
+	&:focus {
+		outline: none;
+		border-color: var(--orange);
+	}
+}
+
+input,
+select {
+	width: 100%;
+	margin: 0.3rem 0;
+	padding: 1rem 0.5rem;
+	border-radius: $border-radius;
+
+	border: 2px solid var(--dark-green);
+	outline: none;
+	font-size: inherit;
+
+	transition: all 0.2s ease-in-out;
+	font-family: inherit;
+
+	&:focus {
+		border: 2px solid var(--orange);
+		box-shadow: 0px 0px 10px 0 var(--shadow-color);
+	}
+}
+
+table {
+	border-collapse: separate;
+	width: 100%;
+	// border: 2px solid var(--light-color);
+	border-radius: $border-radius;
+	box-shadow: 0px 0px 10px 0 var(--shadow-color);
+
+	th,
+	td {
+		padding: 12px;
+		text-align: left;
+	}
+
+	th {
+		background-color: var(--secondary-background-color);
+		color: var(--primary-color);
+		font-weight: bold;
+	}
+
+	tbody tr {
+		&:nth-child(even) {
+			background-color: var(--secondary-background-color);
+			&.row-even {
+				background-color: var(--light-color);
+			}
+		}
+
+		&:nth-child(odd) {
+			&.row-odd {
+				background-color: var(--light-color);
+			}
+		}
+
+		&:hover {
+			background-color: #ddd;
+		}
 	}
 }

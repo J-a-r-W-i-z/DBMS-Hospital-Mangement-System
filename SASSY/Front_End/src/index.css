@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Varela&family=Bebas+Neue&display=swap");
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: "Varela", sans-serif;
+	background-color: var(--background-color);
+	color: var(--primary-color);
+	/* background-image: url("./assets/const-bg.jpg");
+	background-size: 100%; */
+}
+
+heading-font {
+	font-family: "Bebas Neue", cursive;
+}
+
+:root {
+	--font-base: "DM Sans", sans-serif;
+
+	--primary-color: #edf2f8;
+	--secondary-color: #eb048c;
+	--black-color: #030303;
+	--lightGray-color: #e4e4e4;
+	--gray-color: #6b7688;
+	--light-gray-color: #9ba4b3;
+	--brown-color: #46364a;
+	--white-color: #ffffff;
+	--background-color: #100c1c;
+	--dark-blue: rgb(34, 31, 53);
+	--less-dark-blue: rgb(44, 41, 63);
+	--shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+a {
+	text-decoration: none;
+	color: var(--primary-color);
+}

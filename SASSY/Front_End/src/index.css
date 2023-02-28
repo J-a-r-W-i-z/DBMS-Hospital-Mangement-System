@@ -24,6 +24,8 @@ heading-font {
 	--primary-color: #030303;
 	--orange: #ff8b1f;
 	--dark-orange: #cf9a6a;
+	--lesser-dark-color: #1f1f1f;
+	--less-dark-color: #2c2c2c;
 	--dark-color: #141414;
 	--black-color: #030303;
 	--light-color: #e4e4e4;
@@ -36,6 +38,10 @@ heading-font {
 	--light-green: #b9f2b9;
 	--green: #07b907;
 	--dark-green: #78ab73;
+	--danger-color: #bb2124;
+	--warning-color: #f0ad4e;
+	--info-color: #5bc0de;
+	--success-color: #5cb85c;
 	--shadow-color: rgba(0, 0, 0, 0.2);
 }
 

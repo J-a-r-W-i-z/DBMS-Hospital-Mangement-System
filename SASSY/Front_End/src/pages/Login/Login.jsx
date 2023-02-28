@@ -15,7 +15,7 @@ function LoginForm() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ username, password, user_type: userType }),
+				body: JSON.stringify({ username, password, usertype: userType }),
 			})
 			if (response.ok) {
 				// Redirect to the appropriate dashboard based on user type
@@ -30,24 +30,27 @@ function LoginForm() {
 	}
 
 	return (
-		<div className="login-form-container center-flex">
-			<h1 className="login-form-heading">Log In to continue</h1>
+		<div className="login-form-container">
 			<form onSubmit={handleLogin} className="login-form">
+				<h1 className="login-form-heading">Log In to continue</h1>
 				<input
 					type="text"
 					value={username}
 					placeholder="Username"
 					onChange={(event) => setUsername(event.target.value)}
+					required
 				/>
 				<input
 					type="password"
 					value={password}
 					placeholder="Password"
 					onChange={(event) => setPassword(event.target.value)}
+					required
 				/>
 				<select
 					value={userType}
 					onChange={(event) => setUserType(event.target.value)}
+					required
 				>
 					<option value="" disabled>
 						Select user type
@@ -60,7 +63,9 @@ function LoginForm() {
 				<button type="submit" className="btn-primary">
 					Login
 				</button>
-				{errorMessage && <div>{errorMessage}</div>}
+				{errorMessage && (
+					<p className="login-form-error-message">{errorMessage}</p>
+				)}
 			</form>
 		</div>
 	)

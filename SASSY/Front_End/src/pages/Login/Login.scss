@@ -1,18 +1,13 @@
 @import "../../App.scss";
 
 .login-form-container {
-	align-items: center;
-	height: 90vh;
-	flex-direction: column;
-
 	max-width: $xsm;
 	margin: 0 auto;
 	padding: 0 $padding-md;
+	margin-top: 22.5vh;
 }
 
 .login-form {
-	margin: 1rem 0;
-
 	& > input,
 	& > select {
 		width: 100%;
@@ -25,6 +20,7 @@
 		font-size: inherit;
 
 		transition: all 0.2s ease-in-out;
+		font-family: inherit;
 
 		&:focus {
 			border: 2px solid var(--orange);
@@ -37,4 +33,15 @@
 		margin: 1rem auto;
 		width: 100%;
 	}
+
+	& > h1 {
+		text-align: center;
+		margin-bottom: 0.5rem;
+	}
+}
+
+.login-form-error-message {
+	color: var(--danger-color);
+	text-align: center;
+	margin: 0.5rem 0;
 }

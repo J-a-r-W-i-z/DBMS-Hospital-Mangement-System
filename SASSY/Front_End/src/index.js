@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import HomePage from './components/Homepage/Homepage.js'
+import FrontDeskOperator from './components/FrontDeskOperator/FrontDeskOperator'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	<HomePage />
+	<FrontDeskOperator />
 )

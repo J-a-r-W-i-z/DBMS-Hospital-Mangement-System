@@ -1,0 +1,34 @@
+.CompactCard {
+  display: flex;
+  flex: 1;
+  height: 8rem !important;
+  width: 254px;
+  border-radius: 0.7rem;
+  color: rgb(0, 0, 0);
+  padding: 1rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.CompactCard:hover {
+  box-shadow: none !important;
+}
+
+/* radial bar */
+
+@media screen and (max-width: 1200px) {
+  .ExpandedCard {
+    top: 2rem;
+    height: 45vh;
+    left: 6rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ExpandedCard {
+    top: 8rem;
+    height: 50%;
+    left: 25px;
+    width: 80%;
+  }
+}

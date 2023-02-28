@@ -7,6 +7,7 @@
 	// 	height: 4rem;
 	// }
 
+	color: var(--light-color);
 	padding: 0.3rem $padding-lg;
 	@media screen and (max-width: $md) {
 		padding-left: $padding-md;
@@ -19,22 +20,35 @@
 
 	backdrop-filter: blur(4px);
 	-webkit-backdrop-filter: blur(4px);
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: var(--dark-color);
 	position: sticky;
 	top: 0;
 	z-index: 100;
+
+	& a {
+		font-weight: bold;
+	}
 }
 
 .app__navbar-logo {
-	img {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	& > img {
 		width: $img-size-lg;
 		height: $img-size-lg;
 		// margin-top: 1rem;
+		padding: 0.2rem;
 
 		@media screen and (max-width: $md) {
 			width: $img-size-md;
 			height: $img-size-md;
 		}
+	}
+
+	& > h1 {
+		margin-left: 0.5rem;
 	}
 }
 
@@ -56,11 +70,14 @@
 
 		a {
 			flex-direction: column;
+			color: inherit;
 
-			transition: all 0.3s ease-in-out;
+			transition: color 0.3s ease-in-out;
+			padding-bottom: 0.2rem;
 
 			&:hover {
-				color: var(--secondary-color);
+				color: var(--white-color);
+				border-bottom: 3px solid var(--light-green);
 			}
 		}
 	}
@@ -71,20 +88,17 @@
 }
 
 .app__navbar-menu {
-	width: 35px;
-	height: 35px;
-	border-radius: 50%;
+	width: $img-size-md;
+	height: $img-size-md;
 	position: relative;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--secondary-color);
 
 	svg {
 		width: 70%;
 		height: 70%;
-		color: var(--white-color);
 
 		cursor: pointer;
 	}
@@ -107,15 +121,14 @@
 		flex-direction: column;
 
 		// background: url("../../assets/bgWhite.png");
-		background-color: var(--less-dark-blue);
+		background-color: var(--secondary-background-color);
 		// background-size: cover;
 		// background-repeat: repeat;
 
 		svg {
 			width: 35px;
 			height: 35px;
-			color: var(--secondary-color);
-			margin: 0.5rem 1rem;
+			color: var(--orange);
 		}
 
 		ul {
@@ -131,19 +144,22 @@
 			flex-direction: column;
 
 			li {
-				margin: 1rem;
+				width: 100%;
 
 				a {
 					// color: var(--gray-color);
+					width: 100%;
+					display: block;
+					padding: 1rem;
+					border-radius: $border-radius-lg;
 					text-decoration: none;
-					font-size: 1rem;
 					text-transform: uppercase;
-					font-weight: 500;
 
 					transition: all 0.3s ease-in-out;
 
 					&:hover {
-						color: var(--secondary-color);
+						color: var(--orange);
+						background-color: var(--white-color);
 					}
 				}
 			}

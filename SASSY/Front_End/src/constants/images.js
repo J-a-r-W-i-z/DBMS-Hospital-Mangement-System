@@ -1,4 +1,4 @@
-import logo from "../assets/CGL_Logo.png"
+import logo from "../assets/Favicon.png"
 
 const images = {
 	logo,

@@ -10,6 +10,7 @@ const Navbar = () => {
 		<nav className="app__navbar app__pad">
 			<div className="app__navbar-logo">
 				<img src={images.logo} alt="logo" />
+				<h1>SASSY</h1>
 			</div>
 			<ul className="app__navbar-links">
 				{pages.map((page) => (
@@ -18,7 +19,6 @@ const Navbar = () => {
 					</li>
 				))}
 			</ul>
-			<div />
 
 			<div className="app__navbar-menu">
 				<HiMenuAlt1 onClick={() => setIsOpen(true)} />

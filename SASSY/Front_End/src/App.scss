@@ -1,12 +1,13 @@
 $padding-lg: 2rem;
 $padding-md: 1.2rem;
+$xsm: 400px;
 $sm: 576px;
 $md: 768px;
 $amd: 940px;
 $lg: 1200px;
 $xl: 1600px;
 $app-margin-top: 2rem;
-$img-size-md: 45px;
+$img-size-md: 50px;
 $img-size-lg: 60px;
 $border-radius: 10px;
 $border-radius-lg: 1rem;
@@ -67,7 +68,7 @@ html {
 
 .primary-heading {
 	font-family: "Bebas Neue", cursive;
-	color: var(--secondary-color);
+	color: var(--orange);
 	text-transform: uppercase;
 	letter-spacing: 0.1rem;
 	font-size: 5rem;
@@ -146,19 +147,21 @@ button {
 }
 
 .btn-primary {
-	background: var(--less-dark-blue);
-	border: solid 1px var(--secondary-color);
+	background: var(--light-green);
+	border: solid 1px var(--dark-green);
 
 	&:hover {
-		background: var(--secondary-color);
+		background: var(--orange);
+		border-color: var(--dark-orange);
 	}
 }
 
 .btn-secondary {
-	background: var(--secondary-color);
-	border: solid 1px var(--secondary-color);
+	background: var(--orange);
+	border: solid 1px var(--orange);
 
 	&:hover {
-		background: var(--less-dark-blue);
+		background: var(--light-green);
+		border-color: var(--dark-green);
 	}
 }

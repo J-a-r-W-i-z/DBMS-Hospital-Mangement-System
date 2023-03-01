@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
 import { images } from "../../constants"
 import "./Navbar.scss"
 
@@ -11,9 +10,7 @@ const Navbar = () => {
         <h1>SASSY</h1>
       </div>
       <div className="logout-btn">
-        <Link to={"adminstrator"}>
-          <button className="btn-secondary">Admin Login</button>
-        </Link>
+        <button className="btn-secondary">Logout</button>
       </div>
     </nav>
   )

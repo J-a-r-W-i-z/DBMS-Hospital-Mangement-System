@@ -16,8 +16,8 @@ function LoginForm() {
         return 2
       case "doctor":
         return 3
-      // case "adminstrator":
-      //   return 4
+      case "adminstrator":
+        return 4
       default:
         return 0
     }
@@ -75,7 +75,7 @@ function LoginForm() {
           <option value="front-desk-operator">Front desk operator</option>
           <option value="data-entry-operator">Data entry operator</option>
           <option value="doctor">Doctor</option>
-          {/* <option value="adminstrator">Adminstrator</option> */}
+          <option value="adminstrator">Adminstrator</option>
         </select>
         <button type="submit" className="btn-primary">
           Login

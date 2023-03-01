@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Switch, Route, Redirect } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import axios from "axios"
 import { DoctorDashboard, LoginForm } from "./pages"
 import { Navbar } from "./components"
@@ -93,10 +93,10 @@ const App = () => {
     <>
       <Navbar isAuthenticated={isAuthenticated} handleLout={handleLogout} />
       <div className="app">
-        <Switch>
+        <Routes>
           <Route exact path="/" render={() => (
             isAuthenticated ? (
-              <Redirect to={`/${mapUserTypeToString(userType)}`} />
+              <Navigate to={`/${mapUserTypeToString(userType)}`} />
             ) : (
               <LoginForm handleLogin={handleLogin} />
             )
@@ -105,13 +105,13 @@ const App = () => {
             isAuthenticated && mapUserTypeToString(userType) === 'doctor' ? (
               <DoctorDashboard />
             ) : (
-              <Redirect to="/" />
+              <Navigate to="/" />
             )
           )} />
           <Route path="/" render={() => (
-            <Redirect to="/" />
+            <Navigate to="/" />
           )} />
-        </Switch>
+        </Routes>
       </div>
     </>
   )

@@ -6,7 +6,7 @@ export default function Router() {
   const routes = useRoutes([
     ...pages.map((page) => ({
       path: page.path,
-      ...(page.children && {
+      ...(page.children ? {
         children: [
           {
             path: page.path,
@@ -17,6 +17,8 @@ export default function Router() {
             element: HelmetWrap(child.element, child.name)
           }))
         ]
+      } : {
+        element: HelmetWrap(page.element, page.name)
       })
     })),
   ])

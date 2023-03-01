@@ -8,8 +8,8 @@ import "./index.css"
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <HelmetProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    {/* <BrowserRouter> */}
+    <App />
+    {/* </BrowserRouter> */}
   </HelmetProvider>
 )

@@ -1,17 +1,4 @@
-$padding-lg: 2rem;
-$padding-md: 1.2rem;
-$xsm: 400px;
-$sm: 576px;
-$md: 768px;
-$amd: 940px;
-$lg: 1200px;
-$xl: 1600px;
-$app-margin-top: 2rem;
-$img-size-md: 50px;
-$img-size-lg: 60px;
-$border-radius-sm: 5px;
-$border-radius: 10px;
-$border-radius-lg: 1rem;
+@import "./styles/Variables.scss";
 
 html {
 	font-size: 1rem;
@@ -164,7 +151,7 @@ button {
 .btn-primary,
 .btn-primary-sm {
 	background: var(--light-green);
-	border: solid 1px var(--green);
+	border: solid $border-width-sm var(--green);
 
 	&:hover {
 		background: var(--less-light-green);
@@ -175,7 +162,7 @@ button {
 .btn-secondary,
 .btn-secondary-sm {
 	background: var(--light-orange);
-	border: solid 1px var(--orange);
+	border: solid $border-width-sm var(--orange);
 
 	&:hover {
 		background: var(--orange);
@@ -192,7 +179,7 @@ button {
 .input-field {
 	width: 100%;
 	padding: 1rem 2rem;
-	border: solid 1px var(--dark-color);
+	border: solid $border-width-sm var(--dark-color);
 	border-radius: $border-radius;
 	font-size: 1.2rem;
 	font-weight: 600;
@@ -211,7 +198,7 @@ select {
 	padding: 1rem 0.5rem;
 	border-radius: $border-radius;
 
-	border: 2px solid var(--green);
+	border: $border-width solid var(--green);
 	outline: none;
 	font-size: inherit;
 
@@ -219,7 +206,7 @@ select {
 	font-family: inherit;
 
 	&:focus {
-		border: 2px solid var(--dark-green);
+		border: $border-width solid var(--dark-green);
 		box-shadow: 0px 0px 10px 0 var(--shadow-color);
 	}
 }
@@ -257,4 +244,29 @@ table {
 			}
 		}
 	}
+}
+
+.react-tabs__tab {
+	padding: 1rem 2rem;
+	border: none;
+	cursor: pointer;
+
+	bottom: -2px;
+}
+
+.react-tabs__tab-list {
+	border-bottom: $border-width solid var(--green);
+}
+
+.react-tabs__tab--selected {
+	border: $border-width solid var(--green);
+	border-bottom: none;
+	border-color: var(--green);
+	border-radius: $border-radius-sm $border-radius-sm 0 0;
+	color: inherit;
+	background-color: var(--secondary-background-color);
+}
+
+.react-tabs__tab:last-child {
+	margin-right: 0;
 }

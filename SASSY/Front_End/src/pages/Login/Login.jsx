@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import "../../App.scss"
 import "./Login.scss"
 
 function LoginForm() {
@@ -10,16 +11,16 @@ function LoginForm() {
 	const handleLogin = async (event) => {
 		event.preventDefault()
 		try {
-			const response = await fetch("/api/login/", {
+			const response = await fetch("/hms/login/", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ username, password, usertype: userType }),
+				body: JSON.stringify({ username, password, user_type: userType }),
 			})
 			if (response.ok) {
 				// Redirect to the appropriate dashboard based on user type
-				window.location.replace(`/${userType}_dashboard/`)
+				window.location.replace(`/${userType}-dashboard/`)
 			} else {
 				const data = await response.json()
 				setErrorMessage(data.message)

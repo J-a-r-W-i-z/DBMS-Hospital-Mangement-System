@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'HM_System.apps.HmSystemConfig',
+    'Front_End.apps.FrontEndConfig',
     'rest_framework',
-    'Front_End.apps.FrontEndConfig'
+    'corsheaders',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,10 +79,18 @@ WSGI_APPLICATION = 'SASSY.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+import pymysql
+pymysql.install_as_MySQLdb
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dbms_hospital',
+        'USER': 'root',
+        'PASSWORD': 'yaitsme!',
+        'HOST': '127.0.0.1',
+        'PORT': '3306'
+
     }
 }
 
@@ -101,6 +112,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'HM_System.User'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALs = True
 
 
 # Internationalization

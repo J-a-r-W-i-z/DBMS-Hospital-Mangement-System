@@ -36,7 +36,7 @@ function LoginForm() {
       })
 
       if (response.ok) {
-        window.location.replace(`/${userType}-dashboard/`)
+        window.location.replace(`hms/dashboard/${userType}/`)
       } else {
         const data = await response.json()
         setErrorMessage(data.detail)

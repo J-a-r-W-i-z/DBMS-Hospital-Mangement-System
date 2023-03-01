@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
+import { Switch, Route, Redirect } from "react-router-dom"
 import axios from "axios"
-import Router from "./routes.js"
+import { DoctorDashboard } from "./pages"
 import { Navbar } from "./components"
 
 const App = () => {
@@ -26,19 +27,55 @@ const App = () => {
     checkAuth()
   }, [])
 
-  // const handleLogin = async (username, password, userType) => {
-  //   try {
-  //     const res = await axios.post("/api/login", {
-  //       username,
-  //       password,
-  //       userType,
-  //     })
-  //     setIsAuthenticated(res.data.isAuthenticated)
-  //     setUserType(res.data.userType)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+  const mapUserTypeToInt = (userType) => {
+    switch (userType) {
+      case "front-desk-operator":
+        return 1
+      case "data-entry-operator":
+        return 2
+      case "doctor":
+        return 3
+      case "adminstrator":
+        return 4
+      default:
+        return 0
+    }
+  }
+
+  const mapUserTypeToString = (userType) => {
+    switch (userType) {
+      case 1:
+        return "front-desk-operator"
+      case 2:
+        return "data-entry-operator"
+      case 3:
+        return "doctor"
+      case 4:
+        return "adminstrator"
+      default:
+        return "unknown"
+    }
+  }
+
+  const handleLogin = async (username, password, userType) => {
+    const userTypeInt = mapUserTypeToInt(userType)
+    try {
+      const res = await axios.post("/api/login", {
+        username,
+        password,
+        userTypeInt,
+      })
+
+      if (res.status === 200) {
+        setIsAuthenticated(true)
+        setUserType(userTypeInt)
+      } else {
+        return res.data.detail
+      }
+    } catch (err) {
+      return "Something went wrong. Please try again later."
+    }
+  }
 
   const handleLogout = async () => {
     try {
@@ -54,7 +91,25 @@ const App = () => {
     <>
       <Navbar isAuthenticated={isAuthenticated} handleLout={handleLogout} />
       <div className="app">
-        <Router />
+        <Switch>
+          <Route exact path="/" render={() => (
+            isAuthenticated ? (
+              <Redirect to={`/${mapUserTypeToString(userType)}`} />
+            ) : (
+              <Homepage handleLogin={handleLogin} />
+            )
+          )} />
+          <Route exact path="/doctor" render={() => (
+            isAuthenticated && mapUserTypeToString(userType) === 'doctor' ? (
+              <DoctorDashboard />
+            ) : (
+              <Redirect to="/" />
+            )
+          )} />
+          <Route path="/" render={() => (
+            <Redirect to="/" />
+          )} />
+        </Switch>
       </div>
     </>
   )

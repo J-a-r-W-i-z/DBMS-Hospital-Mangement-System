@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import axios from "axios"
 import { DoctorDashboard, LoginForm } from "./pages"
 import { Navbar } from "./components"
@@ -94,27 +94,29 @@ const App = () => {
   return (
     <>
       <Navbar isAuthenticated={isAuthenticated} handleLout={handleLogout} />
-      <div className="app">
-        <Routes>
-          <Route exact path="/" render={() => (
-            isAuthenticated ? (
-              <Navigate to={`/${mapUserTypeToString(userType)}`} />
-            ) : (
-              <LoginForm handleLogin={handleLogin} />
-            )
-          )} />
-          <Route exact path="/doctor" render={() => (
-            isAuthenticated && mapUserTypeToString(userType) === 'doctor' ? (
-              <DoctorDashboard />
-            ) : (
+      <BrowserRouter>
+        <div className="app">
+          <Routes>
+            <Route exact path="/" render={() => (
+              isAuthenticated ? (
+                <Navigate to={`/${mapUserTypeToString(userType)}`} />
+              ) : (
+                <LoginForm handleLogin={handleLogin} />
+              )
+            )} />
+            <Route exact path="/doctor" render={() => (
+              isAuthenticated && mapUserTypeToString(userType) === 'doctor' ? (
+                <DoctorDashboard />
+              ) : (
+                <Navigate to="/" />
+              )
+            )} />
+            <Route path="/" render={() => (
               <Navigate to="/" />
-            )
-          )} />
-          <Route path="/" render={() => (
-            <Navigate to="/" />
-          )} />
-        </Routes>
-      </div>
+            )} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </>
   )
 }

@@ -19,19 +19,20 @@ function LoginForm() {
       case "adminstrator":
         return 4
       default:
-        return 1
+        return 0
     }
   }
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
+      const userTypeInt = mapUserTypeToInt(userType)
       const response = await fetch("/hms/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password, user_type: userType }),
+        body: JSON.stringify({ username, password, user_type: userTypeInt }),
       })
       if (response.ok) {
         // Redirect to the appropriate dashboard based on user type
@@ -65,9 +66,7 @@ function LoginForm() {
         />
         <select
           value={userType}
-          onChange={(event) =>
-            setUserType(mapUserTypeToInt(event.target.value))
-          }
+          onChange={(event) => setUserType(event.target.value)}
           required
         >
           <option value="" disabled>

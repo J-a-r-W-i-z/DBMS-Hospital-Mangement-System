@@ -35,8 +35,11 @@ function LoginForm() {
         body: JSON.stringify({ username, password, user_type: userTypeInt }),
       })
       if (response.ok) {
-        // Redirect to the appropriate dashboard based on user type
-        window.location.replace(`/${userType}-dashboard/`)
+        if (userType === "adminstrator") {
+          windows.location.replace("/admin/")
+        } else {
+          window.location.replace(`/${userType}-dashboard/`)
+        }
       } else {
         const data = await response.json()
         setErrorMessage(data.message)

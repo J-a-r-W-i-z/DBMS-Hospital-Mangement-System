@@ -34,6 +34,10 @@ function LoginForm() {
         },
         body: JSON.stringify({ username, password, user_type: userTypeInt }),
       })
+
+      // Print the response from the server
+      console.log(await response.json())
+
       if (response.ok) {
         if (userType === "adminstrator") {
           windows.location.replace("/admin/")

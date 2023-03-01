@@ -1,5 +1,5 @@
 import React from "react"
-import { useRoutes } from "react-router-dom"
+import { useRoutes, Navigate } from "react-router-dom"
 import { pages } from "./constants"
 import { HelmetWrap } from "./wrapper"
 

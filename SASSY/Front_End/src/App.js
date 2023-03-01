@@ -11,7 +11,7 @@ const App = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("/api/isauth")
+        const res = await axios.get("/api/isAuth")
         if (res.status === 200) {
           setIsAuthenticated(true)
           setUserType(res.data.user_type)

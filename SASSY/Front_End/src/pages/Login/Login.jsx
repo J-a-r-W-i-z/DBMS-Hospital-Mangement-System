@@ -27,6 +27,7 @@ function LoginForm() {
     event.preventDefault()
     try {
       const userTypeInt = mapUserTypeToInt(userType)
+      console.log(userTypeInt, username, password)
       const response = await fetch("/hms/login", {
         method: "POST",
         headers: {

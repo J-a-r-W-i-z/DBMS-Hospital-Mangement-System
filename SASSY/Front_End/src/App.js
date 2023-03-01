@@ -17,6 +17,7 @@ const App = () => {
           setUserType(res.data.user_type)
         } else {
           setIsAuthenticated(false)
+          console.log("set authentication is ", isAuthenticated)
           setUserType(null)
         }
 

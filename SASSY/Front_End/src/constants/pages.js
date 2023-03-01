@@ -2,8 +2,13 @@ import { LoginForm, DoctorDashboard } from "../pages"
 
 const pages = [
   { name: "Home", path: "/", element: LoginForm },
-  { name: "Doctor Dashboard", path: "/doctor-dashboard", element: DoctorDashboard },
-  { name: "Adminstrator", path: "/admin", element: DoctorDashboard }
+  {
+    path: "/hms/dashboard", children: [
+      { path: "doctor", element: DoctorDashboard, name: "Doctor Dashboard" },
+      { path: "patient", element: DoctorDashboard, name: "Patient Dashboard" },
+      { path: "nurse", element: DoctorDashboard, name: "Nurse Dashboard" },
+    ]
+  }
 
 ]
 

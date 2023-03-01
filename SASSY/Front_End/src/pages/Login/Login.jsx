@@ -28,7 +28,7 @@ function LoginForm() {
     try {
       const userTypeInt = mapUserTypeToInt(userType)
       console.log(userTypeInt, username, password)
-      const response = await fetch("/hms/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

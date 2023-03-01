@@ -19,6 +19,8 @@ const App = () => {
           setIsAuthenticated(false)
           setUserType(null)
         }
+
+        console.log(res)
       } catch (err) {
         console.log(err)
       }

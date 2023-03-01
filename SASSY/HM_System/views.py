@@ -15,15 +15,17 @@ class RegisterView(APIView):
     
 class LoginView(APIView):
     def post(self, request):
+        print(request)
         username = request.data['username']
         password = request.data['password']
         user_type = request.data['user_type']
-
+        print("Here")
         user = User.objects.filter(username=username, user_type=user_type).first()
         if user is None:
             raise AuthenticationFailed('User Not Found!')
 
         if not user.check_password(password):
+            print("aiufhaiwuhfnakjfeahnekf")
             raise AuthenticationFailed('Incorrect Password!')
         
         payload = {
@@ -39,11 +41,13 @@ class LoginView(APIView):
         response.data = {
             'jwt':token
         }
+
+        print("returning...")
         return response
 
-class UserView(APIView):
-    
-    def get(self, request):
+
+class isAuth(APIView):
+    def get(sef, request):
         token = request.COOKIES.get('jwt')
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
@@ -58,6 +62,30 @@ class UserView(APIView):
         return Response({
             'response': serializer.data
         })
+
+
+class UserView(APIView): 
+    def authenticate(self, request):
+        token = request.COOKIES.get('jwt')
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        try:
+            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        return payload
+        
+class DoctorView(UserView):
+    def get(self, request):
+        payload = UserView.authenticate(self, request)
+        user = User.objects.filter(id=payload['id']).first()
+        serializer = UserSerializer(user)
+        return Response({
+            'response': serializer.data
+        })
+
         
 class LogoutView(APIView):
     def post(self, request):
@@ -67,5 +95,6 @@ class LogoutView(APIView):
             'messege': 'Logout Successful'
         }
         return response
+    
        
 

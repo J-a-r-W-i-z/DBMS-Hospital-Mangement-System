@@ -1,0 +1,272 @@
+@import "./styles/Variables.scss";
+
+html {
+	font-size: 1rem;
+
+	@media screen and (max-width: $sm) {
+		font-size: 0.8125rem;
+	}
+}
+
+body {
+	color: var(--primary-color);
+}
+
+.section {
+	padding: 1rem $padding-lg 0 $padding-lg;
+	@media screen and (max-width: $md) {
+		padding-left: $padding-md;
+		padding-right: $padding-md;
+	}
+}
+
+.sx-wrapper {
+	max-width: $xl;
+}
+
+.s-wrapper {
+	max-width: $lg;
+}
+
+.p-wrapper {
+	max-width: $amd;
+}
+
+.dashboard {
+	margin-top: $app-margin-top;
+}
+
+.divider {
+	width: 40px;
+	height: 4px;
+	background-color: #f3ad0f;
+	margin: 0.5rem 0 1.2rem 0;
+
+	@media screen and (max-width: $lg) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+.sx-wrapper,
+.s-wrapper,
+.p-wrapper,
+.center-element {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.center-flex {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.primary-heading {
+	font-family: "Bebas Neue", cursive;
+	color: var(--orange);
+	text-transform: uppercase;
+	letter-spacing: 0.1rem;
+	font-size: 5rem;
+	font-weight: 600;
+
+	margin-top: 1rem;
+
+	@media screen and (max-width: $lg) {
+		font-size: 4rem;
+	}
+	@media screen and (max-width: $md) {
+		font-size: 3rem;
+	}
+}
+
+.primary-heading-sm {
+	font-size: 1.5rem;
+	font-weight: 600;
+
+	@media screen and (max-width: $md) {
+		font-size: 1.2rem;
+	}
+}
+
+.secondary-heading {
+	font-size: 2rem;
+	margin: 2rem 0 1rem 0;
+
+	@media screen and (max-width: $md) {
+		font-size: 1.5rem;
+	}
+}
+
+.margin-divider {
+	margin: 6rem 0;
+}
+
+.margin-divider-sm {
+	margin: 3rem 0;
+}
+
+.margin-divider-xsm {
+	margin: 2rem 0;
+}
+
+.margin-divider-xxsm {
+	margin: 1.5rem 0;
+}
+
+.icon-select {
+	text-transform: uppercase;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.center-text {
+	text-align: center;
+}
+
+button {
+	cursor: pointer;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-primary-sm,
+.btn-secondary-sm {
+	font-weight: bold;
+	text-transform: uppercase;
+	transition: all 0.2s ease-in-out;
+}
+
+.btn-primary,
+.btn-secondary {
+	padding: 1rem 2rem;
+	border-radius: $border-radius;
+	box-shadow: 0px 0px 10px 0 var(--shadow-color);
+
+	&:hover {
+		box-shadow: 3px 3px 10px 0 var(--shadow-color);
+	}
+}
+
+.btn-primary,
+.btn-primary-sm {
+	background: var(--light-green);
+	border: solid $border-width-sm var(--green);
+
+	&:hover {
+		background: var(--less-light-green);
+		border-color: var(--dark-green);
+	}
+}
+
+.btn-secondary,
+.btn-secondary-sm {
+	background: var(--light-orange);
+	border: solid $border-width-sm var(--orange);
+
+	&:hover {
+		background: var(--orange);
+		border-color: var(--dark-orange);
+	}
+}
+
+.btn-primary-sm,
+.btn-secondary-sm {
+	padding: 0.7rem 1rem;
+	border-radius: $border-radius-sm;
+}
+
+.input-field {
+	width: 100%;
+	padding: 1rem 2rem;
+	border: solid $border-width-sm var(--dark-color);
+	border-radius: $border-radius;
+	font-size: 1.2rem;
+	font-weight: 600;
+	transition: all 0.2s ease-in-out;
+
+	&:focus {
+		outline: none;
+		border-color: var(--orange);
+	}
+}
+
+input,
+select {
+	width: 100%;
+	margin: 0.3rem 0;
+	padding: 1rem 0.5rem;
+	border-radius: $border-radius;
+
+	border: $border-width solid var(--green);
+	outline: none;
+	font-size: inherit;
+
+	transition: all 0.2s ease-in-out;
+	font-family: inherit;
+
+	&:focus {
+		border: $border-width solid var(--dark-green);
+		box-shadow: 0px 0px 10px 0 var(--shadow-color);
+	}
+}
+
+table {
+	border-collapse: separate;
+	overflow: hidden;
+	width: 100%;
+	border-radius: $border-radius;
+
+	box-shadow: 0px 0px 10px 0 var(--shadow-color);
+
+	th,
+	td {
+		padding: 12px;
+		text-align: left;
+	}
+
+	th {
+		background-color: var(--secondary-background-color);
+		font-weight: bold;
+	}
+
+	tbody tr {
+		&:nth-child(even) {
+			background-color: var(--secondary-background-color);
+			&.row-even {
+				background-color: var(--light-color);
+			}
+		}
+
+		&:nth-child(odd) {
+			&.row-odd {
+				background-color: var(--light-color);
+			}
+		}
+	}
+}
+
+.react-tabs__tab {
+	padding: 1rem 2rem;
+	border: none;
+	cursor: pointer;
+
+	bottom: -2px;
+}
+
+.react-tabs__tab-list {
+	border-bottom: $border-width solid var(--green);
+}
+
+.react-tabs__tab--selected {
+	border: $border-width solid var(--green);
+	border-bottom: none;
+	border-color: var(--green);
+	border-radius: $border-radius-sm $border-radius-sm 0 0;
+	color: inherit;
+	background-color: var(--secondary-background-color);
+}
+
+.react-tabs__tab:last-child {
+	margin-right: 0;
+}

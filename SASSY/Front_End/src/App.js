@@ -23,7 +23,6 @@ const App = () => {
 
         console.log(res)
       } catch (err) {
-        console.log('some random error')
         console.log(err)
       }
     }

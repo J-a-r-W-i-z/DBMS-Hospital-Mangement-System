@@ -19,14 +19,14 @@ function LoginForm() {
       case "adminstrator":
         return 4
       default:
-        return 0
+        return 1
     }
   }
 
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const response = await fetch("/hms/login/", {
+      const response = await fetch("/hms/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -6,20 +6,7 @@ export default function Router() {
   const routes = useRoutes([
     ...pages.map((page) => ({
       path: page.path,
-      ...(page.children ? {
-        children: [
-          {
-            path: page.path,
-            element: <Navigate to={page.children[0].path} replace />
-          },
-          ...page.children.map((child) => ({
-            path: child.path,
-            element: HelmetWrap(child.element, child.name)
-          }))
-        ]
-      } : {
-        element: HelmetWrap(page.element, page.name)
-      })
+      element: HelmetWrap(page.element, page.name)
     })),
   ])
 

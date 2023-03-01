@@ -42,7 +42,7 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("/hms/logout")
+      const res = await axios.post("/api/logout")
       setIsAuthenticated(false)
       setUserType(null)
     } catch (err) {

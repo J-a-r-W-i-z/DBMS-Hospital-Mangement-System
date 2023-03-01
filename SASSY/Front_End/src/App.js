@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import axios from "axios"
-import { DoctorDashboard } from "./pages"
+import { DoctorDashboard, LoginForm } from "./pages"
 import { Navbar } from "./components"
 
 const App = () => {
@@ -57,7 +57,7 @@ const App = () => {
     }
   }
 
-  const handleLogin = async (username, password, userType) => {
+  const handleLogin = async (username, password, userType, setErrorMessage) => {
     const userTypeInt = mapUserTypeToInt(userType)
     try {
       const res = await axios.post("/api/login", {
@@ -70,18 +70,20 @@ const App = () => {
         setIsAuthenticated(true)
         setUserType(userTypeInt)
       } else {
-        return res.data.detail
+        setErrorMessage(res.data.detail)
       }
     } catch (err) {
-      return "Something went wrong. Please try again later."
+      setErrorMessage("Something went wrong. Please try again later.")
     }
   }
 
   const handleLogout = async () => {
     try {
       const res = await axios.post("/api/logout")
-      setIsAuthenticated(false)
-      setUserType(null)
+      if (res.status === 200) {
+        setIsAuthenticated(false)
+        setUserType(null)
+      }
     } catch (err) {
       console.log(err)
     }
@@ -96,7 +98,7 @@ const App = () => {
             isAuthenticated ? (
               <Redirect to={`/${mapUserTypeToString(userType)}`} />
             ) : (
-              <Homepage handleLogin={handleLogin} />
+              <LoginForm handleLogin={handleLogin} />
             )
           )} />
           <Route exact path="/doctor" render={() => (

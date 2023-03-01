@@ -2,54 +2,17 @@ import React, { useState } from "react"
 import "../../App.scss"
 import "./Login.scss"
 
-function LoginForm() {
+function LoginForm({ handleLogin }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [userType, setUserType] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
-  const mapUserTypeToInt = (userType) => {
-    switch (userType) {
-      case "front-desk-operator":
-        return 1
-      case "data-entry-operator":
-        return 2
-      case "doctor":
-        return 3
-      case "adminstrator":
-        return 4
-      default:
-        return 0
-    }
-  }
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-      const userTypeInt = mapUserTypeToInt(userType)
-      console.log(userTypeInt, username, password)
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password, user_type: userTypeInt }),
-      })
-
-      if (response.ok) {
-        window.location.replace(`${userType}`)
-      } else {
-        const data = await response.json()
-        setErrorMessage(data.detail)
-      }
-    } catch (error) {
-      setErrorMessage("Something went wrong. Please try again later.")
-    }
-  }
-
   return (
     <div className="login-form-container">
-      <form onSubmit={handleLogin} className="login-form">
+      <form
+        onSubmit={handleLogin(username, password, userType, setErrorMessage)}
+      >
         <h1 className="login-form-heading">Log In to continue</h1>
         <input
           type="text"

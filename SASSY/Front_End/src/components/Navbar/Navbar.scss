@@ -2,45 +2,45 @@
 
 .app__navbar,
 .app__navbar-logo {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .app__navbar {
-	width: 100%;
+  width: 100%;
 
-	color: var(--light-color);
-	padding: 0.3rem $padding-lg;
-	@media screen and (max-width: $md) {
-		padding-left: $padding-md;
-		padding-right: $padding-md;
-	}
+  color: var(--light-color);
+  padding: 0.3rem $padding-lg;
+  @media screen and (max-width: $md) {
+    padding-left: $padding-md;
+    padding-right: $padding-md;
+  }
 
-	background-color: var(--dark-color);
-	position: sticky;
-	top: 0;
-	z-index: 100;
+  background-color: var(--dark-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
-	justify-content: space-between;
+  justify-content: space-between;
 }
 
 .app__navbar-logo {
-	& > img {
-		width: $img-size-lg;
-		height: $img-size-lg;
-		// margin-top: 1rem;
+  & > img {
+    width: $img-size-lg;
+    height: $img-size-lg;
+    // margin-top: 1rem;
 
-		margin: 0.5rem 0;
+    margin: 0.5rem 0;
 
-		@media screen and (max-width: $md) {
-			width: $img-size-md;
-			height: $img-size-md;
-		}
-	}
+    @media screen and (max-width: $md) {
+      width: $img-size-md;
+      height: $img-size-md;
+    }
+  }
 
-	& > h1 {
-		margin-left: 0.75rem;
-		font-size: 2.5rem;
-	}
+  & > h1 {
+    margin-left: 0.75rem;
+    font-size: 2.5rem;
+  }
 }

@@ -8,12 +8,12 @@ import "./index.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	<HelmetProvider>
-		<BrowserRouter>
-			<Navbar />
-			<div className="app">
-				<Router />
-			</div>
-		</BrowserRouter>
-	</HelmetProvider>
+  <HelmetProvider>
+    <BrowserRouter>
+      <Navbar />
+      <div className="app">
+        <Router />
+      </div>
+    </BrowserRouter>
+  </HelmetProvider>
 )

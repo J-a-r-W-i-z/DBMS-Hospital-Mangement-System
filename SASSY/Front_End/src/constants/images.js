@@ -1,7 +1,7 @@
 import logo from "../assets/Favicon.png"
 
 const images = {
-	logo,
+  logo,
 }
 
 export default images

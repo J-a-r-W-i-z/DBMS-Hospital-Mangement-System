@@ -3,81 +3,62 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import axios from "axios"
 import { DoctorDashboard, LoginForm } from "./pages"
 import { Navbar } from "./components"
+import { HelmetWrap } from "./wrapper"
+import { toastOptions } from "./constants"
+import { getUserTypeInt, getUserTypeStr } from "./util"
+
+import { ToastContainer, toast, Slide } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import "./styles/Toast.scss"
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userType, setUserType] = useState(null)
 
+  const handleError = (err) => {
+    if (err.response === null) {
+      toast.error("Something went wrong. Please try again later.", toastOptions)
+    } else {
+      toast.error(err.response.data.detail, toastOptions)
+    }
+  }
+
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-        const res = await axios.get("/api/isAuth")
-        if (res.status === 200) {
+      axios.get("/api/isAuth")
+        .then(res => {
           setIsAuthenticated(true)
           setUserType(res.data.user_type)
-        } else {
+        })
+        .catch(err => {
           setIsAuthenticated(false)
-          console.log("set authentication is ", isAuthenticated)
           setUserType(null)
-        }
+          console.log(err)
 
-        console.log(res)
-      } catch (err) {
-        console.log(err)
-      }
+          handleError(err)
+        })
     }
 
     checkAuth()
   }, [])
 
-  const mapUserTypeToInt = (userType) => {
-    switch (userType) {
-      case "front-desk-operator":
-        return 1
-      case "data-entry-operator":
-        return 2
-      case "doctor":
-        return 3
-      case "adminstrator":
-        return 4
-      default:
-        return 0
-    }
-  }
-
-  const mapUserTypeToString = (userType) => {
-    switch (userType) {
-      case 1:
-        return "front-desk-operator"
-      case 2:
-        return "data-entry-operator"
-      case 3:
-        return "doctor"
-      case 4:
-        return "adminstrator"
-      default:
-        return "unknown"
-    }
-  }
-
-  const handleLogin = async (username, password, userType, setErrorMessage) => {
-    const userTypeInt = mapUserTypeToInt(userType)
-    try {
-      const res = await axios.post("/api/login", {
-        username,
-        password,
-        userTypeInt,
-      })
-
-      if (res.status === 200) {
+  const handleLogin = async (username, password, userType) => {
+    const userTypeInt = getUserTypeInt(userType)
+    console.log(username, password, userTypeInt)
+    axios.post("/api/login", {
+      username: username,
+      password: password,
+      user_type: userTypeInt,
+    })
+      .then(res => {
         setIsAuthenticated(true)
         setUserType(userTypeInt)
-      } else {
-        setErrorMessage(res.data.detail)
-      }
-    } catch (err) {
-      setErrorMessage("Something went wrong. Please try again later.")
-    }
+
+        toast.success("Login successful.", toastOptions)
+      })
+      .catch(err => {
+        handleError(err)
+      })
   }
 
   const handleLogout = async () => {
@@ -86,27 +67,23 @@ const App = () => {
       if (res.status === 200) {
         setIsAuthenticated(false)
         setUserType(null)
+
+        toast.success("Logout successful.", toastOptions)
       }
     } catch (err) {
-      console.log(err)
+      handleError(err)
     }
   }
 
   return (
     <>
       <Navbar isAuthenticated={isAuthenticated} handleLout={handleLogout} />
-      <BrowserRouter>
-        <div className="app">
+      <div className="app">
+        <BrowserRouter>
           <Routes>
-            <Route exact path="/" render={() => (
-              isAuthenticated ? (
-                <Navigate to={`/${mapUserTypeToString(userType)}`} />
-              ) : (
-                <LoginForm handleLogin={handleLogin} />
-              )
-            )} />
+            <Route exact path="/" element={<LoginForm handleLogin={handleLogin} />} />
             <Route exact path="/doctor" render={() => (
-              isAuthenticated && mapUserTypeToString(userType) === 'doctor' ? (
+              isAuthenticated && getUserTypeStr(userType) === 'doctor' ? (
                 <DoctorDashboard />
               ) : (
                 <Navigate to="/" />
@@ -116,8 +93,22 @@ const App = () => {
               <Navigate to="/" />
             )} />
           </Routes>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </div>
+
+      <ToastContainer
+        position={toastOptions.position}
+        autoClose={toastOptions.autoClose}
+        hideProgressBar={toastOptions.hideProgressBar}
+        closeOnClick={toastOptions.closeOnClick}
+        pauseOnHover={toastOptions.pauseOnHover}
+        theme={toastOptions.theme}
+        transition={Slide}
+        newestOnTop={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+      />
     </>
   )
 }

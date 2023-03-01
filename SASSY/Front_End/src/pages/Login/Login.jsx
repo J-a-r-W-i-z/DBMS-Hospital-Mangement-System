@@ -6,13 +6,15 @@ function LoginForm({ handleLogin }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [userType, setUserType] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    handleLogin(username, password, userType)
+  }
 
   return (
     <div className="login-form-container">
-      <form
-        onSubmit={handleLogin(username, password, userType, setErrorMessage)}
-      >
+      <form className="login-form" onSubmit={handleSubmit}>
         <h1 className="login-form-heading">Log In to continue</h1>
         <input
           type="text"
@@ -44,9 +46,6 @@ function LoginForm({ handleLogin }) {
         <button type="submit" className="btn-primary">
           Login
         </button>
-        {errorMessage && (
-          <p className="login-form-error-message">{errorMessage}</p>
-        )}
       </form>
     </div>
   )

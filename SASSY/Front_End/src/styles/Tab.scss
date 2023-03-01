@@ -1,0 +1,26 @@
+@import "../styles/Variables.scss";
+
+.react-tabs__tab {
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+
+  bottom: -2px;
+}
+
+.react-tabs__tab-list {
+  border-bottom: $border-width solid var(--green);
+}
+
+.react-tabs__tab--selected {
+  border: $border-width solid var(--green);
+  border-bottom: none;
+  border-color: var(--green);
+  border-radius: $border-radius-sm $border-radius-sm 0 0;
+  color: inherit;
+  background-color: var(--secondary-background-color);
+}
+
+.react-tabs__tab:last-child {
+  margin-right: 0;
+}

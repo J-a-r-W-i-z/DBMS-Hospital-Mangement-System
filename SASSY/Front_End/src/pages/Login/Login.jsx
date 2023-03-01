@@ -35,9 +35,6 @@ function LoginForm() {
         body: JSON.stringify({ username, password, user_type: userTypeInt }),
       })
 
-      // Print the response from the server
-      console.log(await response.json())
-
       if (response.ok) {
         if (userType === "adminstrator") {
           windows.location.replace("/admin/")
@@ -46,7 +43,7 @@ function LoginForm() {
         }
       } else {
         const data = await response.json()
-        setErrorMessage(data.message)
+        setErrorMessage(data.detail)
       }
     } catch (error) {
       setErrorMessage("Something went wrong. Please try again later.")

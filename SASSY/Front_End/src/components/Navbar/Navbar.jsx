@@ -9,9 +9,9 @@ const Navbar = () => {
         <img src={images.logo} alt="logo" />
         <h1>SASSY</h1>
       </div>
-      <div className="logout-btn">
+      {/* <div className="logout-btn">
         <button className="btn-secondary">Logout</button>
-      </div>
+      </div> */}
     </nav>
   )
 }

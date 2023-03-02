@@ -20,7 +20,6 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     def post(self, request):
-        print(request)
         username = request.data['username']
         password = request.data['password']
         user_type = request.data['user_type']
@@ -111,6 +110,9 @@ class LogoutView(APIView):
         return response
 
 
+###################################### SQL VIEWS ##################################
+######################################## TODO #####################################
+
 class PatientStayView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
@@ -120,3 +122,5 @@ class PatientStayView(UserView):
             return Response({
                 'List' : UserView.cursorToDict(self,cursor)
             })
+
+

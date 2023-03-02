@@ -1,0 +1,43 @@
+1. Given value for the attributes of the patient. insert a patient 
+   into the Patient table.
+
+2. Given value for the attributes of the Doctor. insert a patient 
+   into the Patient table.
+
+3. Given a new appointment details. Insert into Appointment table.
+
+4. Given a prescription description, insert into prescribe table.
+
+5. Given a Doctor, return all the patients name appointed
+   him/her before date DD/MM/YYYY OR undergoes some treatment
+   [Note: For undergoes, nothing to do with date, coz undergoes
+   table will only be filled after the patient has undergone the
+   treatment].
+
+6. Given a doctor, number of appointments on date D(dd/mm/yyyy).
+
+7. Return the list of Vacant room.
+
+8. Insert record in the stays table given required values.
+
+9. Given patient and doctor, return the list of medicine prescribed
+   in the latest appointment.
+
+10.Given patient and doctor, return the recent test report of last 5 tests.
+
+11.Given some appointment number, medicines name, insert rows in prescribes 
+   table.
+
+12.Insert data into report tables, given required values.
+
+13.Return list of patients who are currently staying/admitted in the hospital
+
+14.Given a patient, set the end datetime(if value is NULL) from stay table with
+   value D(given).
+
+14.Given a patient, return the stay id if datetime value is NULL from stay table.
+
+15.Given stay id make the room available with attached with the given stayid.
+
+16.Given a Testid return the email of doctor associated and the test result.
+

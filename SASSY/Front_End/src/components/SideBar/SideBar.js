@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate, NavLink } from 'react-router-dom';
 import "./SideBar.css";
 import Logo from "../../assets/logo.png";
 import { UilBars } from "@iconscout/react-unicons";
@@ -15,6 +16,7 @@ import {
 } from "@iconscout/react-unicons";
 
 const SideBar = () => {
+
     const SidebarData = [
         {
             icon: UilEstate,
@@ -58,6 +60,7 @@ const SideBar = () => {
     console.log(window.innerWidth)
     return (
         <>
+            <NavLink>Hello</NavLink>
             <div className="bars" style={expanded ? { left: '60%' } : { left: '5%' }} onClick={() => setExpaned(!expanded)}>
                 <UilBars />
             </div>
@@ -79,17 +82,23 @@ const SideBar = () => {
                             <div
                                 className={selected === index ? "menuItem active" : "menuItem"}
                                 key={index}
-                                onClick={() => setSelected(index)}
+                                onClick={() => {
+                                    setSelected(index);
+                                    console.log(item.heading);
+
+                                }}
                             >
                                 <item.icon />
                                 <span>{item.heading}</span>
                             </div>
+
                         );
                     })}
                     {/* signoutIcon */}
-                    <div className="menuItem">
-                        <UilSignOutAlt />
-                    </div>
+                    {/* <div className="menuItem"> */}
+                    {/* <UilSignOutAlt /> */}
+                    {/* <p> Logout</p> */}
+                    {/* </div> */}
                 </div>
             </motion.div>
         </>

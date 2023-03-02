@@ -10,7 +10,7 @@ const FDDischarge = () => {
         { id: 5, name: "Yashwant", age: 20, gender: "Male" },
         { id: 6, name: "Anuj Kakde", age: 20, gender: "Male" },
         { id: 7, name: "Sarthak", age: 20, gender: "Male" },
-        { id: 8, name: "Ayush Diwedi", age: 20, gender: "Male" },
+        { id: 8, name: "Ayush Dwiedi", age: 20, gender: "Male" },
         { id: 9, name: "Saptarshi", age: 20, gender: "Male" },
     ])
 

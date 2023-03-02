@@ -1,4 +1,5 @@
-import { LoginForm, DoctorDashboard } from "../pages"
+import { DoctorDashboard, AdminDashboard } from "../pages"
+import { CreateDoctor } from "../pages/Admin"
 
 const usermap = {
   1: "front-desk-operator",
@@ -7,9 +8,16 @@ const usermap = {
   4: "adminstrator",
 }
 
-const pages = [
-  { name: "Home", path: "/", element: LoginForm },
-  { name: "Doctor Dashboard", path: "/doctor", element: DoctorDashboard }
+const createUserPaths = [
+  { breadcrumb: "Front desk operators", path: "create-front-desk-operator", element: CreateDoctor },
+  { breadcrumb: "Data entry operators", path: "create-data-entry-operator", element: CreateDoctor },
+  { breadcrumb: "Doctors", path: "create-doctor", element: CreateDoctor },
+  { breadcrumb: "Adminstrators", path: "create-adminstrator", element: CreateDoctor },
 ]
 
-export { pages, usermap }
+const pages = [
+  { breadcrumb: "Doctor dashboard", usertype: 3, element: DoctorDashboard },
+  { breadcrumb: "Admin dashboard", usertype: 4, element: AdminDashboard, children: createUserPaths }
+]
+
+export { pages, usermap, createUserPaths }

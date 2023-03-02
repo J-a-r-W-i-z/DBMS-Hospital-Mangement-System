@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import axios from "axios"
-import { DoctorDashboard, LoginForm, AdminDashboard, Error404 } from "./pages"
 import { Navbar } from "./components"
-import { HelmetWrap } from "./wrapper"
-import { toastOptions, usermap } from "./constants"
+import { toastOptions } from "./constants"
+import Router from "./routes"
 
 import { ToastContainer, toast, Slide } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -78,57 +77,14 @@ const App = () => {
   return (
     <>
       <Navbar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+
       <div className="app">
         <BrowserRouter>
-          <Routes>
-            <Route
-              exact
-              path="/"
-              element={
-                isAuthenticated ? (
-                  <Navigate to={`/${usermap[userType]}`} />
-                ) : (
-                  <HelmetWrap
-                    title="Login"
-                    element={<LoginForm handleLogin={handleLogin} />}
-                  />
-                )
-              }
-            />
-            <Route
-              exact
-              path="/doctor"
-              element={
-                isAuthenticated && usermap[userType] === "doctor" ? (
-                  <HelmetWrap
-                    title="Doctor Dashboard"
-                    element={<DoctorDashboard />}
-                  />
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
-            />
-            <Route
-              exact
-              path="/adminstrator"
-              element={
-                isAuthenticated && usermap[userType] === "adminstrator" ? (
-                  <HelmetWrap
-                    title="Admin Dashboard"
-                    element={<AdminDashboard />}
-                  />
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
-            />
-            <Route path="/" element={<Navigate to="/" />} />
-            <Route
-              path="*"
-              element={<HelmetWrap title="Page not found" element={<Error404 />} />}
-            />
-          </Routes>
+          <Router
+            handleLogin={handleLogin}
+            isAuthenticated={isAuthenticated}
+            userType={userType}
+          />
         </BrowserRouter>
       </div>
 

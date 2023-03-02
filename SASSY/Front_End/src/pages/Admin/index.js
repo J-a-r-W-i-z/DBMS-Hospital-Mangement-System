@@ -1,0 +1,1 @@
+export { default as CreateDoctor } from "./CreateDoctor/CreateDoctor.jsx"

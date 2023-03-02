@@ -38,9 +38,7 @@ const DoctorDashboard = () => {
   }
 
   return (
-    <div className="section s-wrapper">
-      <p className="primary-heading center-text">Doctor Dashboard</p>
-      <div className="margin-divider-sm" />
+    <>
       <Tabs focusTabOnClick={false}>
         <TabList>
           <Tab>Appointments</Tab>
@@ -120,7 +118,7 @@ const DoctorDashboard = () => {
           </table>
         </TabPanel>
       </Tabs>
-    </div>
+    </>
   )
 }
 

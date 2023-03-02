@@ -1,5 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet-async"
+import { Breadcrumbs } from "../components"
+import "../App.scss"
 
 const HelmetWrap = ({ title, element }) => {
   const appender = " | SASSY"
@@ -8,7 +10,10 @@ const HelmetWrap = ({ title, element }) => {
       <Helmet>
         <title>{title + appender}</title>
       </Helmet>
-      {element}
+      <div className="section s-wrapper">
+        <Breadcrumbs />
+        {element}
+      </div>
     </>
   )
 }

@@ -1,11 +1,22 @@
 import React, { useState } from "react"
+import { Link } from "react-router-dom"
 import { Table } from "../../components"
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 import "react-tabs/style/react-tabs.css"
 import "./Admin.scss"
 
-const AdminDashboard = () => {
+function CreateUserButton({ path }) {
+  return (
+    <Link to={path}>
+      <button className="btn-primary-sm create-user-btn">
+        Create new user
+      </button>
+    </Link>
+  )
+}
+
+const AdminDashboard = ({ createUserPaths }) => {
   const [users, setUsers] = useState([
     {
       username: "johnsnow",
@@ -43,36 +54,31 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="section s-wrapper">
-      <p className="primary-heading center-text">Admin Dashboard</p>
-      <div className="margin-divider-sm" />
-
+    <>
       <Tabs focusTabOnClick={false}>
         <TabList>
-          <Tab>Front desk operators</Tab>
-          <Tab>Data entry operators</Tab>
-          <Tab>Doctors</Tab>
-          <Tab>Adminstrators</Tab>
+          {createUserPaths.map((path, index) => (
+            <Tab key={index}>{path.breadcrumb}</Tab>
+          ))}
         </TabList>
 
-        <div className="margin-divider-sm" />
-
-        <TabPanel>
-          <Table
-            headers={["Username", "Name", "Date Joined", "Action"]}
-            data={users}
-            searchKey="username"
-            handleClick={removeUser}
-            buttonLabel="Remove"
-            buttonClass="btn-secondary-sm"
-            clickKey="username"
-          />
-        </TabPanel>
-        <TabPanel></TabPanel>
-        <TabPanel></TabPanel>
-        <TabPanel></TabPanel>
+        {createUserPaths.map((path, index) => (
+          <TabPanel>
+            <CreateUserButton key={`userbtn-${index}`} path={path.path} />
+            <Table
+              key={`table-${index}`}
+              headers={["Username", "Name", "Date Joined", "Action"]}
+              data={users}
+              searchKey="username"
+              handleClick={removeUser}
+              buttonLabel="Remove"
+              buttonClass="btn-secondary-sm"
+              clickKey="username"
+            />
+          </TabPanel>
+        ))}
       </Tabs>
-    </div>
+    </>
   )
 }
 

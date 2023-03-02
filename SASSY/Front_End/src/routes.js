@@ -1,27 +1,69 @@
 import React from "react"
 import { useRoutes, Navigate } from "react-router-dom"
-import { pages } from "./constants"
 import { HelmetWrap } from "./wrapper"
+import { LoginForm, Error404, AdminDashboard, DoctorDashboard } from "./pages"
+import { pages, usermap, createUserPaths } from "./constants"
 
-export default function Router() {
+export default function Router({ handleLogin, isAuthenticated, userType }) {
   const routes = useRoutes([
-    ...pages.map((page) => ({
-      path: page.path,
-      ...(page.children ? {
-        children: [
-          {
-            path: page.path,
-            element: <Navigate to={page.children[0].path} replace />
-          },
-          ...page.children.map((child) => ({
-            path: child.path,
-            element: HelmetWrap(child.element, child.name)
-          }))
-        ]
-      } : {
-        element: HelmetWrap(page.element, page.name)
-      })
-    })),
+    {
+      breadcrumb: "Home",
+      path: "/",
+      element: isAuthenticated ? (
+        <Navigate to={`/${usermap[userType]}`} />
+      ) : (
+        <HelmetWrap
+          title="Home"
+          element={<LoginForm handleLogin={handleLogin} />}
+        />
+      ),
+    },
+
+    {
+      breadcrumb: "Doctor dashboard",
+      path: "/doctor",
+      element: isAuthenticated && usermap[userType] === "doctor" ? (
+        <HelmetWrap
+          title="Doctor Dashboard"
+          element={<DoctorDashboard />}
+        />
+      ) : (
+        <Navigate to="/" />
+      ),
+    },
+
+    {
+      breadcrumb: "Admin dashboard",
+      path: "/adminstrator",
+      children: [
+        {
+          element: isAuthenticated && usermap[userType] === "adminstrator" ? (
+            <HelmetWrap
+              title="Admin Dashboard"
+              element={<AdminDashboard createUserPaths={createUserPaths} />}
+            />
+          ) : (
+            <Navigate to="/" />
+          ),
+          index: true
+        },
+        ...createUserPaths.map((item) => ({
+          breadcrumb: item.breadcrumb,
+          path: item.path,
+          element: (
+            <HelmetWrap
+              title={item.name}
+              element={<item.element />}
+            />
+          )
+        }))
+      ]
+    },
+
+    {
+      path: "*",
+      element: <HelmetWrap title="Page not found" element={<Error404 />} />,
+    },
   ])
 
   return routes

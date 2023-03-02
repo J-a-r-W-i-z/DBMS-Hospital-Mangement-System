@@ -5,7 +5,7 @@ import "./Login.scss"
 function LoginForm({ handleLogin }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [userType, setUserType] = useState()
+  const [userType, setUserType] = useState("")
 
   const handleSubmit = (event) => {
     event.preventDefault()

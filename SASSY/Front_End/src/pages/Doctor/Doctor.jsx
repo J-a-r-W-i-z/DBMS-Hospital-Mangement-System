@@ -41,11 +41,7 @@ const DoctorDashboard = () => {
     <div className="section s-wrapper">
       <p className="primary-heading center-text">Doctor Dashboard</p>
       <div className="margin-divider-sm" />
-      <Tabs
-        focusTabOnClick={false}
-        disableLeftRightKeys={true}
-        disableUpDownKeys={true}
-      >
+      <Tabs focusTabOnClick={false}>
         <TabList>
           <Tab>Appointments</Tab>
           <Tab>Patients</Tab>

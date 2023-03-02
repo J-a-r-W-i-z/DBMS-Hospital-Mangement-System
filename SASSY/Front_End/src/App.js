@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import axios from "axios"
-import { DoctorDashboard, LoginForm, AdminDashboard } from "./pages"
+import { DoctorDashboard, LoginForm, AdminDashboard, Error404 } from "./pages"
 import { Navbar } from "./components"
 import { HelmetWrap } from "./wrapper"
 import { toastOptions, usermap } from "./constants"
@@ -124,6 +124,10 @@ const App = () => {
               }
             />
             <Route path="/" element={<Navigate to="/" />} />
+            <Route
+              path="*"
+              element={<HelmetWrap title="Page not found" element={<Error404 />} />}
+            />
           </Routes>
         </BrowserRouter>
       </div>

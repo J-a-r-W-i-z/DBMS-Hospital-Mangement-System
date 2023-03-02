@@ -47,11 +47,7 @@ const AdminDashboard = () => {
       <p className="primary-heading center-text">Admin Dashboard</p>
       <div className="margin-divider-sm" />
 
-      <Tabs
-        focusTabOnClick={false}
-        disableLeftRightKeys={true}
-        disableUpDownKeys={true}
-      >
+      <Tabs focusTabOnClick={false}>
         <TabList>
           <Tab>Front desk operators</Tab>
           <Tab>Data entry operators</Tab>

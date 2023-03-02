@@ -17,7 +17,7 @@ function LoginForm({ handleLogin }) {
     <div className="form-container login-form-container">
       <form onSubmit={handleSubmit}>
         <h1>Log In to continue</h1>
-        <div className="form-container-div">
+        <div className="form-container-div-sm">
           <AuthFields
             username={username}
             setUsername={setUsername}
@@ -27,7 +27,7 @@ function LoginForm({ handleLogin }) {
             setUserType={setUserType}
           />
         </div>
-        <button type="submit" className="btn-primary submit-btn">
+        <button type="submit" className="btn-primary-sm submit-btn">
           Login
         </button>
       </form>

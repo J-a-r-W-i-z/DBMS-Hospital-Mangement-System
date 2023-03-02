@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom"
 import { isAuth, logIn, logOut } from "./api"
 import { Navbar } from "./components"
 import { toastOptions } from "./constants"
+import { handleError } from "./actions"
 import Router from "./routes"
 
 import { ToastContainer, toast, Slide } from "react-toastify"
@@ -16,15 +17,6 @@ const App = () => {
   useEffect(() => {
     checkAuth()
   }, [])
-
-  const handleError = (err, dontToast) => {
-    if (err.response === null) {
-      toast.error("Something went wrong. Please try again later.", toastOptions)
-    } else {
-      if (dontToast) return
-      toast.error(err.response.data.detail, toastOptions)
-    }
-  }
 
   const checkAuth = async () => {
     await isAuth()

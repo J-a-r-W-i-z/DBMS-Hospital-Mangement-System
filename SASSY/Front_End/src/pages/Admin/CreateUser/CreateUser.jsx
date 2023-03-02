@@ -1,11 +1,12 @@
 import React, { useState } from "react"
 import { AuthFields } from "../../../components"
-import { createUser } from "../../../api"
+import { handleCreateUser } from "../../../actions"
 import "./CreateUser.scss"
 
 const CreateUser = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [userType, setUserType] = useState("")
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
@@ -17,6 +18,19 @@ const CreateUser = () => {
 
   function handleSubmit(event) {
     event.preventDefault()
+
+    handleCreateUser({
+      username: username,
+      password: password,
+      user_type: userType,
+      name: name,
+      address: address,
+      phone: phone,
+      email: email,
+      aadhar_id: aadharId,
+      gender: gender,
+      dob: dob,
+    })
   }
 
   return (
@@ -33,6 +47,9 @@ const CreateUser = () => {
               userType={userType}
               setUserType={setUserType}
             />
+          </div>
+          <hr className="span-full fields-separator" />
+          <div className="form-container-div">
             <input
               placeholder="Name"
               type="text"
@@ -82,15 +99,16 @@ const CreateUser = () => {
               onChange={(event) => setDob(event.target.value)}
               required
             />
-            <textarea
+            <input
               placeholder="Address"
+              type="text"
               value={address}
               onChange={(event) => setAddress(event.target.value)}
-              rows="4"
+              className="span-full"
               required
             />
           </div>
-          <button type="submit" className="btn-primary submit-btn">
+          <button type="submit" className="btn-primary-sm submit-btn">
             Add user
           </button>
         </form>

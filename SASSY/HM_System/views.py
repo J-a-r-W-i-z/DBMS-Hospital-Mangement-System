@@ -117,7 +117,6 @@ class PatientStayView(UserView):
         query = "Select * from hm_system_user"  # Put the required query to get list of patients who are currently staying in the hospital room
         with connection.cursor() as cursor:
             cursor.execute(query)
-
             return Response({
                 'List' : UserView.cursorToDict(self,cursor)
             })

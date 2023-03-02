@@ -41,7 +41,7 @@ class Doctor(models.Model):
         (2, 'female'),
         (3, 'other')
     )
-    EmployeeId=models.AutoField(primary_key=True)
+    EmployeeId=models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)
     Name=models.TextField()
     Address=models.TextField()
     Phone=models.TextField()
@@ -50,6 +50,50 @@ class Doctor(models.Model):
     Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB=models.DateField()
 
+class FdOperator(models.Model):
+    GENDER_CHOICES = (
+        (1, 'male'),
+        (2, 'female'),
+        (3, 'other')
+    )
+    EmployeeId=models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)
+    Name=models.TextField()
+    Address=models.TextField()
+    Phone=models.TextField()
+    Email=models.EmailField()
+    AadharId=models.IntegerField()
+    Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
+    DOB=models.DateField()
+
+class DataOperator(models.Model):
+    GENDER_CHOICES = (
+        (1, 'male'),
+        (2, 'female'),
+        (3, 'other')
+    )
+    EmployeeId=models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)
+    Name=models.TextField()
+    Address=models.TextField()
+    Phone=models.TextField()
+    Email=models.EmailField()
+    AadharId=models.IntegerField()
+    Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
+    DOB=models.DateField()
+
+class Administrator(models.Model):
+    GENDER_CHOICES = (
+        (1, 'male'),
+        (2, 'female'),
+        (3, 'other')
+    )
+    EmployeeId=models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)
+    Name=models.TextField()
+    Address=models.TextField()
+    Phone=models.TextField()
+    Email=models.EmailField()
+    AadharId=models.IntegerField()
+    Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
+    DOB=models.DateField()
 
 class Test(models.Model):
     Code=models.AutoField(primary_key=True)
@@ -122,5 +166,3 @@ class Undergoes(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['Patient', 'Treatment','Stay','Date'], name='second_constraint'),
         ]
-
-    

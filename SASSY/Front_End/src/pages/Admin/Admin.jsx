@@ -6,16 +6,6 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 import "react-tabs/style/react-tabs.css"
 import "./Admin.scss"
 
-function CreateUserButton({ path }) {
-  return (
-    <Link to={path}>
-      <button className="btn-primary-sm create-user-btn">
-        Create new user
-      </button>
-    </Link>
-  )
-}
-
 const AdminDashboard = ({ createUserPaths }) => {
   const [users, setUsers] = useState([
     {
@@ -62,11 +52,16 @@ const AdminDashboard = ({ createUserPaths }) => {
           ))}
         </TabList>
 
-        {createUserPaths.map((path, index) => (
+        <Link to="create-user">
+          <button className="btn-primary-sm create-user-btn">
+            Create new user
+          </button>
+        </Link>
+
+        {createUserPaths.map((index) => (
           <TabPanel>
-            <CreateUserButton key={`userbtn-${index}`} path={path.path} />
             <Table
-              key={`table-${index}`}
+              key={index}
               headers={["Username", "Name", "Date Joined", "Action"]}
               data={users}
               searchKey="username"

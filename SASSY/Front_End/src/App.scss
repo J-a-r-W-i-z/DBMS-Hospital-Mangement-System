@@ -176,25 +176,32 @@ button {
   border-radius: $border-radius-sm;
 }
 
-.input-field {
+.submit-btn {
+  max-width: $xsm;
   width: 100%;
-  padding: 1rem 2rem;
-  border: solid $border-width-sm var(--dark-color);
-  border-radius: $border-radius;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: all 0.2s ease-in-out;
+  display: block;
+  margin: 1rem auto;
+}
 
-  &:focus {
-    outline: none;
-    border-color: var(--orange);
+.form-container {
+  margin: 0 auto;
+
+  & h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  & .form-container-div {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
-  margin: 0.3rem 0;
   padding: 1rem 0.5rem;
   border-radius: $border-radius;
 
@@ -209,6 +216,10 @@ select {
     border: $border-width solid var(--dark-green);
     box-shadow: 0px 0px 10px 0 var(--shadow-color);
   }
+}
+
+textarea {
+  resize: vertical;
 }
 
 table {

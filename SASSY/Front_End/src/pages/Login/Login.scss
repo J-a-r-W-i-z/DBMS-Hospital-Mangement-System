@@ -2,20 +2,5 @@
 
 .login-form-container {
   max-width: $xsm;
-  margin: 0 auto;
-  padding: 0 $padding-md;
   margin-top: 22.5vh;
-}
-
-.login-form {
-  & > button {
-    display: block;
-    margin: 1rem auto;
-    width: 100%;
-  }
-
-  & > h1 {
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
 }

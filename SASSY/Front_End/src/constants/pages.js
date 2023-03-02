@@ -9,10 +9,10 @@ const usermap = {
 }
 
 const createUserPaths = [
-  { breadcrumb: "Front desk operators", path: "create-front-desk-operator", element: CreateDoctor },
-  { breadcrumb: "Data entry operators", path: "create-data-entry-operator", element: CreateDoctor },
-  { breadcrumb: "Doctors", path: "create-doctor", element: CreateDoctor },
-  { breadcrumb: "Adminstrators", path: "create-adminstrator", element: CreateDoctor },
+  { breadcrumb: "Create FDO", path: "create-FDO", element: CreateDoctor },
+  { breadcrumb: "Createa DEO", path: "create-DEO", element: CreateDoctor },
+  { breadcrumb: "Create doctor", path: "create-doctor", element: CreateDoctor },
+  { breadcrumb: "Create adminstrator", path: "create-adminstrator", element: CreateDoctor },
 ]
 
 const pages = [

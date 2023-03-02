@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { BrowserRouter } from "react-router-dom"
-import axios from "axios"
+import { isAuth, logIn, logOut } from "./api"
 import { Navbar } from "./components"
 import { toastOptions } from "./constants"
 import Router from "./routes"
@@ -27,7 +27,7 @@ const App = () => {
   }
 
   const checkAuth = async () => {
-    axios.get("/api/isAuth")
+    await isAuth()
       .then(res => {
         setIsAuthenticated(true)
         setUserType(res.data.response.user_type)
@@ -45,7 +45,7 @@ const App = () => {
   }
 
   const handleLogin = async (username, password, userType) => {
-    axios.post("/api/login", {
+    await logIn({
       username: username,
       password: password,
       user_type: userType,
@@ -62,7 +62,7 @@ const App = () => {
   }
 
   const handleLogout = async () => {
-    axios.post("/api/logout")
+    await logOut()
       .then(res => {
         setIsAuthenticated(false)
         setUserType(null)

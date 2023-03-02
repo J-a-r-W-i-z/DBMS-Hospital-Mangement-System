@@ -2,6 +2,7 @@ import React from "react"
 import { useRoutes, Navigate } from "react-router-dom"
 import { HelmetWrap } from "./wrapper"
 import { LoginForm, Error404, AdminDashboard, DoctorDashboard } from "./pages"
+import { CreateUser } from "./pages/Admin"
 import { pages, usermap, createUserPaths } from "./constants"
 
 export default function Router({ handleLogin, isAuthenticated, userType }) {
@@ -47,16 +48,27 @@ export default function Router({ handleLogin, isAuthenticated, userType }) {
           ),
           index: true
         },
-        ...createUserPaths.map((item) => ({
-          breadcrumb: item.breadcrumb,
-          path: item.path,
-          element: (
+        {
+          path: "create-user",
+          element: isAuthenticated && usermap[userType] === "adminstrator" ? (
             <HelmetWrap
-              title={item.name}
-              element={<item.element />}
+              title="Create User"
+              element={<CreateUser />}
             />
-          )
-        }))
+          ) : (
+            <Navigate to="/" />
+          ),
+        }
+        // ...createUserPaths.map((item) => ({
+        //   breadcrumb: item.breadcrumb,
+        //   path: item.path,
+        //   element: (
+        //     <HelmetWrap
+        //       title={item.breadcrumb}
+        //       element={<item.element />}
+        //     />
+        //   )
+        // }))
       ]
     },
 

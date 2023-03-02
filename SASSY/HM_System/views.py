@@ -114,7 +114,10 @@ class LogoutView(APIView):
 class PatientStayView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = ""  # Put the required query to get list of patients who are currently staying in the hospital room
+        query = "Select * from hm_system_user"  # Put the required query to get list of patients who are currently staying in the hospital room
         with connection.cursor() as cursor:
             cursor.execute(query)
-        return UserView.cursorToDict(cursor)
+
+            return Response({
+                'List' : UserView.cursorToDict(self,cursor)
+            })

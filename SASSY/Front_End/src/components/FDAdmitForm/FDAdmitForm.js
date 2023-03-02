@@ -36,7 +36,7 @@ function FDAdmitForm() {
 
 
     return (
-        <div className="container">
+        <div className="containerAdmit">
             <header>Admit Patient</header>
 
             <form action="#">

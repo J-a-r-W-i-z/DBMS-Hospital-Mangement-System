@@ -5,12 +5,14 @@ import FDRegForm from "../FDRegForm/FDRegForm";
 import FDAdmitForm from "../FDAdmitForm/FDAdmitForm";
 import FDAppointmentForm from "../FDAppointmentForm/FDAppointmentForm";
 import FDDischarge from "../FDDischarge/FDDischarge";
+import ProfileCard from "../ProfilePage/Profile";
 import "./MainDash.css";
 const MainDash = ({ page }) => {
   return (
     <div className="MainDash">
       {page === "Register" && <FDRegForm />}
       {page === "Admit" && <FDAdmitForm />}
+      {page === "Profile" && <ProfileCard />}
       {page === "Appointment" && <FDAppointmentForm />}
       {page === "Discharge" && <FDDischarge />}
       {page === "Dashboard" && <FDRegForm />}

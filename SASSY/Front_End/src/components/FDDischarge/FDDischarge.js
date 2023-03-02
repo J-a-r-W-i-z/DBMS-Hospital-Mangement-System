@@ -49,6 +49,7 @@ const FDDischarge = () => {
                 placeholder="Search patients"
                 value={searchTerm}
                 onChange={handleSearch}
+                className="inputsearch"
             />
             <table>
                 <thead>

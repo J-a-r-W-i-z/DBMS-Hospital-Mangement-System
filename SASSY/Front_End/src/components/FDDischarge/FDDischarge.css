@@ -6,7 +6,7 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 90%;
-    height: 550px;
+    height: 400px;
     max-width: 1200px;
     overflow-y: scroll;
     background: linear-gradient(106.37deg,
@@ -14,6 +14,8 @@
             #ffcfd1 51.55%,
             #f3c6f1 90.85%);
 }
+
+
 
 /* Table styles */
 table {
@@ -36,7 +38,7 @@ th {
 }
 
 /* Input styles */
-input[type="text"] {
+.inputsearch {
     width: 100%;
     padding: 12px 20px;
     margin-top: 20px;
@@ -44,6 +46,7 @@ input[type="text"] {
     border: 2px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    position: sticky;
     /* background-color: white; */
     background-image: url("search_icon.png");
     background-position: 10px 10px;

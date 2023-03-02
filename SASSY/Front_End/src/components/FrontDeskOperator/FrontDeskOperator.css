@@ -38,6 +38,8 @@
 
 @media screen and (max-width: 1200px) {
     .AppGlass {
+        justify-content: center;
+        align-items: center;
         grid-template-columns: 10% 50% auto;
         overflow-y: scroll;
     }

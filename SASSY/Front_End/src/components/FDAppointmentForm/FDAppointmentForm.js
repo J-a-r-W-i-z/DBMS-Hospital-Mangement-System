@@ -22,7 +22,7 @@ function FDAppointmentForm() {
     // backBtn.addEventListener("click", () => form.classList.remove('secActive'));
 
     return (
-        <div className="container">
+        <div className="containerApp">
             <header>Appointment</header>
 
             <form action="#">

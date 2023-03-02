@@ -3,7 +3,7 @@
 
 
 
-.container {
+.containerApp {
     position: relative;
     max-width: 900px;
     width: 100%;
@@ -15,14 +15,14 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-.container header {
+.containerApp header {
     position: relative;
     font-size: 20px;
     font-weight: 600;
     color: #333;
 }
 
-.container header::before {
+.containerApp header::before {
     content: "";
     position: absolute;
     left: 0;
@@ -33,7 +33,7 @@
     background-color: #4070f4;
 }
 
-.container form {
+.containerApp form {
     position: relative;
     margin-top: 16px;
     min-height: 330px;
@@ -41,13 +41,13 @@
     overflow: hidden;
 }
 
-.container form .form {
+.containerApp form .form {
     position: absolute;
     background-color: #fff;
     transition: 0.3s ease;
 }
 
-.container form .form.second {
+.containerApp form .form.second {
     opacity: 0;
     pointer-events: none;
     transform: translateX(100%);
@@ -65,7 +65,7 @@ form.secActive .form.first {
     transform: translateX(-100%);
 }
 
-.container form .title {
+.containerApp form .title {
     display: block;
     margin-bottom: 8px;
     font-size: 16px;
@@ -74,7 +74,7 @@ form.secActive .form.first {
     color: #333;
 }
 
-.container form .fields {
+.containerApp form .fields {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -121,7 +121,7 @@ select {
     color: #333;
 }
 
-.container form button,
+.containerApp form button,
 .backBtn {
     display: flex;
     align-items: center;
@@ -139,7 +139,7 @@ select {
     cursor: pointer;
 }
 
-.container form .btnText {
+.containerApp form .btnText {
     font-size: 14px;
     font-weight: 400;
 }
@@ -168,11 +168,11 @@ form .buttons button,
 }
 
 @media (max-width: 750px) {
-    .container form {
+    .containerApp form {
         overflow-y: scroll;
     }
 
-    .container form::-webkit-scrollbar {
+    .containerApp form::-webkit-scrollbar {
         display: none;
     }
 

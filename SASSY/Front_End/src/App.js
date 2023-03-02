@@ -4,8 +4,7 @@ import axios from "axios"
 import { DoctorDashboard, LoginForm } from "./pages"
 import { Navbar } from "./components"
 import { HelmetWrap } from "./wrapper"
-import { toastOptions } from "./constants"
-import { getUserTypeInt, getUserTypeStr } from "./util"
+import { toastOptions, usermap } from "./constants"
 
 import { ToastContainer, toast, Slide } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -47,16 +46,14 @@ const App = () => {
   }
 
   const handleLogin = async (username, password, userType) => {
-    const userTypeInt = getUserTypeInt(userType)
-
     axios.post("/api/login", {
       username: username,
       password: password,
-      user_type: userTypeInt,
+      user_type: userType,
     })
       .then(res => {
         setIsAuthenticated(true)
-        setUserType(userTypeInt)
+        setUserType(userType)
 
         toast.success("Login successful.", toastOptions)
       })
@@ -89,9 +86,12 @@ const App = () => {
               path="/"
               element={
                 isAuthenticated ? (
-                  <Navigate to={`/${getUserTypeStr(userType)}`} />
+                  <Navigate to={`/${usermap[userType]}`} />
                 ) : (
-                  <LoginForm handleLogin={handleLogin} />
+                  <HelmetWrap
+                    title="Login"
+                    element={<LoginForm handleLogin={handleLogin} />}
+                  />
                 )
               }
             />
@@ -99,8 +99,11 @@ const App = () => {
               exact
               path="/doctor"
               element={
-                isAuthenticated && getUserTypeStr(userType) === "doctor" ? (
-                  <DoctorDashboard />
+                isAuthenticated && usermap[userType] === "doctor" ? (
+                  <HelmetWrap
+                    title="Doctor Dashboard"
+                    element={<DoctorDashboard />}
+                  />
                 ) : (
                   <Navigate to="/" />
                 )
@@ -108,7 +111,6 @@ const App = () => {
             />
             <Route path="/" element={<Navigate to="/" />} />
           </Routes>
-
         </BrowserRouter>
       </div>
 

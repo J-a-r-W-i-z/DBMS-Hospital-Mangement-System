@@ -5,7 +5,7 @@ import "./Login.scss"
 function LoginForm({ handleLogin }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [userType, setUserType] = useState("")
+  const [userType, setUserType] = useState()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -38,10 +38,10 @@ function LoginForm({ handleLogin }) {
           <option value="" disabled>
             Select user type
           </option>
-          <option value="front-desk-operator">Front desk operator</option>
-          <option value="data-entry-operator">Data entry operator</option>
-          <option value="doctor">Doctor</option>
-          <option value="adminstrator">Adminstrator</option>
+          <option value={1}>Front desk operator</option>
+          <option value={2}>Data entry operator</option>
+          <option value={3}>Doctor</option>
+          <option value={4}>Adminstrator</option>
         </select>
         <button type="submit" className="btn-primary">
           Login

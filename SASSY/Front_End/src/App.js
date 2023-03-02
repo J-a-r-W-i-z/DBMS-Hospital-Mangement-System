@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import axios from "axios"
-import { DoctorDashboard, LoginForm } from "./pages"
+import { DoctorDashboard, LoginForm, AdminDashboard } from "./pages"
 import { Navbar } from "./components"
 import { HelmetWrap } from "./wrapper"
 import { toastOptions, usermap } from "./constants"
@@ -103,6 +103,20 @@ const App = () => {
                   <HelmetWrap
                     title="Doctor Dashboard"
                     element={<DoctorDashboard />}
+                  />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/adminstrator"
+              element={
+                isAuthenticated && usermap[userType] === "adminstrator" ? (
+                  <HelmetWrap
+                    title="Admin Dashboard"
+                    element={<AdminDashboard />}
                   />
                 ) : (
                   <Navigate to="/" />

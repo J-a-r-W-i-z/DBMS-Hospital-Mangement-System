@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FDAdmit.css'
-
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function FDAdmitForm() {
-    // const form = document.querySelector("form"),
-    //     nextBtn = form.querySelector(".nextBtn"),
-    //     backBtn = form.querySelector(".backBtn"),
-    //     allInput = form.querySelectorAll(".first input");
+    const [formData, setFormData] = useState({
+        name: '',
+        mobile: '',
+    });
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-    // nextBtn.addEventListener("click", () => {
-    //     allInput.forEach(input => {
-    //         if (input.value != "") {
-    //             form.classList.add('secActive');
-    //         } else {
-    //             form.classList.remove('secActive');
-    //         }
-    //     })
-    // })
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(formData)
+        axios.post('http://10.145.230.85:8080/api/temp', formData)
+            .then((response) => {
+                setFormData({
+                    name: '',
+                    mobile: '',
+                });
+                console.log("Admitted successfulluy");
+                console.log(response)
+                toast.success('Admitted Successfully!');
+                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message);
+            });
+    };
 
-    // backBtn.addEventListener("click", () => form.classList.remove('secActive'));
 
     return (
         <div className="container">
@@ -33,7 +47,7 @@ function FDAdmitForm() {
                         <div className="fields">
                             <div className="input-field">
                                 <label>Full Name</label>
-                                <input type="text" placeholder="Enter your name" required />
+                                <input type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
@@ -48,7 +62,7 @@ function FDAdmitForm() {
 
                             <div className="input-field">
                                 <label>Mobile Number</label>
-                                <input type="number" placeholder="Enter mobile number" required />
+                                <input type="number" placeholder="Enter mobile number" name="mobile" value={formData.mobile} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
@@ -103,8 +117,8 @@ function FDAdmitForm() {
                             </div>
                         </div> */}
 
-                        <button className="nextBtn">
-                            <span className="btnText">Next</span>
+                        <button className="nextBtn" onClick={handleSubmit}>
+                            <span className="btnText">Submit</span>
                             <i className="uil uil-navigator"></i>
                         </button>
                     </div>

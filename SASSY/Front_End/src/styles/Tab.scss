@@ -5,7 +5,11 @@
   border: none;
   cursor: pointer;
 
-  bottom: -2px;
+  bottom: -$border-width;
+
+  @media screen and (max-width: $md) {
+    padding: 0.5rem 1rem;
+  }
 }
 
 .react-tabs__tab-list {

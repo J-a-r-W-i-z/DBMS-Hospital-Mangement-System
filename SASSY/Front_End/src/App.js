@@ -15,36 +15,40 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userType, setUserType] = useState(null)
 
-  const handleError = (err) => {
+  useEffect(() => {
+    checkAuth()
+  }, [])
+
+  const handleError = (err, dontToast) => {
     if (err.response === null) {
       toast.error("Something went wrong. Please try again later.", toastOptions)
     } else {
+      if (dontToast) return
       toast.error(err.response.data.detail, toastOptions)
     }
   }
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      axios.get("/api/isAuth")
-        .then(res => {
-          setIsAuthenticated(true)
-          setUserType(res.data.user_type)
-        })
-        .catch(err => {
-          setIsAuthenticated(false)
-          setUserType(null)
-          console.log(err)
+  const checkAuth = async () => {
+    axios.get("/api/isAuth")
+      .then(res => {
+        setIsAuthenticated(true)
+        setUserType(res.data.response.user_type)
+      })
+      .catch(err => {
+        if (err.response.status === 401 && isAuthenticated) {
+          toast.error("Session expired. Please login again.", toastOptions)
+        } else {
+          handleError(err, true)
+        }
 
-          handleError(err)
-        })
-    }
-
-    checkAuth()
-  }, [])
+        setIsAuthenticated(false)
+        setUserType(null)
+      })
+  }
 
   const handleLogin = async (username, password, userType) => {
     const userTypeInt = getUserTypeInt(userType)
-    console.log(username, password, userTypeInt)
+
     axios.post("/api/login", {
       username: username,
       password: password,
@@ -62,37 +66,49 @@ const App = () => {
   }
 
   const handleLogout = async () => {
-    try {
-      const res = await axios.post("/api/logout")
-      if (res.status === 200) {
+    axios.post("/api/logout")
+      .then(res => {
         setIsAuthenticated(false)
         setUserType(null)
 
         toast.success("Logout successful.", toastOptions)
-      }
-    } catch (err) {
-      handleError(err)
-    }
+      })
+      .catch(err => {
+        handleError(err)
+      })
   }
 
   return (
     <>
-      <Navbar isAuthenticated={isAuthenticated} handleLout={handleLogout} />
+      <Navbar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
       <div className="app">
         <BrowserRouter>
           <Routes>
-            <Route exact path="/" element={<LoginForm handleLogin={handleLogin} />} />
-            <Route exact path="/doctor" render={() => (
-              isAuthenticated && getUserTypeStr(userType) === 'doctor' ? (
-                <DoctorDashboard />
-              ) : (
-                <Navigate to="/" />
-              )
-            )} />
-            <Route path="/" render={() => (
-              <Navigate to="/" />
-            )} />
+            <Route
+              exact
+              path="/"
+              element={
+                isAuthenticated ? (
+                  <Navigate to={`/${getUserTypeStr(userType)}`} />
+                ) : (
+                  <LoginForm handleLogin={handleLogin} />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/doctor"
+              element={
+                isAuthenticated && getUserTypeStr(userType) === "doctor" ? (
+                  <DoctorDashboard />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route path="/" element={<Navigate to="/" />} />
           </Routes>
+
         </BrowserRouter>
       </div>
 

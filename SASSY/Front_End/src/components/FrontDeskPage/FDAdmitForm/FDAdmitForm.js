@@ -6,8 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function FDAdmitForm() {
     const [formData, setFormData] = useState({
-        name: '',
-        mobile: '',
+        PatientID: '',
     });
 
     const handleInputChange = (event) => {
@@ -16,24 +15,26 @@ function FDAdmitForm() {
     };
 
     const handleSubmit = (event) => {
+        toast.success('Admitted Successfully!',
+            { position: toast.POSITION.BOTTOM_CENTER })
+
         event.preventDefault();
         console.log(formData)
-        axios.post('http://10.145.230.85:8080/api/temp', formData)
+        axios.post('http://10.145.230.85:8080/api/admitPatient', formData)
             .then((response) => {
                 setFormData({
-                    name: '',
-                    mobile: '',
+                    PatientID: '',
                 });
-                console.log("Admitted successfulluy");
                 console.log(response)
-                toast.success('Admitted Successfully!');
-                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+                toast.success('Admitted Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Admitted successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
             })
             .catch((error) => {
-                toast.error(error.response.data.message);
+                toast.error(error.response.data.message,
+                    { position: toast.POSITION.BOTTOM_CENTER });
             });
     };
-
 
     return (
         <div className="containerAdmit">
@@ -42,30 +43,34 @@ function FDAdmitForm() {
             <form action="#">
                 <div className="form first">
                     <div className="details personal">
-                        <span className="title">Personal Details</span>
+                        <span className="title">Patient Information</span>
 
                         <div className="fields">
-                            <div className="input-field">
+                            {/* <div className="input-field">
                                 <label>Full Name</label>
                                 <input type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleInputChange} required />
-                            </div>
+                            </div> */}
 
-                            <div className="input-field">
+                            {/* <div className="input-field">
                                 <label>Date of Birth</label>
                                 <input type="date" placeholder="Enter birth date" required />
-                            </div>
+                            </div> */}
 
                             <div className="input-field">
+                                <label>Patient ID</label>
+                                <input type="text" placeholder="Enter ID" name="PatientID" value={formData.PatientID} onChange={handleInputChange} required />
+                            </div>
+                            {/* <div className="input-field">
                                 <label>Email</label>
                                 <input type="text" placeholder="Enter your email" required />
-                            </div>
+                            </div> */}
 
-                            <div className="input-field">
+                            {/* <div className="input-field">
                                 <label>Mobile Number</label>
                                 <input type="number" placeholder="Enter mobile number" name="mobile" value={formData.mobile} onChange={handleInputChange} required />
-                            </div>
+                            </div> */}
 
-                            <div className="input-field">
+                            {/* <div className="input-field">
                                 <label>Gender</label>
                                 <select required>
                                     <option disabled selected>Select gender</option>
@@ -73,16 +78,16 @@ function FDAdmitForm() {
                                     <option>Female</option>
                                     <option>Others</option>
                                 </select>
-                            </div>
+                            </div> */}
 
                             <div className="input-field">
-                                <label>Occupation</label>
-                                <input type="text" placeholder="Enter your ccupation" required />
+                                <label>Admitted By</label>
+                                <input type="text" placeholder="Enter your name" required />
                             </div>
                         </div>
                     </div>
 
-                    <div className="details ID">
+                    <div className="details IDBtn">
                         {/* <span className="title">Identity Details</span>
 
                         <div className="fields">
@@ -126,6 +131,7 @@ function FDAdmitForm() {
 
 
             </form>
+            <ToastContainer />
         </div>
     );
 }

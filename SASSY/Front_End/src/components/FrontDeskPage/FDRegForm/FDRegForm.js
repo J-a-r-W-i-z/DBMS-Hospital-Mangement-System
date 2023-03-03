@@ -1,25 +1,51 @@
-import React from 'react';
-import './FDRegForm.css'
+import React, { useState } from 'react';
+import './FDRegForm.css';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function FDRegForm() {
-    // const form = document.querySelector("form"),
-    //     nextBtn = form.querySelector(".nextBtn"),
-    //     backBtn = form.querySelector(".backBtn"),
-    //     allInput = form.querySelectorAll(".first input");
+    const [formData, setFormData] = useState({
+        Name: '',
+        dob: '',
+        email: '',
+        mobile: '',
+        gender: '',
+        address: '',
+        aadharid: '',
+    });
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-    // nextBtn.addEventListener("click", () => {
-    //     allInput.forEach(input => {
-    //         if (input.value != "") {
-    //             form.classList.add('secActive');
-    //         } else {
-    //             form.classList.remove('secActive');
-    //         }
-    //     })
-    // })
+    const handleSubmit = (event) => {
 
-    // backBtn.addEventListener("click", () => form.classList.remove('secActive'));
+        event.preventDefault();
+        console.log(formData)
+        axios.post('http://10.145.230.85:8080/api/registerPatient', formData)
+            .then((response) => {
+                setFormData({
+                    Name: '',
+                    dob: '',
+                    email: '',
+                    mobile: '',
+                    gender: '',
+                    address: '',
+                    aadharid: '',
+                });
+                console.log(response)
+                toast.success('Admitted Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Admitted successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
+    };
 
     return (
         <div className="container">
@@ -33,28 +59,28 @@ function FDRegForm() {
                         <div className="fields">
                             <div className="input-field">
                                 <label>Full Name</label>
-                                <input type="text" placeholder="Enter your name" required />
+                                <input type="text" placeholder="Enter your name" name="Name" value={formData.Name} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
                                 <label>Date of Birth</label>
-                                <input type="date" placeholder="Enter birth date" required />
+                                <input type="date" placeholder="Enter birth date" name="dob" value={formData.dob} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
                                 <label>Email</label>
-                                <input type="text" placeholder="Enter your email" required />
+                                <input type="text" placeholder="Enter your email" name="email" value={formData.email} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
                                 <label>Mobile Number</label>
-                                <input type="number" placeholder="Enter mobile number" required />
+                                <input type="number" placeholder="Enter mobile number" name="mobile" value={formData.mobile} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
                                 <label>Gender</label>
-                                <select required>
-                                    <option disabled selected>Select gender</option>
+                                <select name="gender" value={formData.gender} onChange={handleInputChange} required>
+                                    <option selected>Select gender</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                     <option>Others</option>
@@ -62,8 +88,8 @@ function FDRegForm() {
                             </div>
 
                             <div className="input-field">
-                                <label>Occupation</label>
-                                <input type="text" placeholder="Enter your ccupation" required />
+                                <label>Address</label>
+                                <input type="text" placeholder="Enter your Mobile Number" name="address" value={formData.address} onChange={handleInputChange} required />
                             </div>
                         </div>
                     </div>
@@ -79,7 +105,7 @@ function FDRegForm() {
 
                             <div className="input-field">
                                 <label>ID Number</label>
-                                <input type="number" placeholder="Enter ID number" required />
+                                <input type="number" placeholder="Enter ID number" name="aadharid" value={formData.aadharid} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">
@@ -87,115 +113,18 @@ function FDRegForm() {
                                 <input type="text" placeholder="Enter issued authority" required />
                             </div>
 
-                            <div className="input-field">
-                                <label>Issued State</label>
-                                <input type="text" placeholder="Enter issued state" required />
-                            </div>
 
-                            <div className="input-field">
-                                <label>Issued Date</label>
-                                <input type="date" placeholder="Enter your issued date" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Expiry Date</label>
-                                <input type="date" placeholder="Enter expiry date" required />
-                            </div>
                         </div>
 
-                        <button className="nextBtn">
-                            <span className="btnText">Next</span>
-                            <i className="uil uil-navigator"></i>
+                        <button className="nextBtn" onClick={handleSubmit}>
+                            <span className="btnText">Submit</span>
                         </button>
                     </div>
                 </div>
 
-                <div className="form second">
-                    <div className="details address">
-                        <span className="title">Address Details</span>
 
-                        <div className="fields">
-                            <div className="input-field">
-                                <label>Address Type</label>
-                                <input type="text" placeholder="Permanent or Temporary" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Nationality</label>
-                                <input type="text" placeholder="Enter nationality" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>State</label>
-                                <input type="text" placeholder="Enter your state" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>District</label>
-                                <input type="text" placeholder="Enter your district" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Block Number</label>
-                                <input type="number" placeholder="Enter block number" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Ward Number</label>
-                                <input type="number" placeholder="Enter ward number" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="details family">
-                        <span className="title">Family Details</span>
-
-                        <div className="fields">
-                            <div className="input-field">
-                                <label>Father Name</label>
-                                <input type="text" placeholder="Enter father name" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Mother Name</label>
-                                <input type="text" placeholder="Enter mother name" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Grandfather</label>
-                                <input type="text" placeholder="Enter grandfther name" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Spouse Name</label>
-                                <input type="text" placeholder="Enter spouse name" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Father in Law</label>
-                                <input type="text" placeholder="Father in law name" required />
-                            </div>
-
-                            <div className="input-field">
-                                <label>Mother in Law</label>
-                                <input type="text" placeholder="Mother in law name" required />
-                            </div>
-                        </div>
-
-                        <div className="buttons">
-                            <div className="backBtn">
-                                <i className="uil uil-navigator"></i>
-                                <span className="btnText">Back</span>
-                            </div>
-
-                            <button className="sumbit">
-                                <span className="btnText">Submit</span>
-                                <i className="uil uil-navigator"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </form>
+            <ToastContainer />
         </div>
     );
 }

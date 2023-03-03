@@ -5,9 +5,9 @@
 
 .containerAdmit {
     position: relative;
-    max-width: 900px;
+    max-width: 400px;
     width: 100%;
-    height: 470px;
+    height: 370px;
     border-radius: 6px;
     padding: 30px;
     margin: 0 15px;
@@ -36,9 +36,15 @@
 .containerAdmit form {
     position: relative;
     margin-top: 16px;
-    min-height: 400px;
+    min-height: 300px;
     background-color: #fff;
     overflow: hidden;
+}
+
+.IDBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .containerAdmit form .form {

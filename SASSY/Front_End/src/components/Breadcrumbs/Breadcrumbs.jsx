@@ -5,7 +5,6 @@ import "./Breadcrumbs.scss"
 
 function Breadcrumbs() {
   const breadcrumbs = useBreadcrumbs()
-  console.log(breadcrumbs)
 
   return (
     <>

@@ -23,12 +23,7 @@ export default function Router({ handleLogin, isAuthenticated, userType }) {
       ...page.children ? {
         children: [
           {
-            element: <HelmetWrap
-              title={page.breadcrumb}
-              element={<page.element
-                childrenRoutes={page.children}
-              />}
-            />,
+            element: <Navigate to={page.children[0].path} replace />,
             index: true
           },
           ...page.children.map((child) => ({
@@ -42,16 +37,22 @@ export default function Router({ handleLogin, isAuthenticated, userType }) {
           }))
         ]
       } : {
-        element: <HelmetWrap
-          title={page.breadcrumb}
-          element={<page.element />}
-        />
+        element:
+          <HelmetWrap
+            title={page.breadcrumb}
+            element={<page.element />}
+          />
       }
     })),
 
     {
+      path: "/404",
+      element: <HelmetWrap title="Page not found" element={<Error404 />} />
+    },
+
+    {
       path: "*",
-      element: <HelmetWrap title="Page not found" element={<Error404 />} />,
+      element: isAuthenticated && <Navigate to="/404" replace />
     },
   ])
 

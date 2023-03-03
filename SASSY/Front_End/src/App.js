@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { isAuth, logIn, logOut } from "./api"
 import { Navbar } from "./components"
-import { toastOptions } from "./constants"
+import { toastOptions, usermap } from "./constants"
 import { handleError } from "./actions"
 import Router from "./routes"
 
@@ -12,6 +13,8 @@ import "./styles/Toast.scss"
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userType, setUserType] = useState(null)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     checkAuth()
@@ -32,6 +35,8 @@ const App = () => {
 
         setIsAuthenticated(false)
         setUserType(null)
+
+        navigate("/")
       })
   }
 
@@ -46,6 +51,8 @@ const App = () => {
         setUserType(userType)
 
         toast.success("Login successful.", toastOptions)
+
+        navigate(`/${usermap[userType]}`)
       })
       .catch(err => {
         handleError(err)
@@ -59,6 +66,8 @@ const App = () => {
         setUserType(null)
 
         toast.success("Logout successful.", toastOptions)
+
+        navigate("/")
       })
       .catch(err => {
         handleError(err)

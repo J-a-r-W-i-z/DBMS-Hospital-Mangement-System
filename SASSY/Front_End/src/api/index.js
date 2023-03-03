@@ -14,4 +14,5 @@ export const createUser = payload => api.post(`/create-user`, payload)
 
 export const isAuth = () => api.get(`/isAuth`)
 export const logIn = payload => api.post(`/login`, payload)
+
 export const logOut = () => api.post(`/logout`)

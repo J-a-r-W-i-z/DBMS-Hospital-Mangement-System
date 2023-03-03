@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { HiMenuAlt1, HiMenuAlt3, HiOutlineX } from "react-icons/hi"
-import { entityChildren } from "../../constants"
-import { images } from "../../constants"
+import { HiMenuAlt1, HiOutlineX } from "react-icons/hi"
+import { entityChildren, images } from "../../constants"
 import "./Navbar.scss"
 
 const Navbar = ({ isAuthenticated, userType, handleLogout }) => {

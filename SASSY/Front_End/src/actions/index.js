@@ -32,6 +32,7 @@ export const handleListUsers = async (usertype) => {
 }
 
 export const handleCreateUser = async (userData) => {
+  console.log("handleCreateUser: ", userData)
   await api.createUser(userData)
     .then(res => {
       toast.success("User created successfully.", toastOptions)

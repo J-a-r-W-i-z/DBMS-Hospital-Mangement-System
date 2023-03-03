@@ -2,7 +2,6 @@ import React from "react"
 import { useRoutes, Navigate } from "react-router-dom"
 import { HelmetWrap } from "./wrapper"
 import { LoginForm, Error404, AdminDashboard, DoctorDashboard } from "./pages"
-import { CreateUser } from "./pages/Admin"
 import { pages, usermap } from "./constants"
 
 export default function Router({ handleLogin, isAuthenticated }) {

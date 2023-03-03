@@ -6,6 +6,7 @@ import "./Navbar.scss"
 
 const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeLink, setActiveLink] = useState(0)
 
   return (
     <nav className="app__navbar app__pad">
@@ -19,7 +20,11 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
             <ul className="app__navbar-links">
               {entityChildren[userType].map((task, index) => (
                 <li key={index}>
-                  <Link to={`${usermap[userType]}/${task.path}`}>
+                  <Link
+                    to={`${usermap[userType]}/${task.path}`}
+                    onClick={() => setActiveLink(index)}
+                    className={activeLink === index ? "link-active" : ""}
+                  >
                     {task.breadcrumb}
                   </Link>
                 </li>

@@ -81,11 +81,23 @@
       transition: color 0.3s ease-in-out;
       padding-bottom: 0.2rem;
 
-      &:hover {
+      &:hover,
+      &:active {
         color: var(--white-color);
+      }
+
+      &:hover {
         border-bottom: 3px solid var(--light-green);
       }
+      &:active {
+        border-bottom: 3px solid var(--green);
+      }
     }
+  }
+
+  .link-active {
+    color: var(--white-color);
+    border-bottom: 3px solid var(--green);
   }
 
   @media screen and (max-width: $amd) {

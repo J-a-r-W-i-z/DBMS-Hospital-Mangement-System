@@ -1,8 +1,8 @@
 import React from "react"
 import { useRoutes, Navigate } from "react-router-dom"
 import { HelmetWrap } from "./wrapper"
-import { LoginForm, Error404, AdminDashboard, DoctorDashboard } from "./pages"
-import { pages, usermap } from "./constants"
+import { LoginForm, Error404 } from "./pages"
+import { pages, usermap, routeChildren } from "./constants"
 
 export default function Router({ handleLogin, isAuthenticated }) {
   const routes = useRoutes([
@@ -19,13 +19,13 @@ export default function Router({ handleLogin, isAuthenticated }) {
     ...pages.map((page) => ({
       breadcrumb: page.breadcrumb,
       path: `/${usermap[page.usertype]}`,
-      ...page.children ? {
+      ...(routeChildren[page.usertype].length > 0) ? {
         children: [
           {
-            element: <Navigate to={page.children[0].path} replace />,
+            element: <Navigate to={routeChildren[page.usertype][0].path} replace />,
             index: true
           },
-          ...page.children.map((child) => ({
+          ...routeChildren[page.usertype].map((child) => ({
             breadcrumb: child.breadcrumb,
             path: child.path,
             element:

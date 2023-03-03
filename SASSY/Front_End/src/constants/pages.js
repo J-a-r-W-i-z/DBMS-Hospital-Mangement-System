@@ -1,7 +1,7 @@
 import React from "react"
 import { FrontDeskOperator, DoctorDashboard } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
-import { RegisterPatient } from "../pages/FrontDeskOperator"
+import { RegisterPatient, AdmitPatient, AppointPatient, DischarePatient } from "../pages/FrontDeskOperator"
 
 export const usermap = {
   1: "front-desk-operator",
@@ -36,10 +36,9 @@ const adminTasks = [
 
 const fdoTasks = [
   { breadcrumb: "Register", path: "register", element: <RegisterPatient /> },
-  { breadcrumb: "Admit", path: "admit", element: <CreateUser /> },
-  { breadcrumb: "Appoint", path: "appoint", element: <CreateUser /> },
-  { breadcrumb: "Discharge", path: "discharge", element: <CreateUser /> },
-  { breadcrumb: "Profile", path: "profile", element: <CreateUser /> }
+  { breadcrumb: "Admit", path: "admit", element: <AdmitPatient /> },
+  { breadcrumb: "Appoint", path: "appoint", element: <AppointPatient /> },
+  { breadcrumb: "Discharge", path: "discharge", element: <DischarePatient /> },
 ]
 
 export const entityChildren = {

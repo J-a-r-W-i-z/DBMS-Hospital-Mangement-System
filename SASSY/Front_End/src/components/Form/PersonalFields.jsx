@@ -1,30 +1,30 @@
 import React from "react"
 
-const Name = ({ name, setName, required }) => {
+const Name = ({ name, setName }) => {
   return (
     <input
       placeholder="Name"
       type="text"
       value={name}
       onChange={(event) => setName(event.target.value)}
-      required={required}
+      required
     />
   )
 }
 
-const Email = ({ email, setEmail, required }) => {
+const Email = ({ email, setEmail }) => {
   return (
     <input
       placeholder="Email"
       type="email"
       value={email}
       onChange={(event) => setEmail(event.target.value)}
-      required={required}
+      required
     />
   )
 }
 
-const Phone = ({ phone, setPhone, required }) => {
+const Phone = ({ phone, setPhone }) => {
   return (
     <input
       placeholder="Phone"
@@ -33,12 +33,12 @@ const Phone = ({ phone, setPhone, required }) => {
       onChange={(event) => setPhone(event.target.value)}
       pattern="[0-9]{10}"
       title="Phone number must be 10 digits long."
-      required={required}
+      required
     />
   )
 }
 
-const AadharId = ({ aadharId, setAadharId, required }) => {
+const AadharId = ({ aadharId, setAadharId }) => {
   return (
     <input
       placeholder="Aadhar ID"
@@ -47,17 +47,17 @@ const AadharId = ({ aadharId, setAadharId, required }) => {
       onChange={(event) => setAadharId(event.target.value)}
       pattern="[0-9]{12}"
       title="Aadhar ID must be 12 digits long."
-      required={required}
+      required
     />
   )
 }
 
-const Gender = ({ gender, setGender, required }) => {
+const Gender = ({ gender, setGender }) => {
   return (
     <select
       value={gender}
       onChange={(event) => setGender(event.target.value)}
-      required={required}
+      required
     >
       <option value="">Select Gender</option>
       <option value="1">Male</option>
@@ -67,49 +67,54 @@ const Gender = ({ gender, setGender, required }) => {
   )
 }
 
-const Dob = ({ dob, setDob, required }) => {
+const Dob = ({ dob, setDob }) => {
   return (
     <input
       placeholder="Date of Birth"
       type="date"
       value={dob}
       onChange={(event) => setDob(event.target.value)}
-      required={required}
+      required
     />
   )
 }
 
-const Address = ({ address, setAddress, required }) => {
+const Occupation = ({ occupation, setOccupation }) => {
+  return (
+    <input
+      placeholder="Occupation"
+      type="text"
+      value={occupation}
+      onChange={(event) => setOccupation(event.target.value)}
+      required
+    />
+  )
+}
+
+const Address = ({ address, setAddress }) => {
   return (
     <input
       placeholder="Address"
       type="text"
       value={address}
       onChange={(event) => setAddress(event.target.value)}
-      required={required}
+      className="span-full"
+      required
     />
   )
 }
 
-const PersonalFields = ({
-  hasName,
-  hasEmail,
-  hasPhone,
-  hasAadharId,
-  hasGender,
-  hasDob,
-  hasAddress,
-  ...props
-}) => {
+const PersonalFields = ({ ...props }) => {
   return (
     <>
-      {hasName && <Name {...props} />}
-      {hasEmail && <Email {...props} />}
-      {hasPhone && <Phone {...props} />}
-      {hasAadharId && <AadharId {...props} />}
-      {hasGender && <Gender {...props} />}
-      {hasDob && <Dob {...props} />}
-      {hasAddress && <Address {...props} />}
+      {props.name !== undefined && <Name {...props} />}
+      {props.email !== undefined && <Email {...props} />}
+      {props.phone !== undefined && <Phone {...props} />}
+      {props.aadharId !== undefined && <AadharId {...props} />}
+      {props.gender !== undefined && <Gender {...props} />}
+      {props.dob !== undefined && <Dob {...props} />}
+      {props.occupation !== undefined && <Occupation {...props} />}
+      {props.address !== undefined && <Address {...props} />}
     </>
   )
 }

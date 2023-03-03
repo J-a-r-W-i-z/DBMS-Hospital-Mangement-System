@@ -51,3 +51,33 @@ export const handleRegisterPatient = async (patientData) => {
   //     handleError(err)
   //   })
 }
+
+export const handleAdmitPatient = async (patientData) => {
+  // await api.admitPatient(patientData)
+  //   .then(res => {
+  //     toast.success("Patient admitted successfully.", toastOptions)
+  //   })
+  //   .catch(err => {
+  //     handleError(err)
+  //   })
+}
+
+export const handleAppointPatient = async (patientData) => {
+  // await api.appointPatient(patientData)
+  //   .then(res => {
+  //     toast.success("Patient appointed successfully.", toastOptions)
+  //   })
+  //   .catch(err => {
+  //     handleError(err)
+  //   })
+}
+
+export const handleDischargePatient = async (patientData) => {
+  // await api.dischargePatient(patientData)
+  //   .then(res => {
+  //     toast.success("Patient discharged successfully.", toastOptions)
+  //   })
+  //   .catch(err => {
+  //     handleError(err)
+  //   })
+}

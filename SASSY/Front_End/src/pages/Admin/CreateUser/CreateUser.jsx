@@ -38,7 +38,7 @@ const CreateUser = () => {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h1>Create User</h1>
+        <h1>User creation</h1>
         <div className="form-container-div">
           <AuthFields
             username={username}
@@ -52,25 +52,18 @@ const CreateUser = () => {
         <hr className="span-full fields-separator" />
         <div className="form-container-div">
           <PersonalFields
-            hasName={true}
             name={name}
             setName={setName}
-            hasEmail={true}
             email={email}
             setEmail={setEmail}
-            hasPhone={true}
             phone={phone}
             setPhone={setPhone}
-            hasAadharId={true}
             aadharId={aadharId}
             setAadharId={setAadharId}
-            hasGender={true}
             gender={gender}
             setGender={setGender}
-            hasDob={true}
             dob={dob}
             setDob={setDob}
-            hasAddress={true}
             address={address}
             setAddress={setAddress}
           />

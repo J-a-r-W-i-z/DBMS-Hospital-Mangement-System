@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import { handleRegisterPatient } from "../../../actions"
+import { handleAdmitPatient } from "../../../actions"
 import { PersonalFields } from "../../../components"
 
-const RegisterPatient = () => {
+const AdmitPatient = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
@@ -13,7 +13,7 @@ const RegisterPatient = () => {
   function handleSubmit(event) {
     event.preventDefault()
 
-    handleRegisterPatient({
+    handleAdmitPatient({
       name: name,
       email: email,
       phone: phone,
@@ -26,7 +26,7 @@ const RegisterPatient = () => {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h1>Patient registration</h1>
+        <h1>Patient admission</h1>
         <div className="form-container-div">
           <PersonalFields
             name={name}
@@ -44,11 +44,11 @@ const RegisterPatient = () => {
           />
         </div>
         <button type="submit" className="btn-primary-sm submit-btn">
-          Register patient
+          Admit patient
         </button>
       </form>
     </div>
   )
 }
 
-export default RegisterPatient
+export default AdmitPatient

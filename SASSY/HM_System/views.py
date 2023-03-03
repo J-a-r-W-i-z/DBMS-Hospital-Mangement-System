@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from django.contrib.auth.hashers import make_password
 from rest_framework.views import APIView
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
@@ -107,7 +108,37 @@ class LogoutView(APIView):
         response.data = {
             'messege': 'Logout Successful'
         }
-        return response
+        return 
+    
+class CreateUserView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        username = request.data['username']
+        password = request.data['password']
+        user_type = request.data['user_type']
+        hashed_pwd = make_password(password=password)
+
+        # Run query to insert into Users table
+        query = """INSERT INTO hm_system_user (username, password, user_type) VALUES (%s,%s,%s);"""
+        with connection.cursor() as cursor:
+            cursor.execute(query, {
+            'username': username,
+            'password' : hashed_pwd,
+            'user_type': user_type
+        })
+            
+        # GET other info from request
+        # TODO
+
+        # Insert other details of user in appropriate table according to the user type
+        # TODO
+
+        response = Response()
+        response.data = {
+            'messege': 'User Added Successfully'
+        }
+        return 
+
 
 
 ###################################### SQL VIEWS ##################################

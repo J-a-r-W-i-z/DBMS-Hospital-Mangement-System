@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
 # Create your models here.
 
-class User(AbstractUser, PermissionsMixin):
+class User(AbstractUser):
     USER_TYPE_CHOICES = (
       (1, 'frontDeskOperator'),
       (2, 'dataOperator'),

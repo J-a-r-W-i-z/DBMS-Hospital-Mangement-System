@@ -8,6 +8,6 @@ urlpatterns = [
     path('users/doctor', DoctorView.as_view()),
     path('isAuth', isAuth.as_view()),
     path('patientStayView', PatientStayView.as_view()),
-    path('create-user', CreateUserView.as_view())
+    path('create-user', CreateUserView.as_view()),
     path('registerPatient', InsertPatientView.as_view())
 ]

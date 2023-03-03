@@ -125,11 +125,10 @@ class CreateUserView(UserView):
         username = request.data['username']
         password = request.data['password']
         user_type = request.data['user_type']
-        print("Done!")
+        print(password)
         hashed_pwd = make_password(password=password)
         print(hashed_pwd)
-        print("Doneskajgoiwaj!")
-
+        
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
         try:

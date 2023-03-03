@@ -4,7 +4,6 @@ import { toastOptions } from "../constants"
 
 export const handleError = (err, dontToast) => {
   const defaultError = "Something went wrong. Please try again later."
-
   if (err.response === null) {
     toast.error(defaultError, toastOptions)
     return

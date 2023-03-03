@@ -1,5 +1,5 @@
 import React from "react"
-import { FrontDeskOperator, DoctorDashboard } from "../pages"
+import { DoctorDashboard } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
 import { RegisterPatient, AdmitPatient, AppointPatient, DischarePatient } from "../pages/FrontDeskOperator"
 
@@ -49,7 +49,6 @@ export const entityChildren = {
 }
 
 export const pages = [
-  { breadcrumb: "FDO dashboard", usertype: 1, element: FrontDeskOperator, children: fdoTasks },
   { breadcrumb: "Doctor dashboard", usertype: 3, element: DoctorDashboard },
   { breadcrumb: "Admin dashboard", usertype: 4, children: adminTasks }
 ]

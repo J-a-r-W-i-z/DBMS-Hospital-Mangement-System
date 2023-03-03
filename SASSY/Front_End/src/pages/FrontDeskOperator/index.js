@@ -1,0 +1,1 @@
+export { default as RegisterPatient } from "./RegisterPatient/RegisterPatient.jsx"

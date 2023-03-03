@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter } from "react-router-dom"
-import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { isAuth, logIn, logOut } from "./api"
 import { Navbar } from "./components"
-import { toastOptions } from "./constants"
+import { toastOptions, usermap } from "./constants"
+import { handleError } from "./actions"
 import Router from "./routes"
 
 import { ToastContainer, toast, Slide } from "react-toastify"
@@ -13,39 +14,30 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userType, setUserType] = useState(null)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     checkAuth()
   }, [])
 
-  const handleError = (err, dontToast) => {
-    if (err.response === null) {
-      toast.error("Something went wrong. Please try again later.", toastOptions)
-    } else {
-      if (dontToast) return
-      toast.error(err.response.data.detail, toastOptions)
-    }
-  }
-
   const checkAuth = async () => {
-    axios.get("/api/isAuth")
+    await isAuth()
       .then(res => {
         setIsAuthenticated(true)
         setUserType(res.data.response.user_type)
       })
       .catch(err => {
-        if (err.response.status === 401 && isAuthenticated) {
-          toast.error("Session expired. Please login again.", toastOptions)
-        } else {
-          handleError(err, true)
-        }
+        handleError(err, true)
 
         setIsAuthenticated(false)
         setUserType(null)
+
+        navigate("/")
       })
   }
 
   const handleLogin = async (username, password, userType) => {
-    axios.post("/api/login", {
+    await logIn({
       username: username,
       password: password,
       user_type: userType,
@@ -55,6 +47,8 @@ const App = () => {
         setUserType(userType)
 
         toast.success("Login successful.", toastOptions)
+
+        navigate(`/${usermap[userType]}`)
       })
       .catch(err => {
         handleError(err)
@@ -62,12 +56,14 @@ const App = () => {
   }
 
   const handleLogout = async () => {
-    axios.post("/api/logout")
+    await logOut()
       .then(res => {
         setIsAuthenticated(false)
         setUserType(null)
 
         toast.success("Logout successful.", toastOptions)
+
+        navigate("/")
       })
       .catch(err => {
         handleError(err)
@@ -76,16 +72,16 @@ const App = () => {
 
   return (
     <>
-      <Navbar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        userType={userType}
+        handleLogout={handleLogout} />
 
       <div className="app">
-        <BrowserRouter>
-          <Router
-            handleLogin={handleLogin}
-            isAuthenticated={isAuthenticated}
-            userType={userType}
-          />
-        </BrowserRouter>
+        <Router
+          handleLogin={handleLogin}
+          isAuthenticated={isAuthenticated}
+        />
       </div>
 
       <ToastContainer

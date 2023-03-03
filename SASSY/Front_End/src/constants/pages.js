@@ -1,5 +1,5 @@
 import React from "react"
-import { FrontDeskOperator, DoctorDashboard, AdminDashboard } from "../pages"
+import { FrontDeskOperator, DoctorDashboard } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
 import { RegisterPatient } from "../pages/FrontDeskOperator"
 
@@ -39,6 +39,7 @@ const fdoTasks = [
   { breadcrumb: "Admit", path: "admit", element: <CreateUser /> },
   { breadcrumb: "Appoint", path: "appoint", element: <CreateUser /> },
   { breadcrumb: "Discharge", path: "discharge", element: <CreateUser /> },
+  { breadcrumb: "Profile", path: "profile", element: <CreateUser /> }
 ]
 
 export const entityChildren = {
@@ -51,5 +52,5 @@ export const entityChildren = {
 export const pages = [
   { breadcrumb: "FDO dashboard", usertype: 1, element: FrontDeskOperator, children: fdoTasks },
   { breadcrumb: "Doctor dashboard", usertype: 3, element: DoctorDashboard },
-  { breadcrumb: "Admin dashboard", usertype: 4, element: AdminDashboard, children: adminTasks }
+  { breadcrumb: "Admin dashboard", usertype: 4, children: adminTasks }
 ]

@@ -50,7 +50,7 @@ const RegisterPatient = () => {
           />
         </div>
         <button type="submit" className="btn-primary-sm submit-btn">
-          Add user
+          Register
         </button>
       </form>
     </div>

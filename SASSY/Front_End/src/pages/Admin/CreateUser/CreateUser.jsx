@@ -28,7 +28,10 @@ const CreateUser = () => {
       email: email,
       aadhar_id: aadharId,
       gender: gender,
-      dob: dob,
+      dob: new Date(dob.valueOf())
+        .toISOString()
+        .slice(0, 19)
+        .replace("T", " "),
     })
   }
 

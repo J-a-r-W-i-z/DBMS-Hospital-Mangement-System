@@ -8,8 +8,6 @@ import jwt
 import sys
 import datetime
 from django.db import connection
-from rest_framework.exceptions import APIException
-
 
 # Create your views here.
 
@@ -127,25 +125,51 @@ class CreateUserView(UserView):
         user_type = request.data['user_type']
         print(password)
         hashed_pwd = make_password(password=password)
-        print(hashed_pwd)
-        
+
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
+        with connection.cursor() as cursor:
+            cursor.execute(query, (username,hashed_pwd,user_type,'0'))
+
+        query="""Select username from hm_system_user where username=%s"""
+
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (username,hashed_pwd,user_type,'0'))
+                cursor.execute(query, (username))
+                record=cursor.fetchone()
+                eid=record[0]
         except:
-            # Handle error
-            # TODO
-            pass
-            
-            
+            #TODO
+            return
+        
         # GET other info from request
         # TODO
-
+        EmployeeId=eid
+        Name=request.data['Name']
+        Address=request.data['Address']
+        Phone=request.data['Phone']
+        Email=request.data['Email']
+        AadharId=request.data['AadharID']
+        Gender=request.data['Gender']
+        DOB=request.data['DOB']
         # Insert other details of user in appropriate table according to the user type
         # TODO
+        if user_type==1:
+            query = """Insert into FdOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        elif user_type==2:
+            query = """Insert into DataOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        elif user_type==3:
+            query = """Insert into Doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        else:
+            query = """Insert into Administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
 
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (EmployeeId,Name,Address,Phone,Email,AadharId,Gender,DOB))
+        except:
+            # TODO
+            return
+        
         response = Response()
         response.data = {
             'messege': 'User Added Successfully'
@@ -166,5 +190,245 @@ class PatientStayView(UserView):
             return Response({
                 'List' : UserView.cursorToDict(self,cursor)
             })
+        
+# Query 1
+class InsertPatientView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        
+        AadharId=request.data['AadharID']
+        Name=request.data['Name']
+        Address=request.data['Address']
+        Phone=request.data['Phone']
+        Email=request.data['Email']
+        Gender=request.data['Gender']
+        DOB=request.data['DOB']
 
+        query ="""Insert into Patient values(%s,%s,%s,%s,%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (AadharId,Name,Address,Phone,Email,Gender,DOB))
+        except:
+            # TODO
+            return
+        response = Response()
+        response.data = {
+            'messege': 'Patient Added Successfully'
+        }
+        return response
+    
+#Query 3
+class ConfirmAppointmentView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        
+        Patient=request.data['Patient']
+        Doctor=request.data['Doctor']
+        Start=request.data['Start']
+
+        query ="""Insert into Appointment (Patient,Doctor,Start) values(%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (Patient,Doctor,Start))
+        except:
+            # TODO
+            return
+        response = Response()
+        response.data = {
+            'messege': 'Appointment Added Successfully'
+        }
+        return response
+
+#Query 4
+class InsertPrescribeView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        
+        Appointment=request.data['Appointment']
+        Medication=request.data['Medication']
+        Patient=request.data['Patient']
+        Doctor=request.data['Doctor']
+        Dose=request.data['Dose']
+        
+
+        query ="""Insert into Prescribes values(%s,%s,%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (Appointment,Medication,Patient,Doctor,Dose))
+        except:
+            # TODO
+            return
+        response = Response()
+        response.data = {
+            'messege': 'Prescription Added Successfully'
+        }
+        return response
+    
+class InsertReportView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        
+        Patient=request.data['Patient']
+        Doctor=request.data['Doctor']
+        Test=request.data['Test']
+        Date=request.data['Date']
+        TestResult=request.data[TestResult]
+        
+
+        query ="""Insert into Report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (Patient,Doctor,Test,Date,TestResult))
+        except:
+            # TODO
+            return
+        response = Response()
+        response.data = {
+            'messege': 'Report Added Successfully'
+        }
+        return response
+
+#Query 8
+class InsertStayView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        
+        Patient=request.data['Patient']
+        Room=request.data['Room']
+        Start=request.data['Start']
+
+        query ="""Insert into Stay (Patient,Room,Start) values(%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (Patient,Room,Start))
+        except:
+            # TODO
+            return
+        response = Response()
+        response.data = {
+            'messege': 'Stay Added Successfully'
+        }
+        return response
+    
+class InsertUndergoesView(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        
+        Patient=request.data['Patient']
+        Treatment=request.data['Treatment']
+        Stay=request.data['Stay']
+        Date=request.data['Date']
+        Doctor=request.data['Doctor']
+        Appointment=request.data['Appointment']
+
+        query ="""Insert into Undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (Patient,Treatment,Stay,Date,Doctor,Appointment))
+        except:
+            # TODO
+            return
+        response = Response()
+        response.data = {
+            'messege': 'Undergoes Added Successfully'
+        }
+        return response
+
+#Query 5
+class GetPatientsView(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """(Select distinct P.Name
+                From Patient as P, Appointment as A
+                where P.AadharID=A.Patient and A.Doctor=1 and A.Start>'2020-01-01 00:00')
+                union
+                (Select distinct P.Name
+                From Patient as P, Undergoes as U
+                where P.AadharID=U.Patient and U.Doctor=1);""" 
+        try: 
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List' : UserView.cursorToDict(self,cursor)
+                })
+        except:
+            #TODO
+            return
+
+#Query 6 ????????
+        
+#Query 7
+class GetRoomsView(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Select *
+                from Room as R
+                where R.Unavailable=FALSE;"""  
+        try: 
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List' : UserView.cursorToDict(self,cursor)
+                })
+        except:
+            #TODO
+            return
+        
+#Query 9???
+
+#Query 10
+class GetReportsView(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Select * 
+                from Report
+                where Patient=111 and Doctor=1 
+                order by Date DESC limit 5;"""  
+        try: 
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List' : UserView.cursorToDict(self,cursor)
+                })
+        except:
+            #TODO
+            return
+
+#Query 13
+class GetAdmittedView(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Select P.Name as Name,P.AadharID as AadharID,P.Address as Address,P.Phone as Phone,P.Email as Email,P.Gender as Gender,P.DOB as DOB
+                from Patient as P,Stay as S
+                where S.Patient=P.AadharID and ((S.End is NULL) or (S.End > NOW()));"""  
+        try: 
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List' : UserView.cursorToDict(self,cursor)
+                })
+        except:
+            #TODO
+            return
+        
+#Query 14 ????
+
+#Query 15
+class SetAvailableView(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Update Room
+                Set Unavailable=FALSE
+                where Number=(Select S.Room
+                            from Stay as S
+                            where S.StayID=1);"""  
+        try: 
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List' : UserView.cursorToDict(self,cursor)
+                })
+        except:
+            #TODO
+            return
 

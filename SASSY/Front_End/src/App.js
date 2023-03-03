@@ -27,11 +27,7 @@ const App = () => {
         setUserType(res.data.response.user_type)
       })
       .catch(err => {
-        if (err.response.status === 401 && isAuthenticated) {
-          toast.error("Session expired. Please login again.", toastOptions)
-        } else {
-          handleError(err, true)
-        }
+        handleError(err, true)
 
         setIsAuthenticated(false)
         setUserType(null)
@@ -85,7 +81,6 @@ const App = () => {
         <Router
           handleLogin={handleLogin}
           isAuthenticated={isAuthenticated}
-          userType={userType}
         />
       </div>
 

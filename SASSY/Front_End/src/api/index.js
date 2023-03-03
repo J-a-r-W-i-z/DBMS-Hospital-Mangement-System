@@ -9,7 +9,7 @@ const api = axios.create({
 // export const addDoctor = payload => api.post(`/create-doctor`, payload)
 // export const addAdminstrator = payload => api.post(`/create-adminstrator`, payload)
 
-export const listUsers = usertype => api.get(`/list-users`, { params: { usertype } })
+export const listUsers = payload => api.get(`/list-users`, payload)
 export const createUser = payload => api.post(`/create-user`, payload)
 
 export const isAuth = () => api.get(`/isAuth`)

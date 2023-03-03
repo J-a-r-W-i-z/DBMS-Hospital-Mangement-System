@@ -5,7 +5,7 @@ import { LoginForm, Error404, AdminDashboard, DoctorDashboard } from "./pages"
 import { CreateUser } from "./pages/Admin"
 import { pages, usermap } from "./constants"
 
-export default function Router({ handleLogin, isAuthenticated, userType }) {
+export default function Router({ handleLogin, isAuthenticated }) {
   const routes = useRoutes([
     {
       breadcrumb: "Home",
@@ -32,7 +32,7 @@ export default function Router({ handleLogin, isAuthenticated, userType }) {
             element:
               <HelmetWrap
                 title={child.breadcrumb}
-                element={<child.element />}
+                element={child.element}
               />
           }))
         ]

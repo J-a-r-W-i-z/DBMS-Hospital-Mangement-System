@@ -25,19 +25,6 @@ const AdminDashboard = ({ childrenRoutes }) => {
     },
   ])
 
-  // function combineName(user) {
-  //   setUsers(
-  //     users.map((user) => {
-  //       user.name = user.first_name + " " + user.last_name
-  //       delete user.first_name
-  //       delete user.last_name
-  //       return user
-  //     })
-  //   )
-
-  //   console.log(users)
-  // }
-
   function removeUser(username) {
     setUsers(users.filter((user) => user.username !== username))
     // TODO: Remove user from database

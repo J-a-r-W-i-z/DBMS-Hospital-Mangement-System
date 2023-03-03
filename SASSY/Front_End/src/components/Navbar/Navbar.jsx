@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { HiMenuAlt1, HiOutlineX } from "react-icons/hi"
-import { entityChildren, images } from "../../constants"
+import { entityChildren, images, usermap } from "../../constants"
 import "./Navbar.scss"
 
 const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
@@ -19,7 +19,9 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
             <ul className="app__navbar-links">
               {entityChildren[userType].map((task, index) => (
                 <li key={index}>
-                  <Link to={task.path}>{task.breadcrumb}</Link>
+                  <Link to={`${usermap[userType]}/${task.path}`}>
+                    {task.breadcrumb}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -31,7 +33,9 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
                   <ul>
                     {entityChildren[userType].map((task, index) => (
                       <li key={index} onClick={() => setIsMenuOpen(false)}>
-                        <Link to={task.path}>{task.breadcrumb}</Link>
+                        <Link to={`${usermap[userType]}/${task.path}`}>
+                          {task.breadcrumb}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -42,7 +46,7 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
         )}
       </div>
       {isAuthenticated && (
-        <button onClick={handleLogout} className="btn-secondary logout-btn">
+        <button onClick={handleLogout} className="btn-secondary-sm logout-btn">
           Logout
         </button>
       )}

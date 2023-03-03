@@ -11,17 +11,34 @@ export const usermap = {
 }
 
 const adminTasks = [
-  { breadcrumb: "FDOs", path: "fdos", element: ListUsers },
-  { breadcrumb: "DEOs", path: "deos", element: CreateUser },
-  { breadcrumb: "Doctors", path: "doctors", element: CreateUser },
-  { breadcrumb: "Admins", path: "admins", element: CreateUser },
+  {
+    breadcrumb: "FDOs",
+    path: "fdos",
+    element: <ListUsers title="Front desk operators" userType={1} />
+  },
+  {
+    breadcrumb: "DEOs",
+    path: "deos",
+    element: <ListUsers title="Data entry operators" userType={2} />
+  },
+  {
+    breadcrumb: "Doctors",
+    path: "doctors",
+    element: <ListUsers title="Doctors" userType={3} />
+  },
+  {
+    breadcrumb: "Admins",
+    path: "admins",
+    element: <ListUsers title="Adminstrators" userType={4} />
+  },
+  { breadcrumb: "Create user", path: "create-user", element: <CreateUser /> }
 ]
 
 const fdoTasks = [
-  { breadcrumb: "Register", path: "register", element: RegisterPatient },
-  { breadcrumb: "Admit", path: "admit", element: CreateUser },
-  { breadcrumb: "Appoint", path: "appoint", element: CreateUser },
-  { breadcrumb: "Discharge", path: "discharge", element: CreateUser },
+  { breadcrumb: "Register", path: "register", element: <RegisterPatient /> },
+  { breadcrumb: "Admit", path: "admit", element: <CreateUser /> },
+  { breadcrumb: "Appoint", path: "appoint", element: <CreateUser /> },
+  { breadcrumb: "Discharge", path: "discharge", element: <CreateUser /> },
 ]
 
 export const entityChildren = {

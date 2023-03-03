@@ -3,27 +3,40 @@ import { Table } from "../../../components"
 import { handleListUsers } from "../../../actions"
 import "./ListUsers.scss"
 
-const ListUsers = ({ userType }) => {
-  const [users, setUsers] = useState([])
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+const ListUsers = ({ title, userType }) => {
+  const [users, setUsers] = useState([
+    {
+      username: "johnsnow",
+      name: "John Snow",
+      date_joined: "2021-01-01",
+    },
+    {
+      username: "janesmith",
+      name: "Jane Smith",
+      date_joined: "2021-01-01",
+    },
+    {
+      username: "bobjohnson",
+      name: "Bob Johnson",
+      date_joined: "2021-01-01",
+    },
+  ])
 
   function removeUser(username) {
     setUsers(users.filter((user) => user.username !== username))
   }
 
-  function fetchUsers() {
-    setLoading(true)
-    setUsers(handleListUsers(userType))
-    setLoading(false)
-  }
-
   return (
     <div className="table-container">
+      <h1>{title}</h1>
       <Table
         headers={["Username", "Name", "Date Joined", "Action"]}
-        rows={users}
-        removeUser={removeUser}
+        data={users}
+        searchKey="username"
+        handleClick={removeUser}
+        buttonLabel="Remove"
+        buttonClass="btn-secondary-sm"
+        clickKey="username"
       />
     </div>
   )

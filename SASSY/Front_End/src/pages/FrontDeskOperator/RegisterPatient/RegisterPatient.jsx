@@ -1,12 +1,9 @@
 import React, { useState } from "react"
-import { AuthFields, PersonalFields } from "../../../components"
-import { handleCreateUser } from "../../../actions"
-import "./CreateUser.scss"
+import { handleRegisterPatient } from "../../../actions"
+import { PersonalFields } from "../../../components"
+import "./RegisterPatient.scss"
 
-const CreateUser = () => {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [userType, setUserType] = useState("")
+const RegisterPatient = () => {
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
   const [phone, setPhone] = useState("")
@@ -18,10 +15,7 @@ const CreateUser = () => {
   function handleSubmit(event) {
     event.preventDefault()
 
-    handleCreateUser({
-      username: username,
-      password: password,
-      user_type: userType,
+    handleRegisterPatient({
       name: name,
       address: address,
       phone: phone,
@@ -29,24 +23,14 @@ const CreateUser = () => {
       aadhar_id: aadharId,
       gender: gender,
       dob: dob,
+      address: address,
     })
   }
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h1>Create User</h1>
-        <div className="form-container-div">
-          <AuthFields
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            userType={userType}
-            setUserType={setUserType}
-          />
-        </div>
-        <hr className="span-full fields-separator" />
+        <h1>Register patient</h1>
         <div className="form-container-div">
           <PersonalFields
             name={name}
@@ -73,4 +57,4 @@ const CreateUser = () => {
   )
 }
 
-export default CreateUser
+export default RegisterPatient

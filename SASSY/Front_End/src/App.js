@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter } from "react-router-dom"
 import { isAuth, logIn, logOut } from "./api"
 import { Navbar } from "./components"
 import { toastOptions } from "./constants"
@@ -68,16 +67,17 @@ const App = () => {
 
   return (
     <>
-      <Navbar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
+      <Navbar
+        isAuthenticated={isAuthenticated}
+        userType={userType}
+        handleLogout={handleLogout} />
 
       <div className="app">
-        <BrowserRouter>
-          <Router
-            handleLogin={handleLogin}
-            isAuthenticated={isAuthenticated}
-            userType={userType}
-          />
-        </BrowserRouter>
+        <Router
+          handleLogin={handleLogin}
+          isAuthenticated={isAuthenticated}
+          userType={userType}
+        />
       </div>
 
       <ToastContainer

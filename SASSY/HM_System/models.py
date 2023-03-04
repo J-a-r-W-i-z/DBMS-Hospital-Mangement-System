@@ -1,15 +1,24 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
 # Create your models here.
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractUser):
     USER_TYPE_CHOICES = (
       (1, 'frontDeskOperator'),
       (2, 'dataOperator'),
       (3, 'doctor'),
       (4, 'admin')
     )
+
+    # Redundant fields start
+    first_name = models.CharField(max_length=64, null=True)
+    last_name = models.CharField(max_length=64, null=True)
+    email = models.CharField(max_length=64, null=True)
+    is_staff = models.CharField(max_length=64, null=True)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.CharField(max_length=64, null=True)
+    # Redundant fileds end
 
     id = models.AutoField(primary_key=True)
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)

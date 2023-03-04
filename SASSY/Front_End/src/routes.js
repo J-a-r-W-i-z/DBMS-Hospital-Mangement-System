@@ -49,10 +49,10 @@ export default function Router({ handleLogin, isAuthenticated }) {
       element: <HelmetWrap title="Page not found" element={<Error404 />} />
     },
 
-    {
-      path: "*",
-      element: isAuthenticated && <Navigate to="/404" replace />
-    },
+    // {
+    //   path: "*",
+    //   element: isAuthenticated && <Navigate to="/404" replace />
+    // },
   ])
 
   return routes

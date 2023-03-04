@@ -209,7 +209,8 @@ class InsertPatientView(UserView):
                 cursor.execute(query, (AadharId,Name,Address,Phone,Email,Gender,DOB))
         except:
             # TODO
-            return
+            return 
+
         response = Response()
         response.data = {
             'messege': 'Patient Added Successfully'

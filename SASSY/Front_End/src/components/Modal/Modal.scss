@@ -7,7 +7,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  max-width: $sm;
+  max-width: $md;
   width: 100%;
 
   max-height: 80%;
@@ -38,4 +38,10 @@
 
 .close-modal {
   text-align: right;
+  transition: all $transition;
+  color: var(--gray-color);
+
+  &:hover {
+    color: var(--primary-color);
+  }
 }

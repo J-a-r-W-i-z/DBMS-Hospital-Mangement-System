@@ -26,7 +26,7 @@ const App = () => {
         setIsAuthenticated(true)
         setUserType(res.data.response.user_type)
 
-        navigate(`/${usermap[res.data.response.user_type]}`)
+        // navigate(`/${usermap[res.data.response.user_type]}`)
       })
       .catch(err => {
         handleError(err, true)

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import { Table, Modal, UserDetails } from "../../../components"
-import { handleListUsers } from "../../../actions"
+import { handleListUsers, handleDeleteUser } from "../../../actions"
 
 import { AnimatePresence } from "framer-motion"
 import "./ListUsers.scss"
@@ -24,6 +25,13 @@ const ListUsers = ({ title }) => {
     },
   ])
   const [userROI, setUserROI] = useState(-1)
+  const [loading, setLoading] = useState(true)
+
+  const location = useLocation()
+
+  useEffect(() => {
+    // setUsers(handleListUsers())
+  }, [location])
 
   function tableData() {
     return [
@@ -54,11 +62,8 @@ const ListUsers = ({ title }) => {
           headers={["Username", "Name", "Date Joined", "Action"]}
           data={users}
           searchKey="username"
-          // handleAction={removeUser}
-          getInfo={(user) => {
-            setUserROI(user)
-            console.log(user)
-          }}
+          handleAction={(key) => handleDeleteUser(key)}
+          getInfo={(user) => setUserROI(user)}
           buttonLabel="Remove"
           buttonClass="btn-secondary-sm"
           clickKey="username"

@@ -58,7 +58,7 @@ function Table({
               className={getInfo ? "clickable hover-row" : null}
             >
               {Object.values(row).map((value, index) => (
-                <td key={index}>{value}</td>
+                <td key={index}>{value ? value : "null"}</td>
               ))}
 
               {handleAction && (

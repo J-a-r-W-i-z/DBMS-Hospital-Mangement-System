@@ -48,4 +48,11 @@ table {
       }
     }
   }
+
+  @media screen and (max-width: $md) {
+    tr th:nth-child(1),
+    tr td:nth-child(1) {
+      display: none;
+    }
+  }
 }

@@ -18,7 +18,7 @@ export const handleError = (err, dontToast) => {
   }
 }
 
-export const handleListUsers = async (usertype) => {
+export const handleListUsers = async (usertype, setIsLoading) => {
   let response = null
   await api.listUsers({ req_user_type: usertype })
     .then(res => {
@@ -31,11 +31,19 @@ export const handleListUsers = async (usertype) => {
 }
 
 export const handleCreateUser = async (userData) => {
-  console.log("handleCreateUser: ", userData)
-
   await api.createUser(userData)
     .then(res => {
       toast.success("User created successfully.", toastOptions)
+    })
+    .catch(err => {
+      handleError(err)
+    })
+}
+
+export const handleDeleteUser = async (userData) => {
+  await api.deleteUser(userData)
+    .then(res => {
+      toast.success("User deleted successfully.", toastOptions)
     })
     .catch(err => {
       handleError(err)

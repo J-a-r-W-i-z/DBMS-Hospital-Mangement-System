@@ -14,12 +14,12 @@ const adminTasks = [
   {
     breadcrumb: "FDOs",
     path: "fdos",
-    element: <ListUsers title="Front Desk Ooperators" userType={1} />
+    element: <ListUsers title="Front Desk Operators" userType={1} />
   },
   {
     breadcrumb: "DEOs",
     path: "deos",
-    element: <ListUsers title="Data Entry Ooperators" userType={2} />
+    element: <ListUsers title="Data Entry Operators" userType={2} />
   },
   {
     breadcrumb: "Doctors",

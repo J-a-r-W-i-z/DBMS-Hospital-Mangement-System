@@ -14,6 +14,7 @@ const HelmetWrap = ({ title, element }) => {
         <Breadcrumbs />
         {element}
       </div>
+      <div className="margin-divider" />
     </>
   )
 }

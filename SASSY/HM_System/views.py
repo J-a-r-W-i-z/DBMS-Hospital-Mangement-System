@@ -127,49 +127,80 @@ class CreateUserView(UserView):
         print(password)
         hashed_pwd = make_password(password=password)
 
+        print("Starting querying")
+
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
-        with connection.cursor() as cursor:
-            cursor.execute(query, (username, hashed_pwd, user_type, '0'))
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (username, hashed_pwd, user_type, '0'))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'messege': 'Username not available.'
+            }
+            return response
 
-        # query="""Select username from hm_system_user where username=%s"""
+        print("Query1 done")
 
-        # try:
-        #     with connection.cursor() as cursor:
-        #         cursor.execute(query, (username))
-        #         record=cursor.fetchone()
-        #         eid=record[0]
-        # except:
-        #     #TODO
-        #     return
+        query = """Select id from hm_system_user where username=%s"""
+
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (username,))
+                record = cursor.fetchone()
+                eid = record[0]
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not add user.'
+            }
+            return response
+
+        print("Query2 done")
 
         # GET other info from request
-        # TODO
-        # EmployeeId=eid
-        # Name=request.data['Name']
-        # Address=request.data['Address']
-        # Phone=request.data['Phone']
-        # Email=request.data['Email']
-        # AadharId=request.data['AadharID']
-        # Gender=request.data['Gender']
-        # DOB=request.data['DOB']
+        print(request.data)
+        EmployeeId = eid
+        Name = request.data['name']
+        Address = request.data['address']
+        Phone = request.data['phone']
+        Email = request.data['email']
+        AadharId = request.data['aadhar_id']
+        Gender = request.data['gender']
+        DOB = request.data['dob']
+        print("Aadhar:")
+        print(AadharId)
         # Insert other details of user in appropriate table according to the user type
         # TODO
-        # if user_type==1:
-        #     query = """Insert into FdOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        # elif user_type==2:
-        #     query = """Insert into DataOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        # elif user_type==3:
-        #     query = """Insert into Doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        # else:
-        #     query = """Insert into Administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        if user_type == 1:
+            query = """Insert into hm_system_fdoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        elif user_type == 2:
+            query = """Insert into hm_system_dataoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        elif user_type == 3:
+            query = """Insert into hm_system_doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        else:
+            query = """Insert into hm_system_administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
 
-        # try:
-        #     with connection.cursor() as cursor:
-        #         cursor.execute(query, (EmployeeId,Name,Address,Phone,Email,AadharId,Gender,DOB))
-        # except:
-        #     # TODO
-        #     return
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (EmployeeId, Name, Address,
+                               Phone, Email, AadharId, Gender, DOB))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Could not add user'
+            }
+            return response
+
+        print("Query3 done")
 
         response = Response()
         response.data = {
@@ -446,7 +477,7 @@ class SetAvailableView(UserView):
         query = """Update hm_system_room
                 Set Unavailable=FALSE
                 where Number=(Select S.Room
-                            from Stay as S
+                            from hm_system_stay as S
                             where S.StayID=1);"""
         try:
             with connection.cursor() as cursor:

@@ -125,27 +125,33 @@ class CreateUserView(UserView):
         print(password)
         hashed_pwd = make_password(password=password)
 
+        print("Starting querying")
+
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (username,hashed_pwd,user_type,'0'))
-        except:
+        except Exception as e:
+            print(e)
             response = Response()
             response.status_code = 405
             response.data = {
                 'messege': 'Username not available.'
             }
             return response
+        
+        print("Query1 done")
 
-        query="""Select username from hm_system_user where username=%s"""
+        query="""Select id from hm_system_user where username=%s"""
 
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (username))
+                cursor.execute(query, (username,))
                 record=cursor.fetchone()
                 eid=record[0]
-        except:
+        except Exception as e:
+            print(e)
             response = Response()
             response.status_code = 405
             response.data = {
@@ -153,16 +159,20 @@ class CreateUserView(UserView):
             }
             return response
         
+        print("Query2 done")
+        
         # GET other info from request
-        # TODO
+        print(request.data)
         EmployeeId=eid
-        Name=request.data['Name']
-        Address=request.data['Address']
-        Phone=request.data['Phone']
-        Email=request.data['Email']
-        AadharId=request.data['AadharID']
-        Gender=request.data['Gender']
-        DOB=request.data['DOB']
+        Name=request.data['name']
+        Address=request.data['address']
+        Phone=request.data['phone']
+        Email=request.data['email']
+        AadharId=request.data['aadhar_id']
+        Gender=request.data['gender']
+        DOB=request.data['dob']
+        print("Aadhar:")
+        print(AadharId)
         # Insert other details of user in appropriate table according to the user type
         # TODO
         if user_type==1:
@@ -177,7 +187,8 @@ class CreateUserView(UserView):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (EmployeeId,Name,Address,Phone,Email,AadharId,Gender,DOB))
-        except:
+        except  Exception as e:
+            print(e)
             response = Response()
             response.status_code = 405
             response
@@ -185,6 +196,8 @@ class CreateUserView(UserView):
                 'detail': 'Could not add user'
             }
             return response
+        
+        print("Query3 done")
         
         response = Response()
         response.data = {

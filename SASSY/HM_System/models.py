@@ -16,7 +16,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=64, null=True)
     email = models.CharField(max_length=64, null=True)
     is_staff = models.CharField(max_length=64, null=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.IntegerField(null=True)
     date_joined = models.CharField(max_length=64, null=True)
     # Redundant fileds end
 
@@ -35,11 +35,11 @@ class Patient(models.Model):
         (2, 'female'),
         (3, 'other')
     )
-    AadharId=models.IntegerField(primary_key=True)
+    AadharId=models.CharField(max_length=15,primary_key=True)
     Name=models.TextField()
     Address=models.TextField()
     Phone=models.TextField()
-    Email=models.EmailField()
+    Email=models.TextField()
     Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB=models.DateField()
 
@@ -54,8 +54,8 @@ class Doctor(models.Model):
     Name=models.TextField()
     Address=models.TextField()
     Phone=models.TextField()
-    Email=models.EmailField()
-    AadharId=models.IntegerField()
+    Email=models.TextField()
+    AadharId=models.CharField(max_length=15)
     Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB=models.DateField()
 
@@ -69,8 +69,8 @@ class FdOperator(models.Model):
     Name=models.TextField()
     Address=models.TextField()
     Phone=models.TextField()
-    Email=models.EmailField()
-    AadharId=models.IntegerField()
+    Email=models.TextField()
+    AadharId=models.CharField(max_length=15)
     Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB=models.DateField()
 
@@ -84,8 +84,8 @@ class DataOperator(models.Model):
     Name=models.TextField()
     Address=models.TextField()
     Phone=models.TextField()
-    Email=models.EmailField()
-    AadharId=models.IntegerField()
+    Email=models.TextField()
+    AadharId=models.CharField(max_length=15)
     Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB=models.DateField()
 
@@ -99,8 +99,8 @@ class Administrator(models.Model):
     Name=models.TextField()
     Address=models.TextField()
     Phone=models.TextField()
-    Email=models.EmailField()
-    AadharId=models.IntegerField()
+    Email=models.TextField()
+    AadharId=models.CharField(max_length=15)
     Gender=models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB=models.DateField()
 

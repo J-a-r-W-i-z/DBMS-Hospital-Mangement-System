@@ -1,8 +1,29 @@
 @import "../../styles/Variables.scss";
 
 .table-container > h1 {
-  margin-bottom: 1rem;
   text-align: center;
+}
+
+.table-search-container {
+  padding: 0 3px 0 3px;
+  margin-bottom: 1rem;
+}
+
+.table-search-input {
+  background-color: inherit;
+
+  padding: 0.5rem;
+
+  border-radius: 0;
+  border: none;
+  border-bottom: $border-width solid var(--green);
+
+  &:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0px 15px 10px -15px var(--shadow-color);
+    border-bottom: $border-width solid var(--dark-green);
+  }
 }
 
 table {

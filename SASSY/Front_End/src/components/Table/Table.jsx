@@ -29,21 +29,19 @@ function Table({
   return (
     <div className="table-container">
       <h1>{title}</h1>
+      {searchKey && (
+        <div className="table-search-container">
+          <input
+            type="text"
+            placeholder="Search here . . ."
+            value={query}
+            onChange={handleSearch}
+            className="table-search-input"
+          />
+        </div>
+      )}
       <table>
         <thead>
-          {searchKey && (
-            <tr>
-              <th colSpan={headers.length}>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={query}
-                  onChange={handleSearch}
-                />
-              </th>
-            </tr>
-          )}
-
           <tr>
             {headers.map((header, index) => (
               <th key={index}>{header}</th>

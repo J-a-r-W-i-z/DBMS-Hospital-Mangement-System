@@ -203,8 +203,8 @@ class InsertPatientView(UserView):
         Email=request.data['Email']
         Gender=request.data['Gender']
         DOB=request.data['DOB']
-
-        query ="""Insert into Patient values(%s,%s,%s,%s,%s,%s,%s);"""
+        
+        query ="""Insert into hm_system_patient values(%s,%s,%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (AadharId,Name,Address,Phone,Email,Gender,DOB))
@@ -226,7 +226,7 @@ class ConfirmAppointmentView(UserView):
         Doctor=request.data['Doctor']
         Start=request.data['Start']
 
-        query ="""Insert into Appointment (Patient,Doctor,Start) values(%s,%s,%s);"""
+        query ="""Insert into hm_system_appointment (Patient,Doctor,Start) values(%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient,Doctor,Start))
@@ -251,7 +251,7 @@ class InsertPrescribeView(UserView):
         Dose=request.data['Dose']
         
 
-        query ="""Insert into Prescribes values(%s,%s,%s,%s,%s);"""
+        query ="""Insert into hm_system_prescribes values(%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Appointment,Medication,Patient,Doctor,Dose))
@@ -275,7 +275,7 @@ class InsertReportView(UserView):
         TestResult=request.data[TestResult]
         
 
-        query ="""Insert into Report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
+        query ="""Insert into hm_system_report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient,Doctor,Test,Date,TestResult))
@@ -297,7 +297,7 @@ class InsertStayView(UserView):
         Room=request.data['Room']
         Start=request.data['Start']
 
-        query ="""Insert into Stay (Patient,Room,Start) values(%s,%s,%s);"""
+        query ="""Insert into hm_system_stay (Patient,Room,Start) values(%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient,Room,Start))
@@ -321,7 +321,7 @@ class InsertUndergoesView(UserView):
         Doctor=request.data['Doctor']
         Appointment=request.data['Appointment']
 
-        query ="""Insert into Undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
+        query ="""Insert into hm_system_undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient,Treatment,Stay,Date,Doctor,Appointment))
@@ -339,11 +339,11 @@ class GetPatientsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """(Select distinct P.Name
-                From Patient as P, Appointment as A
+                From hm_system_patient as P, hm_system_appointment as A
                 where P.AadharID=A.Patient and A.Doctor=1 and A.Start>'2020-01-01 00:00')
                 union
                 (Select distinct P.Name
-                From Patient as P, Undergoes as U
+                From hm_system_patient as P, hm_system_undergoes as U
                 where P.AadharID=U.Patient and U.Doctor=1);""" 
         try: 
             with connection.cursor() as cursor:
@@ -362,7 +362,7 @@ class GetRoomsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select *
-                from Room as R
+                from hm_system_room as R
                 where R.Unavailable=FALSE;"""  
         try: 
             with connection.cursor() as cursor:
@@ -381,7 +381,7 @@ class GetReportsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select * 
-                from Report
+                from hm_system_report
                 where Patient=111 and Doctor=1 
                 order by Date DESC limit 5;"""  
         try: 
@@ -399,7 +399,7 @@ class GetAdmittedView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select P.Name as Name,P.AadharID as AadharID,P.Address as Address,P.Phone as Phone,P.Email as Email,P.Gender as Gender,P.DOB as DOB
-                from Patient as P,Stay as S
+                from hm_system_patient as P, hm_system_stay as S
                 where S.Patient=P.AadharID and ((S.End is NULL) or (S.End > NOW()));"""  
         try: 
             with connection.cursor() as cursor:
@@ -417,7 +417,7 @@ class GetAdmittedView(UserView):
 class SetAvailableView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = """Update Room
+        query = """Update hm_system_room
                 Set Unavailable=FALSE
                 where Number=(Select S.Room
                             from Stay as S

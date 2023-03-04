@@ -44,8 +44,8 @@ function DataEntryOperator() {
     }
     console.log(window.innerWidth)
     return (
-        <div className="App">
-            <div className="AppGlass">
+        <div className="Appde">
+            <div className="AppGlassde">
                 <>
                     <div className="bars" style={expanded ? { left: '60%' } : { left: '5%' }} onClick={() => setExpaned(!expanded)}>
                         <UilBars />

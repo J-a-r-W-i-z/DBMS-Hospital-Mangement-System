@@ -25,14 +25,12 @@ class LoginView(APIView):
         username = request.data['username']
         password = request.data['password']
         user_type = request.data['user_type']
-        print("Here")
         user = User.objects.filter(
             username=username, user_type=user_type).first()
         if user is None:
             raise AuthenticationFailed('User Not Found!')
 
         if not user.check_password(password):
-            print("aiufhaiwuhfnakjfeahnekf")
             raise AuthenticationFailed('Incorrect Password!')
 
         payload = {
@@ -49,13 +47,11 @@ class LoginView(APIView):
             'jwt': token
         }
 
-        print("returning...")
         return response
 
 
 class isAuth(APIView):
     def get(sef, request):
-        print(request.__dict__, file=sys.stderr)
         token = request.COOKIES.get('jwt')
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
@@ -76,13 +72,11 @@ class UserView(APIView):
     def authenticate(self, request):
         token = request.COOKIES.get('jwt')
         if not token:
-            print("Err1")
             raise AuthenticationFailed('Unauthenticated!')
 
         try:
             payload = jwt.decode(token, 'secret', algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            print("Err2")
             raise AuthenticationFailed('Unauthenticated!')
 
         return payload
@@ -117,17 +111,12 @@ class LogoutView(APIView):
 
 class CreateUserView(UserView):
     def post(self, request):
-        print(request.data)
-        print("Authenticating...")
         UserView.authenticate(self, request)
 
         username = request.data['username']
         password = request.data['password']
         user_type = request.data['user_type']
-        print(password)
         hashed_pwd = make_password(password=password)
-
-        print("Starting querying")
 
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
@@ -173,15 +162,13 @@ class CreateUserView(UserView):
         AadharId = request.data['aadhar_id']
         Gender = request.data['gender']
         DOB = request.data['dob']
-        print("Aadhar:")
-        print(AadharId)
+
         # Insert other details of user in appropriate table according to the user type
-        # TODO
-        if user_type == 1:
+        if user_type == "1":
             query = """Insert into hm_system_fdoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        elif user_type == 2:
+        elif user_type == "2":
             query = """Insert into hm_system_dataoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        elif user_type == 3:
+        elif user_type == "3":
             query = """Insert into hm_system_doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
         else:
             query = """Insert into hm_system_administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""

@@ -11,6 +11,7 @@ from django.db import connection
 
 # Create your views here.
 
+
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -112,13 +113,14 @@ class LogoutView(APIView):
             'message': 'Logout Successful'
         }
         return response
-    
+
+
 class CreateUserView(UserView):
     def post(self, request):
         print(request.data)
         print("Authenticating...")
         UserView.authenticate(self, request)
-        
+
         username = request.data['username']
         password = request.data['password']
         user_type = request.data['user_type']
@@ -128,7 +130,7 @@ class CreateUserView(UserView):
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
         with connection.cursor() as cursor:
-            cursor.execute(query, (username,hashed_pwd,user_type,'0'))
+            cursor.execute(query, (username, hashed_pwd, user_type, '0'))
 
         # query="""Select username from hm_system_user where username=%s"""
 
@@ -140,7 +142,7 @@ class CreateUserView(UserView):
         # except:
         #     #TODO
         #     return
-        
+
         # GET other info from request
         # TODO
         # EmployeeId=eid
@@ -168,13 +170,12 @@ class CreateUserView(UserView):
         # except:
         #     # TODO
         #     return
-        
+
         response = Response()
         response.data = {
             'messege': 'User Added Successfully'
         }
         return response
-
 
 
 ###################################### SQL VIEWS ##################################
@@ -183,53 +184,61 @@ class CreateUserView(UserView):
 class PatientStayView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = "Select * from hm_system_user"  # Put the required query to get list of patients who are currently staying in the hospital room
+        # Put the required query to get list of patients who are currently staying in the hospital room
+        query = "Select * from hm_system_user"
         with connection.cursor() as cursor:
             cursor.execute(query)
             return Response({
-                'List' : UserView.cursorToDict(self,cursor)
+                'List': UserView.cursorToDict(self, cursor)
             })
-        
+
 # Query 1
+
+
 class InsertPatientView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
-        
-        AadharId=request.data['AadharID']
-        Name=request.data['Name']
-        Address=request.data['Address']
-        Phone=request.data['Phone']
-        Email=request.data['Email']
-        Gender=request.data['Gender']
-        DOB=request.data['DOB']
-        
-        query ="""Insert into hm_system_patient values(%s,%s,%s,%s,%s,%s,%s);"""
+
+        AadharId = request.data['AadharID']
+        Name = request.data['Name']
+        Address = request.data['Address']
+        Phone = request.data['Phone']
+        Email = request.data['Email']
+        Gender = request.data['Gender']
+        DOB = request.data['DOB']
+
+        query = """Insert into hm_system_patient values(%s,'%s','%s','%s','%s','%s','%s');"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (AadharId,Name,Address,Phone,Email,Gender,DOB))
+                cursor.execute(query, (AadharId, Name, Address,
+                               Phone, Email, Gender, DOB))
         except:
             # TODO
-            return 
+            print("I am here")
+
+            return
 
         response = Response()
         response.data = {
             'messege': 'Patient Added Successfully'
         }
         return response
-    
-#Query 3
+
+# Query 3
+
+
 class ConfirmAppointmentView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
-        
-        Patient=request.data['Patient']
-        Doctor=request.data['Doctor']
-        Start=request.data['Start']
 
-        query ="""Insert into hm_system_appointment (Patient,Doctor,Start) values(%s,%s,%s);"""
+        Patient = request.data['Patient']
+        Doctor = request.data['Doctor']
+        Start = request.data['Start']
+
+        query = """Insert into hm_system_appointment (Patient,Doctor,Start) values(%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (Patient,Doctor,Start))
+                cursor.execute(query, (Patient, Doctor, Start))
         except:
             # TODO
             return
@@ -239,22 +248,24 @@ class ConfirmAppointmentView(UserView):
         }
         return response
 
-#Query 4
+# Query 4
+
+
 class InsertPrescribeView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
-        
-        Appointment=request.data['Appointment']
-        Medication=request.data['Medication']
-        Patient=request.data['Patient']
-        Doctor=request.data['Doctor']
-        Dose=request.data['Dose']
-        
 
-        query ="""Insert into hm_system_prescribes values(%s,%s,%s,%s,%s);"""
+        Appointment = request.data['Appointment']
+        Medication = request.data['Medication']
+        Patient = request.data['Patient']
+        Doctor = request.data['Doctor']
+        Dose = request.data['Dose']
+
+        query = """Insert into hm_system_prescribes values(%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (Appointment,Medication,Patient,Doctor,Dose))
+                cursor.execute(
+                    query, (Appointment, Medication, Patient, Doctor, Dose))
         except:
             # TODO
             return
@@ -263,22 +274,23 @@ class InsertPrescribeView(UserView):
             'messege': 'Prescription Added Successfully'
         }
         return response
-    
+
+
 class InsertReportView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
-        
-        Patient=request.data['Patient']
-        Doctor=request.data['Doctor']
-        Test=request.data['Test']
-        Date=request.data['Date']
-        TestResult=request.data[TestResult]
-        
 
-        query ="""Insert into hm_system_report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
+        Patient = request.data['Patient']
+        Doctor = request.data['Doctor']
+        Test = request.data['Test']
+        Date = request.data['Date']
+        TestResult = request.data[TestResult]
+
+        query = """Insert into hm_system_report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (Patient,Doctor,Test,Date,TestResult))
+                cursor.execute(
+                    query, (Patient, Doctor, Test, Date, TestResult))
         except:
             # TODO
             return
@@ -288,19 +300,21 @@ class InsertReportView(UserView):
         }
         return response
 
-#Query 8
+# Query 8
+
+
 class InsertStayView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
-        
-        Patient=request.data['Patient']
-        Room=request.data['Room']
-        Start=request.data['Start']
 
-        query ="""Insert into hm_system_stay (Patient,Room,Start) values(%s,%s,%s);"""
+        Patient = request.data['Patient']
+        Room = request.data['Room']
+        Start = request.data['Start']
+
+        query = """Insert into hm_system_stay (Patient,Room,Start) values(%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (Patient,Room,Start))
+                cursor.execute(query, (Patient, Room, Start))
         except:
             # TODO
             return
@@ -309,22 +323,24 @@ class InsertStayView(UserView):
             'messege': 'Stay Added Successfully'
         }
         return response
-    
+
+
 class InsertUndergoesView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
-        
-        Patient=request.data['Patient']
-        Treatment=request.data['Treatment']
-        Stay=request.data['Stay']
-        Date=request.data['Date']
-        Doctor=request.data['Doctor']
-        Appointment=request.data['Appointment']
 
-        query ="""Insert into hm_system_undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
+        Patient = request.data['Patient']
+        Treatment = request.data['Treatment']
+        Stay = request.data['Stay']
+        Date = request.data['Date']
+        Doctor = request.data['Doctor']
+        Appointment = request.data['Appointment']
+
+        query = """Insert into hm_system_undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (Patient,Treatment,Stay,Date,Doctor,Appointment))
+                cursor.execute(query, (Patient, Treatment,
+                               Stay, Date, Doctor, Appointment))
         except:
             # TODO
             return
@@ -334,7 +350,9 @@ class InsertUndergoesView(UserView):
         }
         return response
 
-#Query 5
+# Query 5
+
+
 class GetPatientsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
@@ -344,76 +362,84 @@ class GetPatientsView(UserView):
                 union
                 (Select distinct P.Name
                 From hm_system_patient as P, hm_system_undergoes as U
-                where P.AadharID=U.Patient and U.Doctor=1);""" 
-        try: 
+                where P.AadharID=U.Patient and U.Doctor=1);"""
+        try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return Response({
-                    'List' : UserView.cursorToDict(self,cursor)
+                    'List': UserView.cursorToDict(self, cursor)
                 })
         except:
-            #TODO
+            # TODO
             return
 
-#Query 6 ????????
-        
-#Query 7
+# Query 6 ????????
+
+# Query 7
+
+
 class GetRoomsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select *
                 from hm_system_room as R
-                where R.Unavailable=FALSE;"""  
-        try: 
+                where R.Unavailable=FALSE;"""
+        try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return Response({
-                    'List' : UserView.cursorToDict(self,cursor)
+                    'List': UserView.cursorToDict(self, cursor)
                 })
         except:
-            #TODO
+            # TODO
             return
-        
-#Query 9???
 
-#Query 10
+# Query 9???
+
+# Query 10
+
+
 class GetReportsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select * 
                 from hm_system_report
                 where Patient=111 and Doctor=1 
-                order by Date DESC limit 5;"""  
-        try: 
+                order by Date DESC limit 5;"""
+        try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return Response({
-                    'List' : UserView.cursorToDict(self,cursor)
+                    'List': UserView.cursorToDict(self, cursor)
                 })
         except:
-            #TODO
+            # TODO
             return
 
-#Query 13
+# Query 13
+
+
 class GetAdmittedView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select P.Name as Name,P.AadharID as AadharID,P.Address as Address,P.Phone as Phone,P.Email as Email,P.Gender as Gender,P.DOB as DOB
                 from hm_system_patient as P, hm_system_stay as S
-                where S.Patient=P.AadharID and ((S.End is NULL) or (S.End > NOW()));"""  
-        try: 
+                where S.Patient=P.AadharID and ((S.End is NULL) or (S.End > NOW()));"""
+        try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return Response({
-                    'List' : UserView.cursorToDict(self,cursor)
+                    'List': UserView.cursorToDict(self, cursor)
                 })
         except:
-            #TODO
+            # TODO
             return
-        
-#Query 14 ????
 
-#Query 15
+# Query 14 ????
+
+# Query 15
+
+
 class SetAvailableView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
@@ -421,14 +447,13 @@ class SetAvailableView(UserView):
                 Set Unavailable=FALSE
                 where Number=(Select S.Room
                             from Stay as S
-                            where S.StayID=1);"""  
-        try: 
+                            where S.StayID=1);"""
+        try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return Response({
-                    'List' : UserView.cursorToDict(self,cursor)
+                    'List': UserView.cursorToDict(self, cursor)
                 })
         except:
-            #TODO
+            # TODO
             return
-

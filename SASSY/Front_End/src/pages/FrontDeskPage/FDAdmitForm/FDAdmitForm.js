@@ -20,7 +20,7 @@ function FDAdmitForm() {
 
         event.preventDefault();
         console.log(formData)
-        axios.post('http://10.145.230.85:8080/api/admitPatient', formData)
+        axios.post('http://127.0.0.1:8000/api/admitPatient', formData)
             .then((response) => {
                 setFormData({
                     PatientID: '',

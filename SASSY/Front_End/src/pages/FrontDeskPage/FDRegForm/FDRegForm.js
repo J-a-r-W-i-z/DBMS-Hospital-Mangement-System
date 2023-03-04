@@ -25,7 +25,8 @@ function FDRegForm() {
 
         event.preventDefault();
         console.log(formData)
-        axios.post('http://10.145.230.85:8080/api/registerPatient', formData)
+        console.log("Hello i am here\n")
+        axios.post('http://127.0.0.1:8000/api/registerPatient', formData)
             .then((response) => {
                 setFormData({
                     Name: '',
@@ -36,7 +37,7 @@ function FDRegForm() {
                     Address: '',
                     AadharID: '',
                 });
-                console.log(response)
+                console.log(response.status)
                 toast.success('Admitted Successfully!',
                     { position: toast.POSITION.BOTTOM_CENTER })
                 console.log("Admitted successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
@@ -49,7 +50,7 @@ function FDRegForm() {
     };
 
     return (
-        <div className="container">
+        <div className="containerReg">
             <header>Registration</header>
 
             <form action="#">

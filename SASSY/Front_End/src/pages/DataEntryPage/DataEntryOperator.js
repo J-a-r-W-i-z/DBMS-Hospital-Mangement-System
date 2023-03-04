@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Switches, Redirect } from 'react-router-dom';
 import "../FrontDeskPage/SideBar/SideBar.css";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/Favicon.png";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import './DataEntryOperator.css'

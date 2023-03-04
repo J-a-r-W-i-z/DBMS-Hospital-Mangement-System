@@ -3,25 +3,26 @@
 
 
 
-.container {
+.containerReg {
     position: relative;
     max-width: 900px;
     width: 100%;
     border-radius: 6px;
+    height: 450px;
     padding: 30px;
     margin: 0 15px;
     background-color: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-.container header {
+.containerReg header {
     position: relative;
     font-size: 20px;
     font-weight: 600;
     color: #333;
 }
 
-.container header::before {
+.containerReg header::before {
     content: "";
     position: absolute;
     left: 0;
@@ -32,21 +33,21 @@
     background-color: #4070f4;
 }
 
-.container form {
+.containerReg form {
     position: relative;
     margin-top: 16px;
-    min-height: 490px;
+    min-height: 370px;
     background-color: #fff;
     overflow: hidden;
 }
 
-.container form .form {
+.containerReg form .form {
     position: absolute;
     background-color: #fff;
     transition: 0.3s ease;
 }
 
-.container form .form.second {
+.containerReg form .form.second {
     opacity: 0;
     pointer-events: none;
     transform: translateX(100%);
@@ -64,7 +65,7 @@ form.secActive .form.first {
     transform: translateX(-100%);
 }
 
-.container form .title {
+.containerReg form .title {
     display: block;
     margin-bottom: 8px;
     font-size: 16px;
@@ -73,7 +74,7 @@ form.secActive .form.first {
     color: #333;
 }
 
-.container form .fields {
+.containerReg form .fields {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -120,7 +121,7 @@ select {
     color: #333;
 }
 
-.container form button,
+.containerReg form button,
 .backBtn {
     display: flex;
     align-items: center;
@@ -138,7 +139,7 @@ select {
     cursor: pointer;
 }
 
-.container form .btnText {
+.containerReg form .btnText {
     font-size: 14px;
     font-weight: 400;
 }
@@ -167,11 +168,11 @@ form .buttons button,
 }
 
 @media (max-width: 750px) {
-    .container form {
+    .containerReg form {
         overflow-y: scroll;
     }
 
-    .container form::-webkit-scrollbar {
+    .containerReg form::-webkit-scrollbar {
         display: none;
     }
 

@@ -134,7 +134,7 @@ class Appointment(models.Model):
     Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     Doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     Start = models.DateTimeField()
-    End = models.DateTimeField()
+    End = models.DateTimeField(null=True)
 
 
 class Medication(models.Model):
@@ -171,7 +171,7 @@ class Stay(models.Model):
     Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     Room = models.ForeignKey(Room, on_delete=models.CASCADE)
     Start = models.DateTimeField()
-    End = models.DateTimeField()
+    End = models.DateTimeField(null=True)
 
 
 class Treatment(models.Model):

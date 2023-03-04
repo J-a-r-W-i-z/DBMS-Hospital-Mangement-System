@@ -4,25 +4,20 @@ import axios from "axios"
 
 const FDDischarge = () => {
     const [patients, setPatients] = useState([
-        { id: 1, name: "John Doe", stayID: 35, gender: "Male" },
-        { id: 2, name: "Jane Smith", stayID: 42, gender: "Female" },
-        { id: 3, name: "Bob Johnson", stayID: 58, gender: "Male" },
-        { id: 4, name: "Souvik Rana", stayID: 20, gender: "Male" },
-        { id: 5, name: "Yashwant", stayID: 20, gender: "Male" },
-        { id: 6, name: "Anuj Kakde", stayID: 20, gender: "Male" },
-        { id: 7, name: "Sarthak", stayID: 20, gender: "Male" },
-        { id: 8, name: "Ayush Dwiedi", stayID: 20, gender: "Male" },
-        { id: 9, name: "Saptarshi", stayID: 20, gender: "Male" },
+        { id: "1", name: "John Doe", stayID: 35, gender: 1 },
+        { id: "2", name: "Jane Smith", stayID: 42, gender: 1},
+    
     ])
-    // useEffect(() => {
-    //     axios.get('/api/patientstay')
-    //         .then(response => {
-    //             setPatients(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/patientstay')
+            .then(response => {
+                console.log(response.data);
+                setPatients(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
 
     const [searchTerm, setSearchTerm] = useState("")
     const [filteredPatients, setFilteredPatients] = useState([])
@@ -79,7 +74,7 @@ const FDDischarge = () => {
                 <tbody>
                     {searchTerm === ""
                         ? patients.map((patient) => (
-                            <tr key={patient.id}>
+                            <tr key={patient.stayID}>
                                 <td>{patient.id}</td>
                                 <td>{patient.name}</td>
                                 <td>{patient.stayID}</td>
@@ -90,7 +85,7 @@ const FDDischarge = () => {
                             </tr>
                         ))
                         : filteredPatients.map((patient) => (
-                            <tr key={patient.id}>
+                            <tr key={patient.stayID}>
                                 <td>{patient.id}</td>
                                 <td>{patient.name}</td>
                                 <td>{patient.stayID}</td>

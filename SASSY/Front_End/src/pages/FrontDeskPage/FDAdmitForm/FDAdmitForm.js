@@ -15,8 +15,8 @@ function FDAdmitForm() {
     };
 
     const handleSubmit = (event) => {
-        toast.success('Admitted Successfully!',
-            { position: toast.POSITION.BOTTOM_CENTER })
+        // toast.success('Admitted Successfully!',
+        //     { position: toast.POSITION.BOTTOM_CENTER })
 
         event.preventDefault();
         console.log(formData)

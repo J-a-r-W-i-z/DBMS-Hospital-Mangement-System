@@ -119,7 +119,7 @@ class CreateUserView(UserView):
         hashed_pwd = make_password(password=password)
 
         # Run query to insert into Users table
-        query = """INSERT INTO HM_System_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
+        query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
         
         try:
             with connection.cursor() as cursor:
@@ -172,7 +172,7 @@ class CreateUserView(UserView):
         elif user_type == "3":
             query = """Insert into hm_system_doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
         else:
-            query = """Insert into HM_System_administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+            query = """Insert into hm_system_administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
 
         try:
             with connection.cursor() as cursor:
@@ -232,7 +232,7 @@ class InsertPatientView(UserView):
             Gender=3
         DOB=request.data['DOB']
         print(request.data)
-        query ="""Insert into HM_System_patient values(%s,%s,%s,%s,%s,%s,%s);"""
+        query ="""Insert into hm_system_patient values(%s,%s,%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (AadharId,Name,Address,Phone,Email,Gender,DOB))
@@ -384,7 +384,7 @@ class GetPatientsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """(Select distinct P.Name
-                From HM_System_patient as P, HM_System_appointment as A
+                From hm_system_patient as P, hm_system_appointment as A
                 where P.AadharID=A.Patient and A.Doctor=1 and A.Start>'2020-01-01 00:00')
                 union
                 (Select distinct P.Name
@@ -430,7 +430,7 @@ class GetReportsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select * 
-                from HM_System_report
+                from hm_system_report
                 where Patient=111 and Doctor=1 
                 order by Date DESC limit 5;"""
         try:
@@ -470,7 +470,7 @@ class GetAdmittedView(UserView):
 class SetAvailableView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = """Update HM_System_room
+        query = """Update hm_system_room
                 Set Unavailable=FALSE
                 where Number=(Select S.Room
                             from hm_system_stay as S

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import "./Table.scss"
 
-function Table({ headers, data, searchKey, handleClick, ...props }) {
+function Table({ title, headers, data, searchKey, handleClick, ...props }) {
   const [query, setQuery] = useState("")
   const [filteredData, setFilteredData] = useState(data)
 
@@ -14,48 +14,51 @@ function Table({ headers, data, searchKey, handleClick, ...props }) {
   }
 
   return (
-    <table>
-      <thead>
-        {searchKey && (
+    <div className="table-container">
+      <h1>{title}</h1>
+      <table>
+        <thead>
+          {searchKey && (
+            <tr>
+              <th colSpan={headers.length}>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={query}
+                  onChange={handleSearch}
+                />
+              </th>
+            </tr>
+          )}
+
           <tr>
-            <th colSpan={headers.length}>
-              <input
-                type="text"
-                placeholder="Search"
-                value={query}
-                onChange={handleSearch}
-              />
-            </th>
-          </tr>
-        )}
-
-        <tr>
-          {headers.map((header, index) => (
-            <th key={index}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {filteredData.map((row, index) => (
-          <tr key={index}>
-            {Object.values(row).map((value, index) => (
-              <td key={index}>{value}</td>
+            {headers.map((header, index) => (
+              <th key={index}>{header}</th>
             ))}
-
-            {handleClick && (
-              <td style={{ paddingTop: 5, paddingBottom: 5 }}>
-                <button
-                  className={props.buttonClass || "btn-primary-sm"}
-                  onClick={() => handleClick(row[props.clickKey])}
-                >
-                  {props.buttonLabel}
-                </button>
-              </td>
-            )}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {filteredData.map((row, index) => (
+            <tr key={index}>
+              {Object.values(row).map((value, index) => (
+                <td key={index}>{value}</td>
+              ))}
+
+              {handleClick && (
+                <td style={{ paddingTop: 5, paddingBottom: 5 }}>
+                  <button
+                    className={props.buttonClass || "btn-primary-sm"}
+                    onClick={() => handleClick(row[props.clickKey])}
+                  >
+                    {props.buttonLabel}
+                  </button>
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
 

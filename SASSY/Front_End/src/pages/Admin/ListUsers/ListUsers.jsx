@@ -28,8 +28,8 @@ const ListUsers = ({ title, userType }) => {
 
   return (
     <div className="table-container">
-      <h1>{title}</h1>
       <Table
+        title={title}
         headers={["Username", "Name", "Date Joined", "Action"]}
         data={users}
         searchKey="username"

@@ -1,6 +1,7 @@
 import React from "react"
 import { DoctorDashboard } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
+import { Appointments, Patients } from "../pages/Doctor"
 
 export const usermap = {
   1: "front-desk-operator",
@@ -13,12 +14,12 @@ const adminTasks = [
   {
     breadcrumb: "FDOs",
     path: "fdos",
-    element: <ListUsers title="Front desk operators" userType={1} />
+    element: <ListUsers title="Front Desk Ooperators" userType={1} />
   },
   {
     breadcrumb: "DEOs",
     path: "deos",
-    element: <ListUsers title="Data entry operators" userType={2} />
+    element: <ListUsers title="Data Entry Ooperators" userType={2} />
   },
   {
     breadcrumb: "Doctors",
@@ -34,8 +35,8 @@ const adminTasks = [
 ]
 
 const doctorTasks = [
-  { breadcrumb: "Patients", path: "patients" },
-  { breadcrumb: "Appointments", path: "appointments" },
+  { breadcrumb: "Patients", path: "patients", element: <Patients /> },
+  { breadcrumb: "Appointments", path: "appointments", element: <Appointments /> },
 ]
 
 export const routeChildren = {

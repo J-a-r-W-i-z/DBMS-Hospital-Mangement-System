@@ -16,7 +16,7 @@ function LoginForm({ handleLogin }) {
   return (
     <div className="form-container login-form-container">
       <form onSubmit={handleSubmit}>
-        <h1>Log In to continue</h1>
+        <h1>Log in to continue</h1>
         <div className="form-container-div-sm">
           <AuthFields
             {...{

@@ -96,7 +96,7 @@ const FDDischarge = () => {
         }
     }
     return (
-        <div className="section s-wrapper">
+        <div className="sectionMed s-wrapper">
             <div className="margin-divider-sm" />
             <h1 className="center-text doctor-subheading">Patient Medicine and Report</h1>
             <input

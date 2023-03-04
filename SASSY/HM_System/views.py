@@ -11,7 +11,6 @@ from django.db import connection
 
 # Create your views here.
 
-
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -131,44 +130,44 @@ class CreateUserView(UserView):
         with connection.cursor() as cursor:
             cursor.execute(query, (username,hashed_pwd,user_type,'0'))
 
-        query="""Select username from hm_system_user where username=%s"""
+        # query="""Select username from hm_system_user where username=%s"""
 
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute(query, (username))
-                record=cursor.fetchone()
-                eid=record[0]
-        except:
-            #TODO
-            return
+        # try:
+        #     with connection.cursor() as cursor:
+        #         cursor.execute(query, (username))
+        #         record=cursor.fetchone()
+        #         eid=record[0]
+        # except:
+        #     #TODO
+        #     return
         
         # GET other info from request
         # TODO
-        EmployeeId=eid
-        Name=request.data['Name']
-        Address=request.data['Address']
-        Phone=request.data['Phone']
-        Email=request.data['Email']
-        AadharId=request.data['AadharID']
-        Gender=request.data['Gender']
-        DOB=request.data['DOB']
+        # EmployeeId=eid
+        # Name=request.data['Name']
+        # Address=request.data['Address']
+        # Phone=request.data['Phone']
+        # Email=request.data['Email']
+        # AadharId=request.data['AadharID']
+        # Gender=request.data['Gender']
+        # DOB=request.data['DOB']
         # Insert other details of user in appropriate table according to the user type
         # TODO
-        if user_type==1:
-            query = """Insert into FdOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        elif user_type==2:
-            query = """Insert into DataOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        elif user_type==3:
-            query = """Insert into Doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
-        else:
-            query = """Insert into Administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        # if user_type==1:
+        #     query = """Insert into FdOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        # elif user_type==2:
+        #     query = """Insert into DataOperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        # elif user_type==3:
+        #     query = """Insert into Doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+        # else:
+        #     query = """Insert into Administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
 
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute(query, (EmployeeId,Name,Address,Phone,Email,AadharId,Gender,DOB))
-        except:
-            # TODO
-            return
+        # try:
+        #     with connection.cursor() as cursor:
+        #         cursor.execute(query, (EmployeeId,Name,Address,Phone,Email,AadharId,Gender,DOB))
+        # except:
+        #     # TODO
+        #     return
         
         response = Response()
         response.data = {

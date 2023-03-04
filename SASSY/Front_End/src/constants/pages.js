@@ -1,7 +1,7 @@
 import React from "react"
-import { DoctorDashboard } from "../pages"
+import { DoctorDashboard,FrontDeskOperator } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
-import { RegisterPatient, AdmitPatient, AppointPatient, DischarePatient } from "../pages/FrontDeskOperator"
+// import { RegisterPatient, AdmitPatient, AppointPatient, DischarePatient } from "../pages/FrontDeskOperator"
 
 export const usermap = {
   1: "front-desk-operator",
@@ -35,10 +35,10 @@ const adminTasks = [
 ]
 
 const fdoTasks = [
-  { breadcrumb: "Register", path: "register", element: <RegisterPatient /> },
-  { breadcrumb: "Admit", path: "admit", element: <AdmitPatient /> },
-  { breadcrumb: "Appoint", path: "appoint", element: <AppointPatient /> },
-  { breadcrumb: "Discharge", path: "discharge", element: <DischarePatient /> },
+  // { breadcrumb: "Register", path: "register", element: <RegisterPatient /> },
+  // { breadcrumb: "Admit", path: "admit", element: <AdmitPatient /> },
+  // { breadcrumb: "Appoint", path: "appoint", element: <AppointPatient /> },
+  // { breadcrumb: "Discharge", path: "discharge", element: <DischarePatient /> },
 ]
 
 export const entityChildren = {
@@ -49,6 +49,7 @@ export const entityChildren = {
 }
 
 export const pages = [
+  {breadcrumb:"FDO Dashboard",usertype:1,element:FrontDeskOperator},
   { breadcrumb: "Doctor dashboard", usertype: 3, element: DoctorDashboard },
   { breadcrumb: "Admin dashboard", usertype: 4, children: adminTasks }
 ]

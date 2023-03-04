@@ -127,8 +127,16 @@ class CreateUserView(UserView):
 
         # Run query to insert into Users table
         query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
-        with connection.cursor() as cursor:
-            cursor.execute(query, (username,hashed_pwd,user_type,'0'))
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (username,hashed_pwd,user_type,'0'))
+        except:
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'messege': 'Username not available.'
+            }
+            return response
 
         query="""Select username from hm_system_user where username=%s"""
 
@@ -138,8 +146,12 @@ class CreateUserView(UserView):
                 record=cursor.fetchone()
                 eid=record[0]
         except:
-            #TODO
-            return
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not add user.'
+            }
+            return response
         
         # GET other info from request
         # TODO
@@ -166,8 +178,13 @@ class CreateUserView(UserView):
             with connection.cursor() as cursor:
                 cursor.execute(query, (EmployeeId,Name,Address,Phone,Email,AadharId,Gender,DOB))
         except:
-            # TODO
-            return
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Could not add user'
+            }
+            return response
         
         response = Response()
         response.data = {

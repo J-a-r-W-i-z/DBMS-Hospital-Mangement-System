@@ -59,7 +59,7 @@ const Gender = ({ gender, setGender }) => {
       onChange={(event) => setGender(event.target.value)}
       required
     >
-      <option value="">Select Gender</option>
+      <option value="">Select gender</option>
       <option value="1">Male</option>
       <option value="2">Female</option>
       <option value="3">Other</option>

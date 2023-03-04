@@ -19,12 +19,14 @@ function LoginForm({ handleLogin }) {
         <h1>Log In to continue</h1>
         <div className="form-container-div-sm">
           <AuthFields
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            userType={userType}
-            setUserType={setUserType}
+            {...{
+              username,
+              setUsername,
+              password,
+              setPassword,
+              userType,
+              setUserType,
+            }}
           />
         </div>
         <button type="submit" className="btn-primary-sm submit-btn">

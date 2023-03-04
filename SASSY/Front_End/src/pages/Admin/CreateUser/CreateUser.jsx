@@ -28,10 +28,7 @@ const CreateUser = () => {
       email: email,
       aadhar_id: aadharId,
       gender: gender,
-      dob: new Date(dob.valueOf())
-        .toISOString()
-        .slice(0, 19)
-        .replace("T", " "),
+      dob: new Date(dob.valueOf()).toISOString().slice(0, 19).replace("T", " "),
     })
   }
 
@@ -41,31 +38,35 @@ const CreateUser = () => {
         <h1>User creation</h1>
         <div className="form-container-div">
           <AuthFields
-            username={username}
-            setUsername={setUsername}
-            password={password}
-            setPassword={setPassword}
-            userType={userType}
-            setUserType={setUserType}
+            {...{
+              username,
+              setUsername,
+              password,
+              setPassword,
+              userType,
+              setUserType,
+            }}
           />
         </div>
         <hr className="span-full fields-separator" />
         <div className="form-container-div">
           <PersonalFields
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            phone={phone}
-            setPhone={setPhone}
-            aadharId={aadharId}
-            setAadharId={setAadharId}
-            gender={gender}
-            setGender={setGender}
-            dob={dob}
-            setDob={setDob}
-            address={address}
-            setAddress={setAddress}
+            {...{
+              name,
+              setName,
+              address,
+              setAddress,
+              phone,
+              setPhone,
+              email,
+              setEmail,
+              aadharId,
+              setAadharId,
+              gender,
+              setGender,
+              dob,
+              setDob,
+            }}
           />
         </div>
         <button type="submit" className="btn-primary-sm submit-btn">

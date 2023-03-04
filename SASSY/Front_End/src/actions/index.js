@@ -18,7 +18,7 @@ export const handleError = (err, dontToast) => {
   }
 }
 
-export const handleListUsers = async (usertype, setIsLoading) => {
+export const handleListUsers = async (usertype) => {
   let response = null
   await api.listUsers({ req_user_type: usertype })
     .then(res => {

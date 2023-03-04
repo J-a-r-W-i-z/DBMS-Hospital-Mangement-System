@@ -12,6 +12,7 @@ const ListUsers = ({ title }) => {
       username: "johnsnow",
       name: "John Snow",
       date_joined: "2021-01-01",
+      something: "no",
     },
     {
       username: "janesmith",
@@ -25,7 +26,6 @@ const ListUsers = ({ title }) => {
     },
   ])
   const [userROI, setUserROI] = useState(-1)
-  const [loading, setLoading] = useState(true)
 
   const location = useLocation()
 
@@ -54,13 +54,23 @@ const ListUsers = ({ title }) => {
     ]
   }
 
+  function limitedData(users) {
+    users = Array.from(users)
+
+    return users.map((user) => ({
+      username: user.username,
+      name: user.name,
+      date_joined: user.date_joined,
+    }))
+  }
+
   return (
     <>
       <div className="table-container">
         <Table
           title={title}
           headers={["Username", "Name", "Date Joined", "Action"]}
-          data={users}
+          data={limitedData(users)}
           searchKey="username"
           handleAction={(key) => handleDeleteUser(key)}
           getInfo={(user) => setUserROI(user)}

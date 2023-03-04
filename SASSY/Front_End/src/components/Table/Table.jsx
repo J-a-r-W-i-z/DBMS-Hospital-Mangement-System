@@ -14,6 +14,7 @@ function Table({
   const [filteredData, setFilteredData] = useState(data)
 
   function handleSearch(event) {
+    console.log(data)
     setQuery(event.target.value)
     const filteredData = data.filter((row) =>
       row[searchKey].toLowerCase().includes(event.target.value.toLowerCase())
@@ -33,7 +34,9 @@ function Table({
         <div className="table-search-container">
           <input
             type="text"
-            placeholder="Search here . . ."
+            placeholder={
+              searchKey ? `Search by ${searchKey} . . .` : "Search here . . ."
+            }
             value={query}
             onChange={handleSearch}
             className="table-search-input"

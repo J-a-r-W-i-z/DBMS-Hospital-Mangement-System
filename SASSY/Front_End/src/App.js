@@ -6,7 +6,7 @@ import { toastOptions, usermap } from "./constants"
 import { handleError } from "./actions"
 import Router from "./routes"
 
-import { ToastContainer, toast, Slide } from "react-toastify"
+import { ToastContainer, toast, Zoom } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import "./styles/Toast.scss"
 
@@ -90,7 +90,7 @@ const App = () => {
         closeOnClick={toastOptions.closeOnClick}
         pauseOnHover={toastOptions.pauseOnHover}
         theme={toastOptions.theme}
-        transition={Slide}
+        transition={Zoom}
         newestOnTop={false}
         rtl={false}
         pauseOnFocusLoss

@@ -1,9 +1,11 @@
-import React, { useState } from "react"
-import { Table } from "../../../components"
+import React, { useState, useEffect } from "react"
+import { Table, Modal, UserDetails } from "../../../components"
 import { handleListUsers } from "../../../actions"
+
+import { AnimatePresence } from "framer-motion"
 import "./ListUsers.scss"
 
-const ListUsers = ({ title, userType }) => {
+const ListUsers = ({ title }) => {
   const [users, setUsers] = useState([
     {
       username: "johnsnow",
@@ -21,24 +23,58 @@ const ListUsers = ({ title, userType }) => {
       date_joined: "2021-01-01",
     },
   ])
+  const [userROI, setUserROI] = useState(-1)
 
-  function removeUser(username) {
-    setUsers(users.filter((user) => user.username !== username))
+  function tableData() {
+    return [
+      {
+        key: "Username",
+        value: users[userROI].username,
+      },
+      {
+        key: "Name",
+        value: users[userROI].name,
+      },
+      {
+        key: "Date Joined",
+        value: users[userROI].date_joined,
+      },
+      {
+        key: "Email",
+        value: users[userROI].email,
+      },
+    ]
   }
 
   return (
-    <div className="table-container">
-      <Table
-        title={title}
-        headers={["Username", "Name", "Date Joined", "Action"]}
-        data={users}
-        searchKey="username"
-        handleClick={removeUser}
-        buttonLabel="Remove"
-        buttonClass="btn-secondary-sm"
-        clickKey="username"
-      />
-    </div>
+    <>
+      <div className="table-container">
+        <Table
+          title={title}
+          headers={["Username", "Name", "Date Joined", "Action"]}
+          data={users}
+          searchKey="username"
+          // handleAction={removeUser}
+          getInfo={(user) => {
+            setUserROI(user)
+            console.log(user)
+          }}
+          buttonLabel="Remove"
+          buttonClass="btn-secondary-sm"
+          clickKey="username"
+        />
+      </div>
+      <AnimatePresence>
+        {userROI !== -1 && (
+          <Modal
+            element={
+              <UserDetails name={users[userROI].name} userInfo={tableData()} />
+            }
+            handleClick={() => setUserROI(-1)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 

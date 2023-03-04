@@ -5,14 +5,13 @@ import { toastOptions } from "../constants"
 export const handleError = (err, dontToast) => {
   const defaultError = "Something went wrong. Please try again later."
 
-  if (err === null) {
+  if (err === null || err.response === undefined) {
     toast.error(defaultError, toastOptions)
     return
   }
 
-  if (dontToast) return
-
-  if (err.response.status === 401) {
+  if (err.response.status === 401 || err.response.status === 405) {
+    if (dontToast) return
     toast.error(err.response.data.detail, toastOptions)
   } else {
     toast.error(defaultError, toastOptions)
@@ -41,44 +40,4 @@ export const handleCreateUser = async (userData) => {
     .catch(err => {
       handleError(err)
     })
-}
-
-export const handleRegisterPatient = async (patientData) => {
-  // await api.registerPatient(patientData)
-  //   .then(res => {
-  //     toast.success("Patient registered successfully.", toastOptions)
-  //   })
-  //   .catch(err => {
-  //     handleError(err)
-  //   })
-}
-
-export const handleAdmitPatient = async (patientData) => {
-  // await api.admitPatient(patientData)
-  //   .then(res => {
-  //     toast.success("Patient admitted successfully.", toastOptions)
-  //   })
-  //   .catch(err => {
-  //     handleError(err)
-  //   })
-}
-
-export const handleAppointPatient = async (patientData) => {
-  // await api.appointPatient(patientData)
-  //   .then(res => {
-  //     toast.success("Patient appointed successfully.", toastOptions)
-  //   })
-  //   .catch(err => {
-  //     handleError(err)
-  //   })
-}
-
-export const handleDischargePatient = async (patientData) => {
-  // await api.dischargePatient(patientData)
-  //   .then(res => {
-  //     toast.success("Patient discharged successfully.", toastOptions)
-  //   })
-  //   .catch(err => {
-  //     handleError(err)
-  //   })
 }

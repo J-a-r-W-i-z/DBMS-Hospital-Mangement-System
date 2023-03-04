@@ -1,4 +1,51 @@
+@import "../../styles/Variables.scss";
+
 .table-container > h1 {
   margin-bottom: 1rem;
   text-align: center;
+}
+
+table {
+  border-collapse: separate;
+  overflow: hidden;
+  width: 100%;
+  border-radius: $border-radius;
+
+  box-shadow: 0px 0px 10px 0 var(--shadow-color);
+
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    background-color: var(--secondary-background-color);
+    font-weight: bold;
+  }
+
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: var(--secondary-background-color);
+        &.row-even {
+          background-color: var(--light-color);
+        }
+      }
+
+      &:nth-child(odd) {
+        &.row-odd {
+          background-color: var(--light-color);
+        }
+      }
+    }
+
+    .hover-row {
+      transition: all $transition;
+
+      &:hover {
+        background-color: var(--light-color);
+      }
+    }
+  }
 }

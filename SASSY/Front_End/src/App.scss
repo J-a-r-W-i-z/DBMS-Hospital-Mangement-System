@@ -124,7 +124,8 @@ body {
   text-align: center;
 }
 
-button {
+button,
+.clickable {
   cursor: pointer;
 }
 
@@ -134,7 +135,7 @@ button {
 .btn-secondary-sm {
   font-weight: bold;
   text-transform: uppercase;
-  transition: all 0.2s ease-in-out;
+  transition: all $transition;
 }
 
 .btn-primary,
@@ -231,7 +232,7 @@ textarea {
   outline: none;
   font-size: inherit;
 
-  transition: all 0.2s ease-in-out;
+  transition: all $transition;
   font-family: inherit;
 
   &:focus {
@@ -242,39 +243,4 @@ textarea {
 
 textarea {
   resize: vertical;
-}
-
-table {
-  border-collapse: separate;
-  overflow: hidden;
-  width: 100%;
-  border-radius: $border-radius;
-
-  box-shadow: 0px 0px 10px 0 var(--shadow-color);
-
-  th,
-  td {
-    padding: 12px;
-    text-align: left;
-  }
-
-  th {
-    background-color: var(--secondary-background-color);
-    font-weight: bold;
-  }
-
-  tbody tr {
-    &:nth-child(even) {
-      background-color: var(--secondary-background-color);
-      &.row-even {
-        background-color: var(--light-color);
-      }
-    }
-
-    &:nth-child(odd) {
-      &.row-odd {
-        background-color: var(--light-color);
-      }
-    }
-  }
 }

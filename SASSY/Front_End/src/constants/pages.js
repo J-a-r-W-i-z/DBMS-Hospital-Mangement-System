@@ -35,8 +35,8 @@ const adminTasks = [
 ]
 
 const doctorTasks = [
-  { breadcrumb: "Patients", path: "patients", element: <Patients /> },
   { breadcrumb: "Appointments", path: "appointments", element: <Appointments /> },
+  { breadcrumb: "Patients", path: "patients", element: <Patients /> },
 ]
 
 export const routeChildren = {

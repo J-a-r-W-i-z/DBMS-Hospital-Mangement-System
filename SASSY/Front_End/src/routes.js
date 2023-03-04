@@ -4,7 +4,7 @@ import { HelmetWrap } from "./wrapper"
 import { LoginForm, Error404 } from "./pages"
 import { pages, usermap, routeChildren } from "./constants"
 
-export default function Router({ handleLogin, isAuthenticated }) {
+export default function Router({ handleLogin }) {
   const routes = useRoutes([
     {
       breadcrumb: "Home",
@@ -44,15 +44,15 @@ export default function Router({ handleLogin, isAuthenticated }) {
       }
     })),
 
-    {
-      path: "/404",
-      element: <HelmetWrap title="Page not found" element={<Error404 />} />
-    },
+    // {
+    //   path: "/404",
+    //   element: <HelmetWrap title="Page not found" element={<Error404 />} />
+    // },
 
-    {
-      path: "*",
-      element: isAuthenticated && <Navigate to="/404" replace />
-    },
+    // {
+    //   path: "*",
+    //   element: <Navigate to="/404" replace />
+    // },
   ])
 
   return routes

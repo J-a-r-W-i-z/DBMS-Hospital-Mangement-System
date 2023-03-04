@@ -33,7 +33,10 @@ const adminTasks = [
   { breadcrumb: "Create user", path: "create-user", element: <CreateUser /> }
 ]
 
-const doctorTasks = []
+const doctorTasks = [
+  { breadcrumb: "Patients", path: "patients" },
+  { breadcrumb: "Appointments", path: "appointments" },
+]
 
 export const routeChildren = {
   1: [],

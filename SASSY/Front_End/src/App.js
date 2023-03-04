@@ -25,6 +25,8 @@ const App = () => {
       .then(res => {
         setIsAuthenticated(true)
         setUserType(res.data.response.user_type)
+
+        navigate(`/${usermap[res.data.response.user_type]}`)
       })
       .catch(err => {
         handleError(err, true)
@@ -78,10 +80,7 @@ const App = () => {
         handleLogout={handleLogout} />
 
       <div className="app">
-        <Router
-          handleLogin={handleLogin}
-          isAuthenticated={isAuthenticated}
-        />
+        <Router handleLogin={handleLogin} />
       </div>
 
       <ToastContainer

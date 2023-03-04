@@ -11,7 +11,7 @@
     --activeItem: #f799a354;
 }
 
-.App {
+.Appde {
     /* padding: 0.5rem 3.5rem; */
     color: var(--black);
     background: linear-gradient(106.37deg,
@@ -23,9 +23,15 @@
     align-items: center;
     justify-content: center;
     font-family: 'Inter', sans-serif;
+    width: 100vw;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 999;
 }
 
-.AppGlass {
+.AppGlassde {
     display: grid;
     height: 97%;
     width: 97%;
@@ -37,7 +43,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-    .AppGlass {
+    .AppGlassde {
         justify-content: center;
         align-items: center;
         grid-template-columns: 10% 50% auto;
@@ -46,7 +52,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .AppGlass {
+    .AppGlassde {
         grid-template-columns: 1fr;
     }
 }

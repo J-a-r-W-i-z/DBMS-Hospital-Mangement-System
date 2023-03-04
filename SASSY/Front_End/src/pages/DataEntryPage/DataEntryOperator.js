@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Switches, Redirect } from 'react-router-dom';
 import "../FrontDeskPage/SideBar/SideBar.css";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/Favicon.png";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import './DataEntryOperator.css'
@@ -44,8 +44,8 @@ function DataEntryOperator() {
     }
     console.log(window.innerWidth)
     return (
-        <div className="App">
-            <div className="AppGlass">
+        <div className="Appde">
+            <div className="AppGlassde">
                 <>
                     <div className="bars" style={expanded ? { left: '60%' } : { left: '5%' }} onClick={() => setExpaned(!expanded)}>
                         <UilBars />

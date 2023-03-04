@@ -27,9 +27,9 @@ SECRET_KEY = 'pfed_=%z4j4z_z2s_1!xhn8b_n17(m*@hhs-a1=xuywe=ea*fa'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
-  '127.0.0.1',
-  '10.145.230.85'
-]
+                 '127.0.0.1',
+                 '10.145.230.85'
+                 ]
 
 
 # Application definition
@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dbms_hospital',
         'USER': 'root',
-        'PASSWORD': 'yaitsme!',
+        'PASSWORD': 'iam@sql123',
         'HOST': '127.0.0.1',
         'PORT': '3306'
 

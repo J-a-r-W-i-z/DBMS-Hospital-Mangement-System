@@ -36,6 +36,21 @@ const FDDischarge = () => {
     }
     const handleDischarge = (stayId) => {
 
+        axios.post('http://127.0.0.1:8000/api/dischargePatient', formData)
+            .then((response) => {
+
+                console.log(response.status)
+                toast.success(patients.filter(obj => {
+                    return obj.stayID === stayId;
+                }).name + ' discharged Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Discharged successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.message,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
 
     }
 
@@ -80,7 +95,7 @@ const FDDischarge = () => {
                                 <td>{patient.name}</td>
                                 <td>{patient.stayID}</td>
                                 <td>{patient.gender}</td>
-                                <td> <button className="DischargeButton">Discharge</button></td>
+                                <td> <button className="DischargeButton" onClick={() => handleDischarge(patient.stayID)}>Discharge</button></td>
                             </tr>
                         ))}
                 </tbody>

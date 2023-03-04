@@ -7,7 +7,7 @@
     position: relative;
     max-width: 600px;
     width: 80%;
-    height: 400px;
+    height: 282px;
     border-radius: 6px;
     padding: 30px;
     margin: 0 15px;
@@ -36,7 +36,7 @@
 .containerApp form {
     position: relative;
     margin-top: 16px;
-    min-height: 330px;
+    min-height: 200px;
     background-color: #fff;
     overflow: hidden;
 }

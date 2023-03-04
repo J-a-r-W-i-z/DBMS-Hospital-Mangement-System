@@ -1,7 +1,7 @@
 import React from "react"
 import { DoctorDashboard } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
-import { Appointments, Patients } from "../pages/Doctor"
+import { Appointments, PatientProfile, Patients } from "../pages/Doctor"
 
 export const usermap = {
   1: "front-desk-operator",
@@ -35,8 +35,8 @@ const adminTasks = [
 ]
 
 const doctorTasks = [
-  { breadcrumb: "Appointments", path: "appointments", element: <Appointments /> },
-  { breadcrumb: "Patients", path: "patients", element: <Patients /> },
+  { breadcrumb: "Appointments", path: "pending-appointments", element: <Appointments /> },
+  { breadcrumb: "Patients", path: "patients", element: <Patients />, },
 ]
 
 export const routeChildren = {

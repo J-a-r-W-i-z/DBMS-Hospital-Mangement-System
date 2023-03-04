@@ -189,11 +189,6 @@
       transform: scaleX(1);
     }
   }
-
-  .nav-link-active {
-    color: var(--white-color);
-    border-bottom: 3px solid var(--orange);
-  }
 }
 
 .app__navbar-menu {
@@ -201,10 +196,6 @@
     &:hover {
       background-color: var(--less-dark-color);
     }
-  }
-  .nav-tab-active {
-    color: var(--white-color);
-    background-color: var(--less-dark-color);
   }
 }
 

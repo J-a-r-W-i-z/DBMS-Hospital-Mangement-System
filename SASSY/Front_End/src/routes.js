@@ -1,7 +1,8 @@
 import React from "react"
 import { useRoutes, Navigate } from "react-router-dom"
 import { HelmetWrap } from "./wrapper"
-import { LoginForm, Error404 } from "./pages"
+import { LoginForm } from "./pages"
+import { PatientProfile } from "./pages/Doctor"
 import { pages, usermap, routeChildren } from "./constants"
 
 export default function Router({ handleLogin }) {
@@ -44,15 +45,15 @@ export default function Router({ handleLogin }) {
       }
     })),
 
-    // {
-    //   path: "/404",
-    //   element: <HelmetWrap title="Page not found" element={<Error404 />} />
-    // },
-
-    // {
-    //   path: "*",
-    //   element: <Navigate to="/404" replace />
-    // },
+    {
+      breadcrumb: "Patient profile",
+      path: "/doctor/patients/:id",
+      element:
+        <HelmetWrap
+          title="Patient profile"
+          element={<PatientProfile />}
+        />
+    }
   ])
 
   return routes

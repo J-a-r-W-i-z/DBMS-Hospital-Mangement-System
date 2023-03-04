@@ -9,6 +9,7 @@ const UserDetails = ({ name, userInfo }) => {
         title={`${name}'s details`}
         headers={["Fields", "Values"]}
         data={userInfo}
+        noShrink
       />
     </div>
   )

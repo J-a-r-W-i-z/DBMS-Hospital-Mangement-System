@@ -8,6 +8,7 @@ function Table({
   searchKey,
   handleAction,
   getInfo,
+  noShrink,
   ...props
 }) {
   const [query, setQuery] = useState("")
@@ -43,7 +44,7 @@ function Table({
           />
         </div>
       )}
-      <table>
+      <table className={!noShrink ? "shrink-table" : null}>
         <thead>
           <tr>
             {headers.map((header, index) => (

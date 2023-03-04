@@ -30,7 +30,7 @@ const ListUsers = ({ title }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // setUsers(handleListUsers())
+    handleListUsers(setUsers)
   }, [location])
 
   function tableData() {
@@ -64,6 +64,11 @@ const ListUsers = ({ title }) => {
     }))
   }
 
+  function deleteAndFetch(key) {
+    handleDeleteUser(key)
+    setUsers(handleListUsers)
+  }
+
   return (
     <>
       <div className="table-container">
@@ -72,7 +77,7 @@ const ListUsers = ({ title }) => {
           headers={["Username", "Name", "Date Joined", "Action"]}
           data={limitedData(users)}
           searchKey="username"
-          handleAction={(key) => handleDeleteUser(key)}
+          handleAction={(key) => deleteAndFetch(key)}
           getInfo={(user) => setUserROI(user)}
           buttonLabel="Remove"
           buttonClass="btn-secondary-sm"

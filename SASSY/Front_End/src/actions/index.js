@@ -27,6 +27,7 @@ export const handleListUsers = async (usertype) => {
     .catch(err => {
       handleError(err)
     })
+
   return response
 }
 
@@ -40,12 +41,61 @@ export const handleCreateUser = async (userData) => {
     })
 }
 
-export const handleDeleteUser = async (userData) => {
-  await api.deleteUser(userData)
+export const handleDeleteUser = async (username) => {
+  await api.deleteUser({ req_user_name: username })
     .then(res => {
       toast.success("User deleted successfully.", toastOptions)
     })
     .catch(err => {
       handleError(err)
     })
+}
+
+export const handleListAppointments = async () => {
+  let response = null
+  await api.listAppointments()
+    .then(res => {
+      response = res.data
+    })
+    .catch(err => {
+      handleError(err)
+    })
+
+  return response
+}
+
+export const handleDeleteAppointment = async (username) => {
+  await api.deleteAppointment({ req_user_name: username })
+    .then(res => {
+      toast.success("Appointment deleted successfully.", toastOptions)
+    })
+    .catch(err => {
+      handleError(err)
+    })
+}
+
+export const handleListPatients = async () => {
+  let response = null
+  await api.listPatients()
+    .then(res => {
+      response = res.data
+    })
+    .catch(err => {
+      handleError(err)
+    })
+
+  return response
+}
+
+export const handleShowPatient = async (username) => {
+  let response = null
+  await api.showPatient({ req_user_name: username })
+    .then(res => {
+      response = res.data
+    })
+    .catch(err => {
+      handleError(err)
+    })
+
+  return response
 }

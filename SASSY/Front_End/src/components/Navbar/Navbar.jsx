@@ -9,12 +9,6 @@ import "./Navbar.scss"
 
 const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeLink, setActiveLink] = useState(0)
-
-  const handleMenuItemClick = (index) => {
-    setActiveLink(index)
-    setIsMenuOpen(false)
-  }
 
   return (
     <nav className="app__navbar app__pad">
@@ -31,7 +25,6 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
                   <Link
                     to={`${usermap[userType]}/${task.path}`}
                     onClick={() => setActiveLink(index)}
-                    className={activeLink === index ? "nav-link-active" : null}
                   >
                     {task.breadcrumb}
                   </Link>
@@ -56,14 +49,9 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
                           {routeChildren[userType].map((task, index) => (
                             <li
                               key={index}
-                              onClick={() => handleMenuItemClick(index)}
+                              onClick={() => setIsMenuOpen(false)}
                             >
-                              <Link
-                                to={`${usermap[userType]}/${task.path}`}
-                                className={
-                                  activeLink === index ? "nav-tab-active" : null
-                                }
-                              >
+                              <Link to={`${usermap[userType]}/${task.path}`}>
                                 {task.breadcrumb}
                               </Link>
                             </li>

@@ -23,12 +23,13 @@ const App = () => {
     setUserType(response)
   }
 
-  const login = async (username, password, userType) => {
-    const response = await handleLogin(username, password, userType)
+  const login = async (user) => {
+    console.log(user)
+    const response = await handleLogin(user)
     if (!response) return
 
-    setUserType(userType)
-    navigate(`/${usermap[userType]}`)
+    setUserType(user.user_type)
+    navigate(`/${usermap[user.user_type]}`)
   }
 
   const logout = async () => {

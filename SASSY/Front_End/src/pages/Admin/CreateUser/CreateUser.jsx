@@ -5,38 +5,41 @@ import { handleCreateUser, checkAuth } from "../../../actions"
 import "./CreateUser.scss"
 
 const CreateUser = () => {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [userType, setUserType] = useState("")
-  const [name, setName] = useState("")
-  const [address, setAddress] = useState("")
-  const [phone, setPhone] = useState("")
-  const [email, setEmail] = useState("")
-  const [aadharId, setAadharId] = useState("")
-  const [gender, setGender] = useState("")
-  const [dob, setDob] = useState("")
+  const initialUserDetails = {
+    username: "",
+    password: "",
+    user_type: "",
+    name: "",
+    email: "",
+    phone: "",
+    aadhar_id: "",
+    gender: "",
+    dob: "",
+    address: "",
+  }
+  const [userDetails, setUserDetails] = useState(initialUserDetails)
 
   const location = useLocation()
 
   useEffect(() => {
     console.log("useEffect")
+    // checkAuth(location)
   }, [location])
 
   function handleSubmit(event) {
     event.preventDefault()
 
-    handleCreateUser({
-      username: username,
-      password: password,
-      user_type: userType,
-      name: name,
-      address: address,
-      phone: phone,
-      email: email,
-      aadhar_id: aadharId,
-      gender: gender,
-      dob: new Date(dob.valueOf()).toISOString().slice(0, 19).replace("T", " "),
-    })
+    handleCreateUser(
+      {
+        ...userDetails,
+        dob: new Date(userDetails.dob.valueOf())
+          .toISOString()
+          .slice(0, 19)
+          .replace("T", " "),
+      },
+      initialUserDetails,
+      setUserDetails
+    )
   }
 
   return (
@@ -44,37 +47,11 @@ const CreateUser = () => {
       <form onSubmit={handleSubmit}>
         <h1>User creation</h1>
         <div className="form-container-div">
-          <AuthFields
-            {...{
-              username,
-              setUsername,
-              password,
-              setPassword,
-              userType,
-              setUserType,
-            }}
-          />
+          <AuthFields user={userDetails} setUser={setUserDetails} />
         </div>
         <hr className="span-full fields-separator" />
         <div className="form-container-div">
-          <PersonalFields
-            {...{
-              name,
-              setName,
-              address,
-              setAddress,
-              phone,
-              setPhone,
-              email,
-              setEmail,
-              aadharId,
-              setAadharId,
-              gender,
-              setGender,
-              dob,
-              setDob,
-            }}
-          />
+          <PersonalFields user={userDetails} setUser={setUserDetails} />
         </div>
         <button type="submit" className="btn-primary-sm submit-btn">
           Add user

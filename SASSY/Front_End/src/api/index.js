@@ -16,5 +16,4 @@ export const showPatient = payload => api.get(`/show-patient`, payload)
 
 export const isAuth = () => api.get(`/isAuth`)
 export const logIn = payload => api.post(`/login`, payload)
-
 export const logOut = () => api.post(`/logout`)

@@ -1,5 +1,5 @@
-import { toast } from "react-toastify"
 import * as api from "../api"
+import { toast } from "react-toastify"
 import { toastOptions } from "../constants"
 
 const handleError = (err) => {
@@ -35,13 +35,9 @@ export const checkAuth = async () => {
   return response
 }
 
-export const handleLogin = async (username, password, userType) => {
+export const handleLogin = async (user) => {
   let response = null
-  await api.logIn({
-    username: username,
-    password: password,
-    user_type: userType,
-  })
+  await api.logIn(user)
     .then(res => {
       toast.success("Login successful.", toastOptions)
       response = res
@@ -80,10 +76,11 @@ export const handleListUsers = async (usertype) => {
   return response
 }
 
-export const handleCreateUser = async (userData) => {
+export const handleCreateUser = async (userData, initialData, resetData) => {
   await api.createUser(userData)
     .then(res => {
       toast.success("User created successfully.", toastOptions)
+      resetData(initialData)
     })
     .catch(err => {
       handleError(err)

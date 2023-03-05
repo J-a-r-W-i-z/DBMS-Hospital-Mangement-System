@@ -4,13 +4,15 @@ import "../../App.scss"
 import "./Login.scss"
 
 function LoginForm({ handleLogin }) {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [userType, setUserType] = useState("")
+  const [userDetails, setUserDetails] = useState({
+    username: "",
+    password: "",
+    user_type: "",
+  })
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    handleLogin(username, password, userType)
+    handleLogin(userDetails)
   }
 
   return (
@@ -18,16 +20,7 @@ function LoginForm({ handleLogin }) {
       <form onSubmit={handleSubmit}>
         <h1>Log in to continue</h1>
         <div className="form-container-div-sm">
-          <AuthFields
-            {...{
-              username,
-              setUsername,
-              password,
-              setPassword,
-              userType,
-              setUserType,
-            }}
-          />
+          <AuthFields user={userDetails} setUser={setUserDetails} />
         </div>
         <button type="submit" className="btn-primary-sm submit-btn">
           Login

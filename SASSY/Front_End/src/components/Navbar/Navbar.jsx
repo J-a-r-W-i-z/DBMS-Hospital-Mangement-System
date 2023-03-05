@@ -7,7 +7,7 @@ import { Overlay } from "../../components"
 import { motion, AnimatePresence } from "framer-motion"
 import "./Navbar.scss"
 
-const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
+const Navbar = ({ userType, handleLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -17,21 +17,18 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
           <img src={images.logo} alt="logo" />
           <h1>SASSY</h1>
         </div>
-        {isAuthenticated && (
+        {userType !== null && (
           <>
             <ul className="app__navbar-links">
-              {routeChildren[userType].map((task, index) => (
+              {routeChildren[userType]?.map((task, index) => (
                 <li key={index}>
-                  <Link
-                    to={`${usermap[userType]}/${task.path}`}
-                    onClick={() => setActiveLink(index)}
-                  >
+                  <Link to={`${usermap[userType]}/${task.path}`}>
                     {task.breadcrumb}
                   </Link>
                 </li>
               ))}
             </ul>
-            {routeChildren[userType].length > 0 && (
+            {routeChildren[userType]?.length > 0 && (
               <div className="app__navbar-menu">
                 <HiMenuAlt1 onClick={() => setIsMenuOpen(true)} />
                 <AnimatePresence>
@@ -46,7 +43,7 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
                       >
                         <HiOutlineX onClick={() => setIsMenuOpen(false)} />
                         <ul>
-                          {routeChildren[userType].map((task, index) => (
+                          {routeChildren[userType]?.map((task, index) => (
                             <li
                               key={index}
                               onClick={() => setIsMenuOpen(false)}
@@ -67,7 +64,7 @@ const Navbar = ({ isAuthenticated, userType, handleLogout }) => {
           </>
         )}
       </div>
-      {isAuthenticated && (
+      {userType !== null && (
         <button onClick={handleLogout} className="btn-secondary-sm logout-btn">
           Logout
         </button>

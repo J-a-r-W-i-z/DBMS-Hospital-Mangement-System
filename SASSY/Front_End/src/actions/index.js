@@ -2,7 +2,7 @@ import { toast } from "react-toastify"
 import * as api from "../api"
 import { toastOptions } from "../constants"
 
-export const handleError = (err, dontToast) => {
+const handleError = (err) => {
   const defaultError = "Something went wrong. Please try again later."
 
   if (err === null || err.response === undefined) {
@@ -10,12 +10,61 @@ export const handleError = (err, dontToast) => {
     return
   }
 
-  if (err.response.status === 401 || err.response.status === 405) {
-    if (dontToast) return
-    toast.error(err.response.data.detail, toastOptions)
-  } else {
-    toast.error(defaultError, toastOptions)
+  switch (err.response.status) {
+    case 401:
+      toast.error(err.response.data.detail, toastOptions)
+      break
+    case 405:
+      toast.error(err.response.data.detail, toastOptions)
+      break
+    default:
+      toast.error(defaultError, toastOptions)
   }
+}
+
+export const checkAuth = async () => {
+  let response = null
+  await api.isAuth()
+    .then(res => {
+      response = res.data.response.user_type
+    })
+    .catch(err => {
+      handleError(err, true)
+    })
+
+  return response
+}
+
+export const handleLogin = async (username, password, userType) => {
+  let response = null
+  await api.logIn({
+    username: username,
+    password: password,
+    user_type: userType,
+  })
+    .then(res => {
+      toast.success("Login successful.", toastOptions)
+      response = res
+    })
+    .catch(err => {
+      handleError(err)
+    })
+
+  return response
+}
+
+export const handleLogout = async () => {
+  let response = null
+  await api.logOut()
+    .then(res => {
+      toast.success("Logout successful.", toastOptions)
+      response = res
+    })
+    .catch(err => {
+      handleError(err)
+    })
+
+  return response
 }
 
 export const handleListUsers = async (usertype) => {

@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import { AuthFields, PersonalFields } from "../../../components"
-import { handleCreateUser } from "../../../actions"
+import { handleCreateUser, checkAuth } from "../../../actions"
 import "./CreateUser.scss"
 
 const CreateUser = () => {
@@ -14,6 +15,12 @@ const CreateUser = () => {
   const [aadharId, setAadharId] = useState("")
   const [gender, setGender] = useState("")
   const [dob, setDob] = useState("")
+
+  const location = useLocation()
+
+  useEffect(() => {
+    console.log("useEffect")
+  }, [location])
 
   function handleSubmit(event) {
     event.preventDefault()

@@ -187,9 +187,13 @@ button,
 .form-container {
   margin: 0 auto;
   background-color: var(--secondary-background-color);
-  padding: 2rem;
   border-radius: $border-radius;
   box-shadow: 0px 0px 10px 0 var(--shadow-color);
+
+  padding: $padding-lg;
+  @media screen and (max-width: $md) {
+    padding: $padding-md;
+  }
 
   & h1 {
     text-align: center;
@@ -200,7 +204,7 @@ button,
   & .form-container-div-sm {
     display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
 
     @media screen and (max-width: $amd) {
       gap: 1rem;

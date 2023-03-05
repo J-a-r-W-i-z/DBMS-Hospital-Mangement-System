@@ -13,7 +13,7 @@ function Breadcrumbs() {
           {breadcrumbs.map(({ key, breadcrumb }, index) => (
             <li key={index}>
               <a href={key}>
-                <h2>{breadcrumb}</h2>
+                <h3>{breadcrumb}</h3>
               </a>
             </li>
           ))}

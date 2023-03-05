@@ -1,6 +1,6 @@
 import React from "react"
 import { useRoutes, Navigate } from "react-router-dom"
-import { HelmetWrap } from "./wrapper"
+import { HelmetWrap, PageWrap } from "./wrapper"
 import { LoginForm } from "./pages"
 import { PatientProfile } from "./pages/Doctor"
 import { pages, usermap, routeChildren } from "./constants"
@@ -30,7 +30,7 @@ export default function Router({ handleLogin }) {
             breadcrumb: child.breadcrumb,
             path: child.path,
             element:
-              <HelmetWrap
+              <PageWrap
                 title={child.breadcrumb}
                 element={child.element}
               />
@@ -38,7 +38,7 @@ export default function Router({ handleLogin }) {
         ]
       } : {
         element:
-          <HelmetWrap
+          <PageWrap
             title={page.breadcrumb}
             element={<page.element />}
           />
@@ -49,7 +49,7 @@ export default function Router({ handleLogin }) {
       breadcrumb: "Patient profile",
       path: "/doctor/patients/:id",
       element:
-        <HelmetWrap
+        <PageWrap
           title="Patient profile"
           element={<PatientProfile />}
         />

@@ -1,10 +1,10 @@
 .breadcrumb-nav li {
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 
   &::after {
     content: "/";
-    font-size: 1.5rem;
+    font-weight: bold;
     margin: 0 0.5rem;
   }
 
@@ -20,7 +20,7 @@
       text-decoration: underline;
     }
 
-    & > h2 {
+    & > h3 {
       display: inline-block;
     }
   }

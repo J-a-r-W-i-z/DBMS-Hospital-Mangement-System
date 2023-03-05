@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { AuthFields, PersonalFields } from "../../../components"
-import { handleCreateUser, checkAuth } from "../../../actions"
+import { handleCreateUser, checkAuth, redirectUser } from "../../../actions"
 import "./CreateUser.scss"
 
 const CreateUser = () => {
@@ -22,8 +22,10 @@ const CreateUser = () => {
   const location = useLocation()
 
   useEffect(() => {
-    console.log("useEffect")
-    // checkAuth(location)
+    const redirect = async () => {
+      await redirectUser(4)
+    }
+    redirect()
   }, [location])
 
   function handleSubmit(event) {
@@ -45,7 +47,7 @@ const CreateUser = () => {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h1>User creation</h1>
+        <h1>Create user</h1>
         <div className="form-container-div">
           <AuthFields user={userDetails} setUser={setUserDetails} />
         </div>

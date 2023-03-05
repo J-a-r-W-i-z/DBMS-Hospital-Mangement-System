@@ -24,7 +24,6 @@ const App = () => {
   }
 
   const login = async (user) => {
-    console.log(user)
     const response = await handleLogin(user)
     if (!response) return
 

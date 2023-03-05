@@ -6,7 +6,7 @@ import { handleListUsers, handleDeleteUser } from "../../../actions"
 import { AnimatePresence } from "framer-motion"
 import "./ListUsers.scss"
 
-const ListUsers = ({ title }) => {
+const ListUsers = ({ title, userType }) => {
   const [users, setUsers] = useState([
     {
       username: "johnsnow",
@@ -30,7 +30,8 @@ const ListUsers = ({ title }) => {
   const location = useLocation()
 
   useEffect(() => {
-    handleListUsers(setUsers)
+    // handleListUsers(userType, setUsers)
+    // console.log("useEffect", users)
   }, [location])
 
   function tableData() {
@@ -65,8 +66,14 @@ const ListUsers = ({ title }) => {
   }
 
   function deleteAndFetch(key) {
-    handleDeleteUser(key)
-    setUsers(handleListUsers)
+    const status = async () => {
+      const response = await handleDeleteUser(key)
+      if (!response) return
+
+      await handleListUsers(userType, setUsers)
+    }
+
+    status()
   }
 
   return (

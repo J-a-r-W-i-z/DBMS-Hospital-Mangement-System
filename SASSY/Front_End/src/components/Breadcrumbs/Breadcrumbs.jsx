@@ -20,7 +20,7 @@ function Breadcrumbs() {
         </ul>
       </nav>
       <hr className="breadcrumb-line" />
-      <div className="margin-divider-sm"></div>
+      <div className="margin-divider-xxsm"></div>
     </>
   )
 }

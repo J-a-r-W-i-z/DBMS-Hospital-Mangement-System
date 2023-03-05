@@ -9,7 +9,7 @@ function page(element) {
         <Breadcrumbs />
         {element}
       </div>
-      <div className="margin-divider" />
+      <div className="margin-divider-xsm" />
     </>
   )
 }

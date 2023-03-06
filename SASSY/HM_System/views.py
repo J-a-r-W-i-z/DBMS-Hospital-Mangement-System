@@ -721,13 +721,14 @@ class UpcomingAppointments(UserView):
                 'detail': 'Could not retrive data'
             }
 
+
 class getProfileView(UserView):
     def get(self, request):
         payload = UserView.authenticate(self, request)
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         print(serializer.data)
-        user_type = serializer.data.user_type
+        user_type = serializer.data['user_type']
 
         query = ""
         if user_type == 1:
@@ -738,7 +739,6 @@ class getProfileView(UserView):
             query = """SELECT * FROM hm_system_doctor WHERE EmployeeId_id = %s;"""
         elif user_type == 4:
             query = """SELECT * FROM hm_system_administrator WHERE EmployeeId_id = %s;"""
-
 
         try:
             with connection.cursor() as cursor:

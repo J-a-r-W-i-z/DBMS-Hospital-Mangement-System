@@ -91,7 +91,7 @@ export const handleLogout = async () => {
   return response
 }
 
-export const handleListUsers = async (usertype, setUsers) => {
+export const handleListUsers = async (usertype) => {
   let response = []
   await api.listUsers({ user_type: usertype })
     .then(res => {
@@ -101,7 +101,7 @@ export const handleListUsers = async (usertype, setUsers) => {
       handleError(err)
     })
 
-  setUsers(response)
+  return response
 }
 
 export const handleCreateUser = async (userData, initialData, resetData) => {
@@ -116,9 +116,9 @@ export const handleCreateUser = async (userData, initialData, resetData) => {
     })
 }
 
-export const handleDeleteUser = async (username) => {
+export const handleDeleteUser = async (id, type) => {
   let status = null
-  await api.deleteUser({ req_user_name: username })
+  await api.deleteUser({ EmployeeId_id: id, user_type: type })
     .then(res => {
       status = true
       toast.success("User deleted successfully.", toastOptions)

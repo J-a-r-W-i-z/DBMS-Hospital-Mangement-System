@@ -116,7 +116,7 @@ const PatientMedReport = () => {
                         ? patients.map((patient) => (
                             <tr key={patient.id}>
                                 <td>{patient.id}</td>
-                                <td>{patient.name}</td>
+                                <td>{patient.Start}</td>
                                 <td>{patient.appId}</td>
 
                                 <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>

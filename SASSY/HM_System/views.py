@@ -738,7 +738,7 @@ class GetPatientDetails(UserView):
             response.data = {
                 'detail': 'Could not retrive data'
             }
-        query="""select A.AppointmentID,,U.Doctor_id,T.TreatmentID,T.Name,U.Date hm_system_undergoes as U,hm_system_appointment as A,hm_system_treatment as T where
+        query="""select A.AppointmentID,,U.Doctor_id,T.TreatmentID,T.Name,U.Date from hm_system_undergoes as U,hm_system_appointment as A,hm_system_treatment as T where
                 U.Appointment_id=A.AppointmentID and U.Treatment_id=T.TreatmentID and A.Patient_id=%s"""
         undergoes = None
         try:
@@ -753,7 +753,7 @@ class GetPatientDetails(UserView):
                 'detail': 'Could not retrive data'
             }
         
-        query="""select A.AppointmentID,,P.Doctor_id,M.Code,M.Name,P.Date hm_system_prescribes as P,hm_system_appointment as A,hm_system_Medication as M where
+        query="""select A.AppointmentID,,P.Doctor_id,M.Code,M.Name,P.Date from hm_system_prescribes as P,hm_system_appointment as A,hm_system_Medication as M where
                 U.Appointment_id=A.AppointmentID and U.Treatment_id=T.TreatmentID and A.Patient_id=%s"""
         prescribes = None
         try:
@@ -768,7 +768,7 @@ class GetPatientDetails(UserView):
                 'detail': 'Could not retrive data'
             }
         
-        query="""select * hm_system_report as U,hm_system_appointment as A,hm_system_test as T where
+        query="""select * from hm_system_report as U,hm_system_appointment as A,hm_system_test as T where
                 U.Appointment_id=A.AppointmentID and U.Treatment_id=T.TreatmentID and A.Patient_id=%s"""
         report = None
         try:

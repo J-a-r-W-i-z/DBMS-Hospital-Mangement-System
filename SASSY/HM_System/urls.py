@@ -11,7 +11,7 @@ urlpatterns = [
     path('create-user', CreateUserView.as_view()),
     path('registerPatient', InsertPatientView.as_view()),
     path('admitPatient', InsertStayView.as_view()),
-    path('appointment,Patient',ConfirmAppointmentView.as_view()),
+    path('appointmentPatient',ConfirmAppointmentView.as_view()),
     path('patientstay',GetAdmittedView.as_view()),
     # path('dischargePatient',)
 ]

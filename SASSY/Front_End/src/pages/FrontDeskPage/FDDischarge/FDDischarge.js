@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react"
 import "./FDDischarge.css"
 import axios from "axios"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FDDischarge = () => {
     const [patients, setPatients] = useState([
         { id: "1", name: "John Doe", stayID: 35, gender: 1 },
-        { id: "2", name: "Jane Smith", stayID: 42, gender: 1},
-    
+        { id: "2", name: "Jane Smith", stayID: 42, gender: 1 },
+
     ])
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/patientstay')
             .then(response => {
-                console.log(response.data);
-                setPatients(response.data);
+                console.log(response.data.List);
+                setPatients(response.data.List);
+                toast.success('Patient List Updated Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
             })
             .catch(error => {
                 console.log(error);
+                toast.error('Could not refresh patient list',
+                    { position: toast.POSITION.BOTTOM_CENTER })
             });
-    });
+    }, []);
 
     const [searchTerm, setSearchTerm] = useState("")
     const [filteredPatients, setFilteredPatients] = useState([])
@@ -95,6 +101,7 @@ const FDDischarge = () => {
                         ))}
                 </tbody>
             </table>
+            <ToastContainer />
         </div>
     )
 }

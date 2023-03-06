@@ -8,7 +8,7 @@ import jwt
 import sys
 import datetime
 from django.db import connection
-# from datetime import datetime
+
 # Create your views here.
 
 
@@ -242,7 +242,7 @@ class InsertPatientView(UserView):
             response.status_code = 405
             response
             response.data = {
-                'message': 'Could not add patient'
+                'detail': 'Could not add patient'
             }
             return response
 
@@ -259,26 +259,59 @@ class ConfirmAppointmentView(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
 
-        Patient = request.data['Patient']
-        Doctor = request.data['Doctor']
-        Start = request.data['Start']
+        Patient = request.data['PatientID']
+        Doctor = request.data['DoctorID']
+        Start = request.data['DateOfAppointment']
 
-        query = """Insert into hm_system_appointment (Patient,Doctor,Start) values(%s,%s,%s);"""
+        today = datetime.datetime.now().date()
+        date_time_obj = datetime.datetime.strptime(Start, '%Y-%m-%d').date()
+        if today > date_time_obj:
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Appointment cannot be scheduled for past dates'
+            }
+            return response
+
+        query = """Select count(distinct A.AppointmentID)
+                    from hm_system_appointment as A
+                    where A.Doctor_id=%s and CAST(A.Start as DATE)=%s"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (Patient, Doctor, Start))
+                cursor.execute(query, (Doctor, Start))
+                row=cursor.fetchone()
+                if int(row[0])>=10:
+                    response = Response()
+                    response.status_code = 405
+                    response.data = {
+                        'detail': 'Number of appointments for doctor exceeded on that date'
+                    }
+                    return response
         except Exception as e:
             print(e)
             response = Response()
             response.status_code = 405
-            response
             response.data = {
-                'message': 'Could not add appointment'
+                'detail': 'Failed to get doctor appointments'
+            }
+            return response
+        
+        query = """Insert into hm_system_appointment (Patient_id,Doctor_id,Start) values(%s,%s,%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (Patient, Doctor, Start))
+                
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not add appointment'
             }
             return response
         response = Response()
         response.data = {
-            'detail': 'Appointment Added Successfully'
+            'detail': f'Appointment Added Successfully '
         }
         return response
 
@@ -541,35 +574,3 @@ class SetAvailableView(UserView):
         except:
             # TODO
             return
-        
-class GetUserProfile(UserView):
-    def post(self, request):
-        UserView.authenticate(self,request)
-        user_type = request.data['user_type']
-        print(user_type)
-        query = ""
-        if user_type==1:
-            query = """ Select * from hm_system_user inner join hm_system_fdoperator on hm_system_user.id = hm_system_fdoperator.EmployeeId_id """
-        elif user_type==2:
-            query = """ Select * from hm_system_user inner join hm_system_dataoperator on hm_system_user.id = hm_system_dataoperator.EmployeeId_id"""
-        elif user_type==3:
-            query = """ Select * from hm_system_user inner join hm_system_doctor on hm_system_user.id = hm_system_doctor.EmployeeId_id"""
-        elif user_type==4:
-            query = """ Select * from hm_system_user inner join hm_system_administrator on hm_system_user.id = hm_system_administrator.EmployeeId_id"""
-        
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                return Response({
-                    'List': UserView.cursorToDict(self, cursor)
-                })
-        except Exception as e:
-            print(e)
-            response = Response()
-            response.status_code = 405
-            response.data = {
-                'detail': 'Could not retrive data'
-            }
-            return response
-        
-        

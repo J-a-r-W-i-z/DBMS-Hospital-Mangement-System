@@ -30,8 +30,8 @@ const ListUsers = ({ title, userType }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // handleListUsers(userType, setUsers)
-    // console.log("useEffect", users)
+    handleListUsers(userType, setUsers)
+    console.log("useEffect", users)
   }, [location])
 
   function deleteAndFetch(key) {

@@ -541,3 +541,32 @@ class SetAvailableView(UserView):
         except:
             # TODO
             return
+        
+class GetUserProfile(UserView):
+    def post(self, request):
+        UserView.authenticate(self,request)
+        user_type = request.data['user_type']
+        if user_type=='1':
+            query = """ Select * from hm_system_user natural join hm_system_fdoperator """
+        elif user_type=='2':
+            query = """ Select * from hm_system_user natural join hm_system_dataoperator """
+        elif user_type=='3':
+            query = """ Select * from hm_system_user natural join hm_system_doctor """
+        elif user_type=='4':
+            query = """ Select * from hm_system_user natural join hm_system_administrator """
+        
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except:
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+            return response
+        
+        

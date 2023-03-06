@@ -602,9 +602,13 @@ class DischargePatientView(UserView):
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (StayID,))
-                response.data = {
-                    'detail': 'Unable to set room available'
-                }
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Unable to find room availability'
+            }
             return response
         return Response({
             'detail': 'Discharged successfully'

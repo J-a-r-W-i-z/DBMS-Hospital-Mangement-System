@@ -6,7 +6,7 @@ const api = axios.create({
 
 export const listUsers = payload => api.post(`/list-users`, payload)
 export const createUser = payload => api.post(`/create-user`, payload)
-export const deleteUser = payload => api.delete(`/delete-user`, payload)
+export const deleteUser = payload => api.post(`/delete-user`, payload)
 
 export const listAppointments = () => api.get(`/list-appointments`)
 export const deleteAppointment = payload => api.delete(`/delete-appointment`, payload)

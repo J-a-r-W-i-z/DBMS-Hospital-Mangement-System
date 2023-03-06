@@ -112,23 +112,6 @@ class Administrator(models.Model):
     Gender = models.PositiveSmallIntegerField(choices=GENDER_CHOICES)
     DOB = models.DateField()
 
-
-class Test(models.Model):
-    Code = models.AutoField(primary_key=True)
-    Name = models.TextField()
-    Description = models.TextField()
-    Cost = models.IntegerField()
-
-
-class Report(models.Model):
-    ReportID = models.AutoField(primary_key=True)
-    Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    Doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    Test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    Date = models.DateTimeField()
-    TestResult = models.TextField()
-
-
 class Appointment(models.Model):
     AppointmentID = models.AutoField(primary_key=True)
     Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -136,6 +119,18 @@ class Appointment(models.Model):
     Start = models.DateTimeField()
     End = models.DateTimeField(null=True)
 
+class Test(models.Model):
+    Code = models.AutoField(primary_key=True)
+    Name = models.TextField()
+    Description = models.TextField()
+    Cost = models.IntegerField()
+
+class Report(models.Model):
+    ReportID = models.AutoField(primary_key=True)
+    Appointment=models.ForeignKey(Appointment,on_delete=models.CASCADE)
+    Test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    Date = models.DateTimeField()
+    TestResult = models.TextField()
 
 class Medication(models.Model):
     Code = models.AutoField(primary_key=True)
@@ -147,8 +142,6 @@ class Medication(models.Model):
 class Prescribes(models.Model):
     Appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
     Medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
-    Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    Doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     Dose = models.TextField()
 
     class Meta:
@@ -181,15 +174,12 @@ class Treatment(models.Model):
 
 
 class Undergoes(models.Model):
-    Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    Treatment = models.ForeignKey(Treatment, on_delete=models.CASCADE)
-    Stay = models.ForeignKey(Stay, on_delete=models.CASCADE)
-    Date = models.DateTimeField()
-    Doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     Appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
-
+    Treatment = models.ForeignKey(Treatment, on_delete=models.CASCADE)
+    Date = models.DateTimeField()
+    
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['Patient', 'Treatment', 'Stay', 'Date'], name='second_constraint'),
+                fields=['Appointment', 'Treatment'], name='second_constraint'),
         ]

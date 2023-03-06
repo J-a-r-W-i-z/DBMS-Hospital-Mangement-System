@@ -88,9 +88,9 @@ export const PersonalFields = ({ user, setUser }) => {
         required
       >
         <option value="">Select gender</option>
-        <option value="1">Male</option>
-        <option value="2">Female</option>
-        <option value="3">Other</option>
+        <option value={1}>Male</option>
+        <option value={2}>Female</option>
+        <option value={3}>Other</option>
       </select>
       <input
         type="date"

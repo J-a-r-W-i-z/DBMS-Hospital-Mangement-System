@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { Navbar } from "./components"
 import { toastOptions, usermap } from "./constants"
 import { checkAuth, handleLogin, handleLogout } from "./actions"
@@ -13,10 +13,11 @@ const App = () => {
   const [userType, setUserType] = useState(null)
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     isauth()
-  }, [])
+  }, [location])
 
   const isauth = async () => {
     const response = await checkAuth()

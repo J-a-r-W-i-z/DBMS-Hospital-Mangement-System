@@ -472,6 +472,7 @@ class InsertUndergoesView(UserView):
 
 class GetPatientsView(UserView):
     def get(self, request):
+<<<<<<< HEAD
         UserView.authenticate(self, request)
         query = """(Select distinct P.Name
                 From hm_system_patient as P, hm_system_appointment as A
@@ -480,15 +481,24 @@ class GetPatientsView(UserView):
                 (Select distinct P.Name
                 From hm_system_patient as P, hm_system_undergoes as U
                 where P.AadharID=U.Patient and U.Doctor=1);"""
+=======
+        payload = UserView.authenticate(self, request)
+        id = payload['id']
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
+>>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query)
+                cursor.execute(query, (str(id),))
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
-        except:
-            # TODO
-            return
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
 
 # Query 6 ????????
 
@@ -525,9 +535,15 @@ class GetRoomsView(UserView):
 class GetReportsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
+<<<<<<< HEAD
         query = """Select * 
                 from hm_system_report
                 where Patient=111 and Doctor=1 
+=======
+        query = """Select *
+                from hm_system_report
+                where Patient=111 and Doctor=1
+>>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539
                 order by Date DESC limit 5;"""
         try:
             with connection.cursor() as cursor:
@@ -607,11 +623,120 @@ class DischargePatientView(UserView):
             print(e)
             response = Response()
             response.status_code = 405
-            response
             response.data = {
-                'detail': 'Unable to set room available'
+                'detail': 'Unable to find room availability'
             }
             return response
         return Response({
             'detail': 'Discharged successfully'
         })
+<<<<<<< HEAD
+=======
+
+
+class GetUserProfile(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        user_type = request.data['user_type']
+        print(user_type)
+        query = ""
+        if user_type == 1:
+            query = """ Select * from hm_system_user inner join hm_system_fdoperator on hm_system_user.id = hm_system_fdoperator.EmployeeId_id; """
+        elif user_type == 2:
+            query = """ Select * from hm_system_user inner join hm_system_dataoperator on hm_system_user.id = hm_system_dataoperator.EmployeeId_id; """
+        elif user_type == 3:
+            query = """ Select * from hm_system_user inner join hm_system_doctor on hm_system_user.id = hm_system_doctor.EmployeeId_id; """
+        elif user_type == 4:
+            query = """ Select * from hm_system_user inner join hm_system_administrator on hm_system_user.id = hm_system_administrator.EmployeeId_id; """
+
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+            return response
+
+
+class DeleteUserView(UserView):
+    def post(self, request):
+        payload = UserView.authenticate(self, request)
+        user_type = request.data['user_type']
+        id = request.data['EmployeeId_id']
+        query = ""
+        if user_type == 1:
+            query = """DELETE FROM hm_system_fdoperator WHERE EmployeeId_id = %s;"""
+        elif user_type == 2:
+            query = """DELETE FROM hm_system_dataoperator WHERE EmployeeId_id = %s;"""
+        elif user_type == 3:
+            query = """DELETE FROM hm_system_doctor WHERE EmployeeId_id = %s;"""
+        elif user_type == 4:
+            query = """DELETE FROM hm_system_administrator WHERE EmployeeId_id = %s;"""
+
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not delete user'
+            }
+            return response
+
+        query = """DELETE FROM hm_system_user WHERE id = %s;"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not delete user'
+            }
+            return response
+
+        if payload['id'] == id:
+            response = Response()
+            response.delete_cookie('jwt')
+            response.data = {
+                'detail': 'Logout Successful'
+            }
+            return response
+
+        response = Response()
+        response.data = {
+            'detail': 'User Deleted Successfully'
+        }
+        return response
+
+
+class UpcomingAppointments(UserView):
+    def get(self, request):
+        payload = UserView.authenticate(self, request)
+        id = payload['id']
+        today = datetime.datetime.now().date()
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s and CAST(start as Date)>= %s) """
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id), today.strftime('%Y-%m-%d')))
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+>>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539

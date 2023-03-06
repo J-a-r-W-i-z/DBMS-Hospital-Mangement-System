@@ -1,8 +1,8 @@
 import * as api from "../api"
 import { toast } from "react-toastify"
-import { toastOptions, usermap } from "../constants"
+import { toastOptions } from "../constants"
 
-const handleError = (err, noredirect) => {
+const handleError = (err) => {
   const defaultError = "Something went wrong. Please try again later."
 
   if (err === null || err.response === undefined) {
@@ -11,15 +11,7 @@ const handleError = (err, noredirect) => {
   }
 
   switch (err.response.status) {
-    case 401:
-      if (noredirect) break
-      toast.error(err.response.data.detail, toastOptions)
-
-      // const checkAuth = async () => await redirectUser()
-      // checkAuth()
-
-      break
-    case 405:
+    case 401, 405:
       toast.error(err.response.data.detail, toastOptions)
       break
     default:
@@ -45,22 +37,21 @@ export const redirectUser = async (userType, navigate, setLoading) => {
 
   if (response === null) {
     if (userType === null) {
-      console.log("response is", response, ":loading is set to false")
-      setLoading(false)
+      setLoading && setLoading(false)
       return
     }
 
     navigate("/")
-    return
+    return true
   }
 
   if (userType === response) {
-    console.log("loading is set to false")
-    setLoading(false)
+    setLoading && setLoading(false)
     return
   }
 
-  navigate(`/${usermap[response]}`)
+  navigate(-1)
+  return true
 }
 
 export const handleLogin = async (user) => {
@@ -91,21 +82,20 @@ export const handleLogout = async () => {
   return response
 }
 
-export const handleListUsers = async (usertype, setUsers) => {
-  let response = []
+export const handleListUsers = async (usertype, setUsers, setLoading) => {
+  setLoading(true)
+
   await api.listUsers({ user_type: usertype })
     .then(res => {
-      response = res.data
+      setUsers(res.data.List)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
-
-  setUsers(response)
 }
 
 export const handleCreateUser = async (userData, initialData, resetData) => {
-  console.log(userData)
   await api.createUser(userData)
     .then(res => {
       toast.success("User created successfully.", toastOptions)
@@ -116,9 +106,9 @@ export const handleCreateUser = async (userData, initialData, resetData) => {
     })
 }
 
-export const handleDeleteUser = async (username) => {
+export const handleDeleteUser = async (id, type) => {
   let status = null
-  await api.deleteUser({ req_user_name: username })
+  await api.deleteUser({ EmployeeId_id: id, user_type: type })
     .then(res => {
       status = true
       toast.success("User deleted successfully.", toastOptions)
@@ -130,40 +120,41 @@ export const handleDeleteUser = async (username) => {
   return status
 }
 
-export const handleListAppointments = async () => {
-  let response = null
+export const handleListAppointments = async (setPatients, setLoading) => {
+  setLoading(true)
+
   await api.listAppointments()
     .then(res => {
-      response = res.data
-    })
-    .catch(err => {
-      handleError(err)
-    })
-
-  return response
-}
-
-export const handleDeleteAppointment = async (username) => {
-  await api.deleteAppointment({ req_user_name: username })
-    .then(res => {
-      toast.success("Appointment deleted successfully.", toastOptions)
+      setPatients(res.data.List)
+      console.log("appointments", res.data.list)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
 }
 
-export const handleListPatients = async () => {
-  let response = null
+// export const handleDeleteAppointment = async (username) => {
+//   await api.deleteAppointment({ req_user_name: username })
+//     .then(res => {
+//       toast.success("Appointment deleted successfully.", toastOptions)
+//     })
+//     .catch(err => {
+//       handleError(err)
+//     })
+// }
+
+export const handleListPatients = async (setPatients, setLoading) => {
+  setLoading(true)
+
   await api.listPatients()
     .then(res => {
-      response = res.data
+      setPatients(res.data.List)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
-
-  return response
 }
 
 export const handleShowPatient = async (username) => {

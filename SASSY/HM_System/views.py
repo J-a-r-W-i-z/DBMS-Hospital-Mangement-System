@@ -610,20 +610,7 @@ class DeleteUserView(UserView):
         UserView.authenticate(self,request)
         user_type = request.data['user_type']
         id = request.data['EmployeeId_id']
-
-        query = """DELETE FROM hm_system_user WHERE id = %s;"""
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute(query, (id,))
-        except Exception as e:
-            print(e)
-            response = Response()
-            response.status_code = 405
-            response.data = {
-                'detail': 'Could not delete user'
-            }
-            return response
-
+        print(type(user_type))
         query = ""
         if user_type==1:
             query = """DELETE FROM hm_system_fdoperator WHERE EmployeeId_id = %s;""" 
@@ -636,7 +623,21 @@ class DeleteUserView(UserView):
         
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (id,))
+                cursor.execute(query, (str(id),))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not delete user'
+            }
+            return response
+        
+        
+        query = """DELETE FROM hm_system_user WHERE id = %s;"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
         except Exception as e:
             print(e)
             response = Response()

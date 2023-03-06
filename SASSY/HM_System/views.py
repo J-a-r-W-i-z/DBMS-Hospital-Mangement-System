@@ -474,7 +474,7 @@ class GetPatientsView(UserView):
     def get(self, request):
         payload = UserView.authenticate(self, request)
         id = payload['id']
-        query = """Select * from hm_system_patient where Aadhar_Id in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (str(id),))
@@ -645,18 +645,17 @@ class DeleteUserView(UserView):
                 'detail': 'Could not delete user'
             }
             return response
-        
-        if payload['id']== id:
+
+        if payload['id'] == id:
             response = Response()
             response.delete_cookie('jwt')
             response.data = {
                 'detail': 'Logout Successful'
             }
             return response
-        
+
         response = Response()
         response.data = {
             'detail': 'User Deleted Successfully'
         }
         return response
-

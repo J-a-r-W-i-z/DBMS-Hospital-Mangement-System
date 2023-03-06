@@ -4,31 +4,16 @@ import { Table } from "../../../components"
 import { handleListPatients } from "../../../actions"
 
 const Patients = () => {
-  const [users, setUsers] = useState([
-    {
-      username: "johnsnow",
-      name: "John Snow",
-      date_joined: "2021-01-01",
-      something: "no",
-    },
-    {
-      username: "janesmith",
-      name: "Jane Smith",
-      date_joined: "2021-01-01",
-    },
-    {
-      username: "bobjohnson",
-      name: "Bob Johnson",
-      date_joined: "2021-01-01",
-    },
-  ])
+  const [loading, setLoading] = useState(true)
+  const [patients, setPatients] = useState([])
 
   const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log("useEffect")
-    // setUsers(handleListPatients())
+    console.log("Patients")
+    handleListPatients(setPatients, setLoading)
+    console.log(patients)
   }, [location])
 
   function limitedData(users) {
@@ -42,20 +27,23 @@ const Patients = () => {
   }
 
   function getPatientDetails(index) {
-    console.log(index)
     navigate(`/doctor/patients/${users[index].username}`)
   }
 
   return (
-    <div className="table-container">
-      <Table
-        title="Patients seen"
-        headers={["Username", "Name", "Date Joined"]}
-        data={limitedData(users)}
-        searchKey="username"
-        getInfo={(user) => getPatientDetails(user)}
-      />
-    </div>
+    <>
+      {!loading && (
+        <div className="table-container">
+          <Table
+            title="Patients seen"
+            headers={["Username", "Name", "Date Joined"]}
+            data={limitedData(patients)}
+            searchKey="username"
+            getInfo={(user) => getPatientDetails(user)}
+          />
+        </div>
+      )}
+    </>
   )
 }
 

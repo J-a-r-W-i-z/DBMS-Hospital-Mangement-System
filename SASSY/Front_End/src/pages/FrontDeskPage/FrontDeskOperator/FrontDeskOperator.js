@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Switches, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Switches, Redirect, useNavigate } from 'react-router-dom';
 import "../SideBar/SideBar.css";
 import Logo from "../../../assets/Favicon.png";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import './FrontDeskOperator.css'
 import MainDash from '../MainDash/MainDash';
+import axios from "axios";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     UilEstate,
     UilClipboardAlt,
@@ -16,6 +20,8 @@ import {
 } from "@iconscout/react-unicons";
 
 function FrontDeskOperator() {
+    const navigate = useNavigate()
+
     const [page, setPage] = useState("Register");
     const SidebarData = [
         {
@@ -57,6 +63,25 @@ function FrontDeskOperator() {
             left: '-60%'
         }
     }
+
+
+    const handleLogout = () => {
+
+        axios.post('http://127.0.0.1:8000/api/logout')
+            .then((response) => {
+                console.log(response.status)
+                toast.success('Logout Successful',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Logout successful!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+                navigate("/")
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.detail,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
+
+    }
     console.log(window.innerWidth)
     return (
         <div className="AppFd">
@@ -97,7 +122,7 @@ function FrontDeskOperator() {
                                 );
                             })}
                             {/* signoutIcon */}
-                            <div className="menuItem">
+                            <div className="menuItem" onClick={handleLogout} >
                                 <UilSignOutAlt />
                                 Logout
                             </div>

@@ -549,13 +549,13 @@ class GetUserProfile(UserView):
         print(user_type)
         query = ""
         if user_type==1:
-            query = """ Select * from hm_system_user inner join hm_system_fdoperator on hm_system_user.id = hm_system_fdoperator.EmployeeId_id """
+            query = """ Select * from hm_system_user inner join hm_system_fdoperator on hm_system_user.id = hm_system_fdoperator.EmployeeId_id; """
         elif user_type==2:
-            query = """ Select * from hm_system_user inner join hm_system_dataoperator on hm_system_user.id = hm_system_dataoperator.EmployeeId_id"""
+            query = """ Select * from hm_system_user inner join hm_system_dataoperator on hm_system_user.id = hm_system_dataoperator.EmployeeId_id; """
         elif user_type==3:
-            query = """ Select * from hm_system_user inner join hm_system_doctor on hm_system_user.id = hm_system_doctor.EmployeeId_id"""
+            query = """ Select * from hm_system_user inner join hm_system_doctor on hm_system_user.id = hm_system_doctor.EmployeeId_id; """
         elif user_type==4:
-            query = """ Select * from hm_system_user inner join hm_system_administrator on hm_system_user.id = hm_system_administrator.EmployeeId_id"""
+            query = """ Select * from hm_system_user inner join hm_system_administrator on hm_system_user.id = hm_system_administrator.EmployeeId_id; """
         
         try:
             with connection.cursor() as cursor:
@@ -571,5 +571,56 @@ class GetUserProfile(UserView):
                 'detail': 'Could not retrive data'
             }
             return response
+        
+class DeleteUserView(UserView):
+    def post(self, request):
+        UserView.authenticate(self,request)
+        user_type = request.data['user_type']
+        id = request.data['EmployeeId_id']
+
+        query = """DELETE FROM hm_system_user WHERE id = %s;"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (id,))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not delete user'
+            }
+            return response
+
+        query = ""
+        if user_type==1:
+            query = """DELETE FROM hm_system_fdoperator WHERE EmployeeId_id = %s;""" 
+        elif user_type==2:
+            query = """DELETE FROM hm_system_dataoperator WHERE EmployeeId_id = %s;""" 
+        elif user_type==3:
+            query = """DELETE FROM hm_system_doctor WHERE EmployeeId_id = %s;""" 
+        elif user_type==4:
+            query = """DELETE FROM hm_system_administrator WHERE EmployeeId_id = %s;""" 
+        
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (id,))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not delete user'
+            }
+            return response
+
+        response = Response()
+        response.data = {
+            'detail': 'User Deleted Successfully'
+        }
+        return response
+        
+
+
+    
         
         

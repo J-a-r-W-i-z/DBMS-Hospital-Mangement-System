@@ -472,20 +472,9 @@ class InsertUndergoesView(UserView):
 
 class GetPatientsView(UserView):
     def get(self, request):
-<<<<<<< HEAD
-        UserView.authenticate(self, request)
-        query = """(Select distinct P.Name
-                From hm_system_patient as P, hm_system_appointment as A
-                where P.AadharID=A.Patient and A.Doctor=1 and A.Start>'2020-01-01 00:00')
-                union
-                (Select distinct P.Name
-                From hm_system_patient as P, hm_system_undergoes as U
-                where P.AadharID=U.Patient and U.Doctor=1);"""
-=======
         payload = UserView.authenticate(self, request)
         id = payload['id']
         query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
->>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (str(id),))
@@ -535,15 +524,9 @@ class GetRoomsView(UserView):
 class GetReportsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-<<<<<<< HEAD
-        query = """Select * 
-                from hm_system_report
-                where Patient=111 and Doctor=1 
-=======
         query = """Select *
                 from hm_system_report
                 where Patient=111 and Doctor=1
->>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539
                 order by Date DESC limit 5;"""
         try:
             with connection.cursor() as cursor:
@@ -630,8 +613,6 @@ class DischargePatientView(UserView):
         return Response({
             'detail': 'Discharged successfully'
         })
-<<<<<<< HEAD
-=======
 
 
 class GetUserProfile(UserView):
@@ -739,4 +720,34 @@ class UpcomingAppointments(UserView):
             response.data = {
                 'detail': 'Could not retrive data'
             }
->>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539
+
+
+class getProfileView(UserView):
+    def get(self, request):
+        payload = UserView.authenticate(self, request)
+        user = User.objects.filter(id=payload['id']).first()
+        serializer = UserSerializer(user)
+        print(serializer.data)
+        user_type = serializer.data['user_type']
+
+        query = ""
+        if user_type == 1:
+            query = """SELECT * FROM hm_system_fdoperator WHERE EmployeeId_id = %s;"""
+        elif user_type == 2:
+            query = """SELECT * FROM hm_system_dataoperator WHERE EmployeeId_id = %s;"""
+        elif user_type == 3:
+            query = """SELECT * FROM hm_system_doctor WHERE EmployeeId_id = %s;"""
+        elif user_type == 4:
+            query = """SELECT * FROM hm_system_administrator WHERE EmployeeId_id = %s;"""
+
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(payload['id'])))
+                return Response(UserView.cursorToDict(self, cursor))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }

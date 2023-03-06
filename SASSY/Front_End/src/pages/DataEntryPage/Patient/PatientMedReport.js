@@ -1,5 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import axios from "axios";
 import "./PatientMedReport.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ff = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => {
     return (
@@ -55,16 +58,32 @@ const PatientMedReport = () => {
             });
     }, []);
 
-    const [showPopup, setShowPopup] = useState(false);
+    const [showPopup1, setShowPopup1] = useState(false);
+    const [showPopup2, setShowPopup2] = useState(false);
+    const [showPopup3, setShowPopup3] = useState(false);
 
-    const handleButtonClick = () => {
-        setShowPopup(true);
+    const handleButtonClick1 = () => {
+        setShowPopup1(true);
+    };
+    const handleButtonClick2 = () => {
+        setShowPopup2(true);
+    };
+    const handleButtonClick3 = () => {
+        setShowPopup3(true);
     };
 
     const [inputValue, setInputValue] = useState('');
     const [todos, setTodos] = useState([]);
-    const handlePopupClose = () => {
-        setShowPopup(false);
+    const handlePopupClose1 = () => {
+        setShowPopup1(false);
+        setTodos([])
+    };
+    const handlePopupClose2 = () => {
+        setShowPopup2(false);
+        setTodos([])
+    };
+    const handlePopupClose3 = () => {
+        setShowPopup3(false);
         setTodos([])
     };
 
@@ -88,6 +107,68 @@ const PatientMedReport = () => {
             handleFormSubmit();
         }
     }
+
+    const handleMedicineSubmit = (appID) => {
+        const mess = {
+            applicationid: appID.toString(),
+            MedicineList: todos,
+        };
+        console.log(mess);
+        axios.post('http://127.0.0.1:8000/api/insertMedicine', mess)
+            .then((response) => {
+                setTodos([])
+                toast.success('Medicines added Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Medicines added successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.detail,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
+    };
+    const handleTestSubmit = (appID) => {
+        const mess = {
+            applicationid: appID.toString(),
+            MedicineList: todos,
+        };
+        console.log(mess);
+        axios.post('http://127.0.0.1:8000/api/insertTest', mess)
+            .then((response) => {
+                setTodos([])
+                toast.success('Medicines added Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Medicines added successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.detail,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
+
+    };
+    const handleTreatmentSubmit = (appID) => {
+        const mess = {
+            applicationid: appID.toString(),
+            MedicineList: todos,
+        };
+        console.log(mess);
+        axios.post('http://127.0.0.1:8000/api/insertTreatment', mess)
+            .then((response) => {
+                setTodos([])
+                toast.success('Medicines added Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Medicines added successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.detail,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
+
+    };
+
+
     return (
         <div className="sectionMed s-wrapper">
             <div className="margin-divider-sm" />
@@ -108,35 +189,40 @@ const PatientMedReport = () => {
                         <th>Date</th>
 
                         <th>Medication</th>
-                        <th>Report</th>
+                        <th>Test</th>
+                        <th>Treatment</th>
                     </tr>
                 </thead>
                 <tbody>
                     {searchTerm === ""
                         ? patients.map((patient) => (
-                            <tr key={patient.id}>
-                                <td>{patient.id}</td>
+                            <tr key={patient.Patient_id}>
+                                <td>{patient.Patient_id}</td>
+                                <td>{patient.Name}</td>
+                                <td>{patient.AppointmentID}</td>
                                 <td>{patient.Start}</td>
-                                <td>{patient.appId}</td>
 
-                                <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={handleButtonClick1}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={handleButtonClick2}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={handleButtonClick3}>Add</button></td>
                             </tr>
                         ))
                         : filteredPatients.map((patient) => (
                             <tr key={patient.id}>
-                                <td>{patient.id}</td>
-                                <td>{patient.name}</td>
-                                <td>{patient.appId}</td>
+                                <td>{patient.Patient_id}</td>
+                                <td>{patient.Name}</td>
+                                <td>{patient.AppointmentID}</td>
+                                <td>{patient.Start}</td>
 
-                                <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={handleButtonClick1}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={handleButtonClick2}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={handleButtonClick3}>Add</button></td>
                             </tr>
                         ))}
                 </tbody>
             </table>
 
-            {showPopup && <><div className="popup-overlay"></div> <div className="popup">
+            {showPopup1 && <><div className="popup-overlay"></div> <div className="popup">
                 <div className="popup-content">
                     <h1>Add Medicine</h1>
                     <div className="inputDiv">
@@ -151,11 +237,52 @@ const PatientMedReport = () => {
                         </ul>
                     </div>
                     <div className="buttonDiv">
-                        <button className="popSubmitButton">Submit</button>
-                        <button className="popCloseButton" onClick={handlePopupClose}>Close</button>
+                        <button className="popSubmitButton" onClick={handleMedicineSubmit}>Submit</button>
+                        <button className="popCloseButton" onClick={handlePopupClose1}>Close</button>
                     </div>
                 </div>
             </div></>}
+            {showPopup2 && <><div className="popup-overlay"></div> <div className="popup">
+                <div className="popup-content">
+                    <h1>Add Test</h1>
+                    <div className="inputDiv">
+                        <input className="popInput" type="text" value={inputValue} onChange={handleInputChange} onKeyDown={handleKeyDown} />
+                        <button className="popAddButton" type="submit" onClick={handleFormSubmit}>Add</button>
+                    </div>
+                    <div className="ListDiv">
+                        <ul>
+                            {todos.map((todo, index) => (
+                                <li key={index}>{todo}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="buttonDiv">
+                        <button className="popSubmitButton" onClick={handleTestSubmit}>Submit</button>
+                        <button className="popCloseButton" onClick={handlePopupClose2}>Close</button>
+                    </div>
+                </div>
+            </div></>}
+            {showPopup3 && <><div className="popup-overlay"></div> <div className="popup">
+                <div className="popup-content">
+                    <h1>Add Treatment</h1>
+                    <div className="inputDiv">
+                        <input className="popInput" type="text" value={inputValue} onChange={handleInputChange} onKeyDown={handleKeyDown} />
+                        <button className="popAddButton" type="submit" onClick={handleFormSubmit}>Add</button>
+                    </div>
+                    <div className="ListDiv">
+                        <ul>
+                            {todos.map((todo, index) => (
+                                <li key={index}>{todo}</li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="buttonDiv">
+                        <button className="popSubmitButton" onClick={handleTreatmentSubmit}>Submit</button>
+                        <button className="popCloseButton" onClick={handlePopupClose3}>Close</button>
+                    </div>
+                </div>
+            </div></>}
+            <ToastContainer />
         </div>
     )
 }

@@ -37,7 +37,8 @@ function FDAppointmentForm() {
                 console.log("Admitted successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
             })
             .catch((error) => {
-                toast.error(error.response.data.message,
+                console.log(error);
+                toast.error(error.response.data.detail,
                     { position: toast.POSITION.BOTTOM_CENTER });
             });
     };

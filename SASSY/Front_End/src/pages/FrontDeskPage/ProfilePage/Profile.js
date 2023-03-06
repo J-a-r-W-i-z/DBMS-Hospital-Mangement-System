@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Profile.css'
-const ProfileCard = ({ name, contact, email, age, sex, address }) => {
-    name = "Souvik Rana"
-    contact = "9339005762"
-    email = "ranasouvik07@gmail.com"
-    age = 20
-    sex = "Male"
-    address = "Kharagpur,India"
+const ProfileCard = () => {
+    const [profileinfo, setProfileinfo] = useState({
+        employeeeId: '',
+        name: '',
+        address: '',
+        contact: '',
+        email: '',
+        aadharId: '',
+        gender: '',
+        dob: '',
+
+    })
+    const genderMap = {
+        '1': 'Male',
+        '2': 'Female',
+        '3': 'Other'
+    }
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/getProfile')
+            .then(response => {
+                console.log(response.data.List);
+                setProfileinfo(response.data);
+
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error('Could not refresh Profile page',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+            });
+    }, []);
     return (
         <div className="containerPro">
             <div className="col-lg-6">
-                <h1 className="dark-color">Souvik Rana</h1>
+                <h1 className="dark-color">{profileinfo.name}</h1>
                 <h3 className="theme-color lead">Front Desk Operator</h3>
             </div>
             <div className="about-text go-to">
@@ -18,38 +41,35 @@ const ProfileCard = ({ name, contact, email, age, sex, address }) => {
                 <div className="row about-list">
                     <div className="col-md-6">
                         <div className="media">
-                            <label>Birthday</label>
-                            <p>4th april 1998</p>
+                            <label>Date of Birth</label>
+                            <p>{profileinfo.dob}</p>
                         </div>
-                        <div className="media">
-                            <label>Age</label>
-                            <p>22 Yr</p>
-                        </div>
-                        <div className="media">
-                            <label>Residence</label>
-                            <p>Canada</p>
-                        </div>
+
                         <div className="media">
                             <label>Address</label>
-                            <p>California, USA</p>
+                            <p>{profileinfo.address}</p>
+                        </div>
+                        <div className="media">
+                            <label>Employee Id</label>
+                            <p>{profileinfo.employeeeId}</p>
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="media">
                             <label>E-mail</label>
-                            <p>info@domain.com</p>
+                            <p>{profileinfo.email}</p>
                         </div>
                         <div className="media">
                             <label>Phone</label>
-                            <p>820-885-3321</p>
+                            <p>{profileinfo.contact}</p>
                         </div>
                         <div className="media">
-                            <label>Skype</label>
-                            <p>skype.0404</p>
+                            <label>Gender</label>
+                            <p>{profileinfo.gender}</p>
                         </div>
                         <div className="media">
-                            <label>Freelance</label>
-                            <p>Available</p>
+                            <label>AadharID</label>
+                            <p>{profileinfo.aadharId}</p>
                         </div>
                     </div>
                 </div>

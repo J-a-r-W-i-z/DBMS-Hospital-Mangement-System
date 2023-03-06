@@ -90,7 +90,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dbms_hospital',
         'USER': 'root',
+<<<<<<< HEAD
+        'PASSWORD': 'iam@sql123',
+=======
         'PASSWORD': 'sarthak',
+>>>>>>> a3cab8c2e7c70da1e6517552298e0837a0e68539
         'HOST': '127.0.0.1',
         'PORT': '3306'
 

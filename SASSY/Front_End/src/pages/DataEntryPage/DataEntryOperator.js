@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Switches, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Switches, Redirect, useNavigate } from 'react-router-dom';
 import "../FrontDeskPage/SideBar/SideBar.css";
 import Logo from "../../assets/Favicon.png";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import './DataEntryOperator.css'
 import MainDash from "./MainDash/MainDash";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {
     UilEstate,
@@ -17,6 +20,7 @@ import {
 } from "@iconscout/react-unicons";
 
 function DataEntryOperator() {
+    const navigate = useNavigate();
     const [page, setPage] = useState("Patients");
     const SidebarData = [
         {
@@ -36,11 +40,28 @@ function DataEntryOperator() {
 
     const sidebarVariants = {
         true: {
-            left: '0'
+            left: '0%'
         },
         false: {
             left: '-60%'
         }
+    }
+    const handleLogout = () => {
+
+        axios.post('http://127.0.0.1:8000/api/logout')
+            .then((response) => {
+                console.log(response.status)
+                toast.success('Logout Successful',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+                console.log("Logout successful!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
+                navigate("/")
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.detail,
+                    { position: toast.POSITION.BOTTOM_CENTER });
+            });
+
     }
     console.log(window.innerWidth)
     return (
@@ -52,7 +73,7 @@ function DataEntryOperator() {
                     </div>
                     <motion.div className='sidebar'
                         variants={sidebarVariants}
-                        animate={window.innerWidth <= 768 ? `${expanded}` : ''}
+                        animate={window.innerWidth <= 1200 ? `${expanded}` : ''}
                     >
                         {/* logo */}
                         <div className="logo">
@@ -82,7 +103,7 @@ function DataEntryOperator() {
                                 );
                             })}
                             {/* signoutIcon */}
-                            <div className="menuItem">
+                            <div className="menuItem" onClick={handleLogout}>
                                 <UilSignOutAlt />
                                 Logout
                             </div>

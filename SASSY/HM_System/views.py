@@ -119,7 +119,7 @@ class CreateUserView(UserView):
         hashed_pwd = make_password(password=password)
 
         # Run query to insert into Users table
-        query = """INSERT INTO HM_System_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
+        query = """INSERT INTO hm_system_user (username, password, user_type, is_superuser) VALUES (%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (username, hashed_pwd, user_type, '0'))
@@ -134,7 +134,7 @@ class CreateUserView(UserView):
 
         print("Query1 done")
 
-        query = """Select id from HM_System_user where username=%s"""
+        query = """Select id from hm_system_user where username=%s"""
 
         try:
             with connection.cursor() as cursor:
@@ -165,13 +165,13 @@ class CreateUserView(UserView):
 
         # Insert other details of user in appropriate table according to the user type
         if user_type == "1":
-            query = """Insert into HM_System_fdoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+            query = """Insert into hm_system_fdoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
         elif user_type == "2":
-            query = """Insert into HM_System_dataoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+            query = """Insert into hm_system_dataoperator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
         elif user_type == "3":
-            query = """Insert into HM_System_doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+            query = """Insert into hm_system_doctor values(%s,%s,%s,%s,%s,%s,%s,%s);"""
         else:
-            query = """Insert into HM_System_administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
+            query = """Insert into hm_system_administrator values(%s,%s,%s,%s,%s,%s,%s,%s);"""
 
         try:
             with connection.cursor() as cursor:
@@ -203,7 +203,7 @@ class PatientStayView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         # Put the required query to get list of patients who are currently staying in the hospital room
-        query = "Select * from HM_System_user"
+        query = "Select * from hm_system_user"
         with connection.cursor() as cursor:
             cursor.execute(query)
             return Response({
@@ -231,7 +231,7 @@ class InsertPatientView(UserView):
             Gender = 3
         DOB = request.data['DOB']
 
-        query = """Insert into HM_System_patient values(%s,%s,%s,%s,%s,%s,%s);"""
+        query = """Insert into hm_system_patient values(%s,%s,%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (AadharId, Name, Address,
@@ -274,7 +274,7 @@ class ConfirmAppointmentView(UserView):
             return response
 
         query = """Select count(distinct A.AppointmentID)
-                    from HM_System_appointment as A
+                    from hm_system_appointment as A
                     where A.Doctor_id=%s and CAST(A.Start as DATE)=%s"""
         try:
             with connection.cursor() as cursor:
@@ -296,7 +296,7 @@ class ConfirmAppointmentView(UserView):
             }
             return response
 
-        query = """Insert into HM_System_appointment (Patient_id,Doctor_id,Start) values(%s,%s,%s);"""
+        query = """Insert into hm_system_appointment (Patient_id,Doctor_id,Start) values(%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient, Doctor, Start))
@@ -328,7 +328,7 @@ class InsertPrescribeView(UserView):
         Doctor = request.data['Doctor']
         Dose = request.data['Dose']
 
-        query = """Insert into HM_System_prescribes values(%s,%s,%s,%s,%s);"""
+        query = """Insert into hm_system_prescribes values(%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -353,7 +353,7 @@ class InsertReportView(UserView):
         Date = request.data['Date']
         TestResult = request.data[TestResult]
 
-        query = """Insert into HM_System_report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
+        query = """Insert into hm_system_report (Patient,Doctor,Test,Date,TestResult) values(%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -377,7 +377,7 @@ class InsertStayView(UserView):
         Patient = request.data['PatientID']
 
         # check if room is available
-        query = """Select Number from HM_System_room where Unavailable=0;"""
+        query = """Select Number from hm_system_room where Unavailable=0;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -396,7 +396,7 @@ class InsertStayView(UserView):
             return response
 
         # check if patient is not currently admitted
-        query = """SELECT * from HM_System_stay WHERE Patient_id=%s and End is NULL;"""
+        query = """SELECT * from hm_system_stay WHERE Patient_id=%s and End is NULL;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient,))
@@ -420,11 +420,11 @@ class InsertStayView(UserView):
             }
             return response
 
-        query = """Insert into HM_System_stay (Patient_id,Room_id,Start,End) values(%s,%s,%s,NULL);"""
+        query = """Insert into hm_system_stay (Patient_id,Room_id,Start,End) values(%s,%s,%s,NULL);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient, Room, Start))
-                query = """update HM_System_room set Unavailable=1 where Number=%s;"""
+                query = """update hm_system_room set Unavailable=1 where Number=%s;"""
                 cursor.execute(query, (Room,))
         except Exception as e:
             print(e)
@@ -453,7 +453,7 @@ class InsertUndergoesView(UserView):
         Doctor = request.data['Doctor']
         Appointment = request.data['Appointment']
 
-        query = """Insert into HM_System_undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
+        query = """Insert into hm_system_undergoes (Patient,Treatment,Stay,Date,Doctor,Appointment) values(%s,%s,%s,%s,%s,%s);"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (Patient, Treatment,
@@ -474,7 +474,7 @@ class GetPatientsView(UserView):
     def get(self, request):
         payload = UserView.authenticate(self, request)
         id = payload['id']
-        query = """Select * from HM_System_patient where AadharId in (Select Patient_id from HM_System_appointment where Doctor_id = %s) """
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (str(id),))
@@ -498,7 +498,7 @@ class GetRoomsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select *
-                from HM_System_room as R
+                from hm_system_room as R
                 where R.Unavailable=0;"""
         try:
             with connection.cursor() as cursor:
@@ -525,7 +525,7 @@ class GetReportsView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select *
-                from HM_System_report
+                from hm_system_report
                 where Patient=111 and Doctor=1
                 order by Date DESC limit 5;"""
         try:
@@ -551,7 +551,7 @@ class GetAdmittedView(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
         query = """Select P.AadharId as id, P.Name as name, S.StayID as stayID, P.Gender as gender
-                from HM_System_patient as P, HM_System_stay as S
+                from hm_system_patient as P, hm_system_stay as S
                 where S.Patient_id=P.AadharId and S.End is NULL;"""
         try:
             with connection.cursor() as cursor:
@@ -580,7 +580,7 @@ class DischargePatientView(UserView):
         StayID = request.data['stayid']
         now = datetime.datetime.now()
         End = now.strftime('%Y-%m-%d %H:%M:%S')
-        query = """Update HM_System_stay set End=%s where StayID=%s and End is NULL;"""
+        query = """Update hm_system_stay set End=%s where StayID=%s and End is NULL;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (End, StayID))
@@ -594,10 +594,10 @@ class DischargePatientView(UserView):
             }
             return response
 
-        query = """Update HM_System_room
+        query = """Update hm_system_room
                 Set Unavailable=0
                 where Number=(Select S.Room_id
-                            from HM_System_stay as S
+                            from hm_system_stay as S
                             where S.StayID=%s);"""
         try:
             with connection.cursor() as cursor:
@@ -622,13 +622,13 @@ class GetUserProfile(UserView):
         print(user_type)
         query = ""
         if user_type == 1:
-            query = """ Select * from HM_System_user inner join HM_System_fdoperator on HM_System_user.id = HM_System_fdoperator.EmployeeId_id; """
+            query = """ Select * from hm_system_user inner join hm_system_fdoperator on hm_system_user.id = hm_system_fdoperator.EmployeeId_id; """
         elif user_type == 2:
-            query = """ Select * from HM_System_user inner join HM_System_dataoperator on HM_System_user.id = HM_System_dataoperator.EmployeeId_id; """
+            query = """ Select * from hm_system_user inner join hm_system_dataoperator on hm_system_user.id = hm_system_dataoperator.EmployeeId_id; """
         elif user_type == 3:
-            query = """ Select * from HM_System_user inner join HM_System_doctor on HM_System_user.id = HM_System_doctor.EmployeeId_id; """
+            query = """ Select * from hm_system_user inner join hm_system_doctor on hm_system_user.id = hm_system_doctor.EmployeeId_id; """
         elif user_type == 4:
-            query = """ Select * from HM_System_user inner join HM_System_administrator on HM_System_user.id = HM_System_administrator.EmployeeId_id; """
+            query = """ Select * from hm_system_user inner join hm_system_administrator on hm_system_user.id = hm_system_administrator.EmployeeId_id; """
 
         try:
             with connection.cursor() as cursor:
@@ -653,13 +653,13 @@ class DeleteUserView(UserView):
         id = request.data['EmployeeId_id']
         query = ""
         if user_type == 1:
-            query = """DELETE FROM HM_System_fdoperator WHERE EmployeeId_id = %s;"""
+            query = """DELETE FROM hm_system_fdoperator WHERE EmployeeId_id = %s;"""
         elif user_type == 2:
-            query = """DELETE FROM HM_System_dataoperator WHERE EmployeeId_id = %s;"""
+            query = """DELETE FROM hm_system_dataoperator WHERE EmployeeId_id = %s;"""
         elif user_type == 3:
-            query = """DELETE FROM HM_System_doctor WHERE EmployeeId_id = %s;"""
+            query = """DELETE FROM hm_system_doctor WHERE EmployeeId_id = %s;"""
         elif user_type == 4:
-            query = """DELETE FROM HM_System_administrator WHERE EmployeeId_id = %s;"""
+            query = """DELETE FROM hm_system_administrator WHERE EmployeeId_id = %s;"""
 
         try:
             with connection.cursor() as cursor:
@@ -673,7 +673,7 @@ class DeleteUserView(UserView):
             }
             return response
 
-        query = """DELETE FROM HM_System_user WHERE id = %s;"""
+        query = """DELETE FROM hm_system_user WHERE id = %s;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (str(id),))
@@ -706,7 +706,7 @@ class UpcomingAppointments(UserView):
         payload = UserView.authenticate(self, request)
         id = payload['id']
         today = datetime.datetime.now().date()
-        query = """Select * from HM_System_patient where AadharId in (Select Patient_id from HM_System_appointment where Doctor_id = %s and CAST(start as Date)>= %s) """
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s and CAST(start as Date)>= %s) """
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (str(id), today.strftime('%Y-%m-%d')))
@@ -727,13 +727,23 @@ class getProfileView(UserView):
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         print(serializer.data)
-        query = """Select * from HM_System_patient where AadharId in (Select Patient_id from HM_System_appointment where Doctor_id = %s and CAST(start as Date)>= %s) """
+        user_type = serializer.data.user_type
+
+        query = ""
+        if user_type == 1:
+            query = """SELECT * FROM hm_system_fdoperator WHERE EmployeeId_id = %s;"""
+        elif user_type == 2:
+            query = """SELECT * FROM hm_system_dataoperator WHERE EmployeeId_id = %s;"""
+        elif user_type == 3:
+            query = """SELECT * FROM hm_system_doctor WHERE EmployeeId_id = %s;"""
+        elif user_type == 4:
+            query = """SELECT * FROM hm_system_administrator WHERE EmployeeId_id = %s;"""
+
+
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query)
-                return Response({
-                    'List': UserView.cursorToDict(self, cursor)
-                })
+                cursor.execute(query, (str(payload['id'])))
+                return Response(UserView.cursorToDict(self, cursor))
         except Exception as e:
             print(e)
             response = Response()

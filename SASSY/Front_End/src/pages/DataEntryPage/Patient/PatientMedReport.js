@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import "./PatientMedReport.css"
 
-const Popup = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => {
+const ff = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => {
     return (
         <div className="popup">
             <div className="popup-content">
                 <form onSubmit={handleFormSubmit}>
                     <label>
-                        Add Todo:
+                        Add Medicine:
                         <input type="text" value={inputValue} onChange={handleInputChange} />
                     </label>
                     <button type="submit">Add</button>
@@ -23,7 +23,7 @@ const Popup = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => 
         </div>
     );
 };
-const FDDischarge = () => {
+const PatientMedReport = () => {
     const [patients, setPatients] = useState([
         { id: 1, name: "John Doe", appId: 35, gender: "Male" },
         { id: 2, name: "Jane Smith", appId: 42, gender: "Female" },
@@ -166,4 +166,4 @@ const FDDischarge = () => {
     )
 }
 
-export default FDDischarge
+export default PatientMedReport

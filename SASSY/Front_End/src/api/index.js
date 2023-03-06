@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: `http://localhost:8000/api`,
+  baseURL: `http://127.0.0.1:8000/api`,
 })
 
 export const listUsers = payload => api.post(`/list-users`, payload)
@@ -9,7 +9,7 @@ export const createUser = payload => api.post(`/create-user`, payload)
 export const deleteUser = payload => api.post(`/delete-user`, payload)
 
 export const listAppointments = () => api.get(`/list-appointments`)
-export const deleteAppointment = payload => api.delete(`/delete-appointment`, payload)
+// export const deleteAppointment = payload => api.delete(`/delete-appointment`, payload)
 
 export const listPatients = () => api.get(`/list-patients`)
 export const showPatient = payload => api.post(`/show-patient`, payload)

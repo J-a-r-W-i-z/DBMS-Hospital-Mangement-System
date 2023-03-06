@@ -45,7 +45,6 @@ export const redirectUser = async (userType, navigate, setLoading) => {
 
   if (response === null) {
     if (userType === null) {
-      console.log("response is", response, ":loading is set to false")
       setLoading(false)
       return
     }
@@ -91,17 +90,19 @@ export const handleLogout = async () => {
   return response
 }
 
-export const handleListUsers = async (usertype) => {
+export const handleListUsers = async (usertype, setUsers, setLoading) => {
   let response = []
+  setLoading(true)
+
   await api.listUsers({ user_type: usertype })
     .then(res => {
       response = res.data
+      setUsers(response.List)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
-
-  return response
 }
 
 export const handleCreateUser = async (userData, initialData, resetData) => {
@@ -143,27 +144,29 @@ export const handleListAppointments = async () => {
   return response
 }
 
-export const handleDeleteAppointment = async (username) => {
-  await api.deleteAppointment({ req_user_name: username })
-    .then(res => {
-      toast.success("Appointment deleted successfully.", toastOptions)
-    })
-    .catch(err => {
-      handleError(err)
-    })
-}
+// export const handleDeleteAppointment = async (username) => {
+//   await api.deleteAppointment({ req_user_name: username })
+//     .then(res => {
+//       toast.success("Appointment deleted successfully.", toastOptions)
+//     })
+//     .catch(err => {
+//       handleError(err)
+//     })
+// }
 
-export const handleListPatients = async () => {
-  let response = null
+export const handleListPatients = async (setPatients, setLoading) => {
+  let response = []
+  setLoading(true)
+
   await api.listPatients()
     .then(res => {
       response = res.data
+      setPatients(response.List)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
-
-  return response
 }
 
 export const handleShowPatient = async (username) => {

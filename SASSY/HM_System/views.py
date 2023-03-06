@@ -579,11 +579,11 @@ class DischargePatientView(UserView):
         UserView.authenticate(self, request)
         StayID = request.data['stayid']
         now = datetime.datetime.now()
-        End=now.strftime('%Y-%m-%d %H:%M:%S')
+        End = now.strftime('%Y-%m-%d %H:%M:%S')
         query = """Update hm_system_stay set End=%s where StayID=%s and End is NULL;"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query,(End,StayID))
+                cursor.execute(query, (End, StayID))
         except Exception as e:
             print(e)
             response = Response()
@@ -601,20 +601,20 @@ class DischargePatientView(UserView):
                             where S.StayID=%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query,(StayID,))
+                cursor.execute(query, (StayID,))
         except Exception as e:
             print(e)
             response = Response()
             response.status_code = 405
-            response
             response.data = {
-                'detail': 'Unable to set room available'
+                'detail': 'Unable to find room availability'
             }
             return response
         return Response({
-                    'detail': 'Discharged successfully'
-                })
- 
+            'detail': 'Discharged successfully'
+        })
+
+
 class GetUserProfile(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
@@ -685,20 +685,21 @@ class DeleteUserView(UserView):
                 'detail': 'Could not delete user'
             }
             return response
-        
-        if payload['id']== id:
+
+        if payload['id'] == id:
             response = Response()
             response.delete_cookie('jwt')
             response.data = {
                 'detail': 'Logout Successful'
             }
             return response
-        
+
         response = Response()
         response.data = {
             'detail': 'User Deleted Successfully'
         }
         return response
+
 
 class UpcomingAppointments(UserView):
     def get(self, request):
@@ -708,7 +709,7 @@ class UpcomingAppointments(UserView):
         query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s and CAST(start as Date)<= %s) """
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (str(id),today.strfdate('%Y-%m-%d')))
+                cursor.execute(query, (str(id), today.strfdate('%Y-%m-%d')))
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
@@ -719,5 +720,3 @@ class UpcomingAppointments(UserView):
             response.data = {
                 'detail': 'Could not retrive data'
             }
-
-

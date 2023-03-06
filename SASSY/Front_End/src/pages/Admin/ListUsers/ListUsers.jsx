@@ -8,43 +8,14 @@ import "./ListUsers.scss"
 
 const ListUsers = ({ title, userType }) => {
   const [loading, setLoading] = useState(true)
-  const [users, setUsers] = useState([
-    {
-      username: "admin",
-      name: "Admin",
-      date_joined: "2021-05-01",
-      EmployeeId_id: 4,
-      user_type: 1,
-    },
-    {
-      username: "user",
-      name: "User",
-      date_joined: "2021-05-01",
-      EmployeeId_id: 6,
-      user_type: 1,
-    },
-    {
-      username: "user1",
-      name: "User1",
-      date_joined: "2021-05-01",
-      EmployeeId_id: 7,
-      user_type: 1,
-    },
-  ])
+  const [users, setUsers] = useState([])
   const [userROI, setUserROI] = useState(-1)
 
   const location = useLocation()
 
   useEffect(() => {
-    listusers(userType)
+    handleListUsers(userType, setUsers, setLoading)
   }, [location])
-
-  const listusers = async (userType) => {
-    setLoading(true)
-    const response = await handleListUsers(userType)
-    setLoading(false)
-    setUsers(response.List)
-  }
 
   function deleteAndFetch(key) {
     const status = async (user) => {
@@ -54,7 +25,7 @@ const ListUsers = ({ title, userType }) => {
       )
       if (!response) return
 
-      listusers(userType)
+      handleListUsers(userType, setUsers, setLoading)
     }
 
     const filteredUser = users.filter((user) => user.username === key)[0]

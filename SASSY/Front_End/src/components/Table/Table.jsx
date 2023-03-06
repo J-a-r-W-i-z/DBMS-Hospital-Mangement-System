@@ -15,7 +15,6 @@ function Table({
   const [filteredData, setFilteredData] = useState(data)
 
   function handleSearch(event) {
-    console.log(data)
     setQuery(event.target.value)
     const filteredData = data.filter((row) =>
       row[searchKey].toLowerCase().includes(event.target.value.toLowerCase())

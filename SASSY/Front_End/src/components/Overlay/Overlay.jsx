@@ -12,9 +12,7 @@ const Overlay = ({ handleClick, opacity }) => {
       transition={{ duration: 0.2 }}
       className="bg-overlay"
       onClick={handleClick}
-    >
-      Overlay
-    </motion.div>
+    />
   )
 }
 

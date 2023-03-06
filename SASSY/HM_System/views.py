@@ -474,7 +474,7 @@ class GetPatientsView(UserView):
     def get(self, request):
         payload = UserView.authenticate(self, request)
         id = payload['id']
-        query = """Select * from hm_system_patient where Aadhar_Id in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query, (str(id),))
@@ -659,4 +659,25 @@ class DeleteUserView(UserView):
             'detail': 'User Deleted Successfully'
         }
         return response
+
+class UpcomingAppointments(UserView):
+    def get(self, request):
+        payload = UserView.authenticate(self, request)
+        id = payload['id']
+        today = datetime.datetime.now().date()
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s and CAST(start as Date)<= %s) """
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),today.strfdate('%Y-%m-%d')))
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+
 

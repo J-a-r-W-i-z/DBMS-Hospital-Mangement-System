@@ -19,7 +19,8 @@ urlpatterns = [
     path('list-patients', GetPatientsView.as_view()),
     path('dischargePatient', DischargePatientView.as_view()),
     # get a request and send profile info for any user
-    path('getProfile', getProfileView.as_view())
+    path('getProfile', getProfileView.as_view()),
+    path('appointmentDetails',GetPatientAppointment.as_view())
     # path('insertPrescription',), # patient id,name,appointemt id,date  get appointment id,medication list and insert in table
     # path('insertTest',), #
     # path('insertTreatment',) #

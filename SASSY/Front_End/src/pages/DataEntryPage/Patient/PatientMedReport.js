@@ -1,5 +1,8 @@
-import React, { useState } from "react"
+import React, { useState,useEffect } from "react"
+import axios from "axios";
 import "./PatientMedReport.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ff = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => {
     return (
@@ -114,10 +117,11 @@ const PatientMedReport = () => {
                 <tbody>
                     {searchTerm === ""
                         ? patients.map((patient) => (
-                            <tr key={patient.id}>
-                                <td>{patient.id}</td>
-                                <td>{patient.name}</td>
-                                <td>{patient.appId}</td>
+                            <tr key={patient.Patient_id}>
+                                <td>{patient.Patient_id}</td>
+                                <td>{patient.Name}</td>
+                                <td>{patient.AppointmentID}</td>
+                                <td>{patient.Start}</td>
 
                                 <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
                                 <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
@@ -125,9 +129,10 @@ const PatientMedReport = () => {
                         ))
                         : filteredPatients.map((patient) => (
                             <tr key={patient.id}>
-                                <td>{patient.id}</td>
-                                <td>{patient.name}</td>
-                                <td>{patient.appId}</td>
+                               <td>{patient.Patient_id}</td>
+                               <td>{patient.Name}</td>
+                                <td>{patient.AppointmentID}</td>
+                                <td>{patient.Start}</td>
 
                                 <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
                                 <td> <button className="DischargeButton" onClick={handleButtonClick}>Add</button></td>
@@ -156,6 +161,7 @@ const PatientMedReport = () => {
                     </div>
                 </div>
             </div></>}
+            <ToastContainer/>
         </div>
     )
 }

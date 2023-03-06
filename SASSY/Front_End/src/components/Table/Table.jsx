@@ -44,7 +44,7 @@ function Table({
           />
         </div>
       )}
-      <table className={!noShrink ? "shrink-table" : null}>
+      <table className={!noShrink ? "shrink-table m-table" : "m-table"}>
         <thead>
           <tr>
             {headers.map((header, index) => (

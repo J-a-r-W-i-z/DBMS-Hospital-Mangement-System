@@ -607,10 +607,9 @@ class GetUserProfile(UserView):
         
 class DeleteUserView(UserView):
     def post(self, request):
-        UserView.authenticate(self,request)
+        payload = UserView.authenticate(self, request)
         user_type = request.data['user_type']
         id = request.data['EmployeeId_id']
-        print(type(user_type))
         query = ""
         if user_type==1:
             query = """DELETE FROM hm_system_fdoperator WHERE EmployeeId_id = %s;""" 
@@ -646,7 +645,15 @@ class DeleteUserView(UserView):
                 'detail': 'Could not delete user'
             }
             return response
-
+        
+        if payload['id']== id:
+            response = Response()
+            response.delete_cookie('jwt')
+            response.data = {
+                'detail': 'Logout Successful'
+            }
+            return response
+        
         response = Response()
         response.data = {
             'detail': 'User Deleted Successfully'

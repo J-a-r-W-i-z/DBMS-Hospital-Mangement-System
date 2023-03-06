@@ -549,13 +549,13 @@ class GetUserProfile(UserView):
         print(user_type)
         query = ""
         if user_type==1:
-            query = """ Select * from hm_system_user natural join hm_system_fdoperator """
+            query = """ Select * from hm_system_user inner join hm_system_fdoperator on hm_system_user.id = hm_system_fdoperator.EmployeeId_id """
         elif user_type==2:
-            query = """ Select * from hm_system_user natural join hm_system_dataoperator """
+            query = """ Select * from hm_system_user inner join hm_system_dataoperator on hm_system_user.id = hm_system_dataoperator.EmployeeId_id"""
         elif user_type==3:
-            query = """ Select * from hm_system_user natural join hm_system_doctor """
+            query = """ Select * from hm_system_user inner join hm_system_doctor on hm_system_user.id = hm_system_doctor.EmployeeId_id"""
         elif user_type==4:
-            query = """ Select * from hm_system_user natural join hm_system_administrator """
+            query = """ Select * from hm_system_user inner join hm_system_administrator on hm_system_user.id = hm_system_administrator.EmployeeId_id"""
         
         try:
             with connection.cursor() as cursor:

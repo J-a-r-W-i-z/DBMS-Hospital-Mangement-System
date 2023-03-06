@@ -7,7 +7,8 @@ import {
 } from "../../../actions"
 
 const Appointments = () => {
-  const [users, setUsers] = useState([
+  const [loading, setLoading] = useState(true)
+  const [patients, setPatients] = useState([
     {
       username: "johnsnow",
       name: "John Snow",
@@ -30,8 +31,8 @@ const Appointments = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log("useEffect")
-    // setUsers(handleListAppointments())
+    console.log("Appointments")
+    handleListAppointments(setPatients, setLoading)
   }, [location])
 
   function limitedData(users) {
@@ -55,19 +56,23 @@ const Appointments = () => {
   }
 
   return (
-    <div className="table-container">
-      <Table
-        title="Pending appointments"
-        headers={["Username", "Name", "Date Joined", "Action"]}
-        data={limitedData(users)}
-        searchKey="username"
-        getInfo={(user) => getPatientDetails(user)}
-        handleAction={(key) => deleteAndFetch(key)}
-        buttonLabel="Close"
-        buttonClass="btn-primary-sm"
-        clickKey="username"
-      />
-    </div>
+    <>
+      {!loading && (
+        <div className="table-container">
+          <Table
+            title="Pending appointments"
+            headers={["Username", "Name", "Date Joined", "Action"]}
+            data={limitedData(patients)}
+            searchKey="username"
+            getInfo={(user) => getPatientDetails(user)}
+            handleAction={(key) => deleteAndFetch(key)}
+            buttonLabel="Close"
+            buttonClass="btn-primary-sm"
+            clickKey="username"
+          />
+        </div>
+      )}
+    </>
   )
 }
 

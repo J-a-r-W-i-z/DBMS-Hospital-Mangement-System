@@ -91,13 +91,11 @@ export const handleLogout = async () => {
 }
 
 export const handleListUsers = async (usertype, setUsers, setLoading) => {
-  let response = []
   setLoading(true)
 
   await api.listUsers({ user_type: usertype })
     .then(res => {
-      response = res.data
-      setUsers(response.List)
+      setUsers(res.data.List)
       setLoading(false)
     })
     .catch(err => {
@@ -131,17 +129,18 @@ export const handleDeleteUser = async (id, type) => {
   return status
 }
 
-export const handleListAppointments = async () => {
-  let response = null
+export const handleListAppointments = async (setPatients, setLoading) => {
+  setLoading(true)
+
   await api.listAppointments()
     .then(res => {
-      response = res.data
+      setPatients(res.data.List)
+      console.log("appointments", res.data.list)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
-
-  return response
 }
 
 // export const handleDeleteAppointment = async (username) => {
@@ -155,13 +154,11 @@ export const handleListAppointments = async () => {
 // }
 
 export const handleListPatients = async (setPatients, setLoading) => {
-  let response = []
   setLoading(true)
 
   await api.listPatients()
     .then(res => {
-      response = res.data
-      setPatients(response.List)
+      setPatients(res.data.List)
       setLoading(false)
     })
     .catch(err => {

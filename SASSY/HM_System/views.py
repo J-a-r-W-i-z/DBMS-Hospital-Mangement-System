@@ -706,10 +706,10 @@ class UpcomingAppointments(UserView):
         payload = UserView.authenticate(self, request)
         id = payload['id']
         today = datetime.datetime.now().date()
-        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s and CAST(start as Date)<= %s) """
+        query = """Select * from hm_system_patient where AadharId in (Select Patient_id from hm_system_appointment where Doctor_id = %s and CAST(start as Date)>= %s) """
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query, (str(id), today.strfdate('%Y-%m-%d')))
+                cursor.execute(query, (str(id), today.strftime('%Y-%m-%d')))
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })

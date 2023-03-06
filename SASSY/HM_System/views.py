@@ -548,13 +548,13 @@ class GetUserProfile(UserView):
         user_type = request.data['user_type']
         print(user_type)
         query = ""
-        if user_type=='1':
+        if user_type==1:
             query = """ Select * from hm_system_user natural join hm_system_fdoperator """
-        elif user_type=='2':
+        elif user_type==2:
             query = """ Select * from hm_system_user natural join hm_system_dataoperator """
-        elif user_type=='3':
+        elif user_type==3:
             query = """ Select * from hm_system_user natural join hm_system_doctor """
-        elif user_type=='4':
+        elif user_type==4:
             query = """ Select * from hm_system_user natural join hm_system_administrator """
         
         try:

@@ -25,15 +25,8 @@ const ff = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => {
 };
 const PatientMedReport = () => {
     const [patients, setPatients] = useState([
-        { id: 1, name: "John Doe", appId: 35, gender: "Male" },
-        { id: 2, name: "Jane Smith", appId: 42, gender: "Female" },
-        { id: 3, name: "Bob Johnson", appId: 58, gender: "Male" },
-        { id: 4, name: "Souvik Rana", appId: 20, gender: "Male" },
-        { id: 5, name: "Yashwant", appId: 20, gender: "Male" },
-        { id: 6, name: "Anuj Kakde", appId: 20, gender: "Male" },
-        { id: 7, name: "Sarthak", appId: 20, gender: "Male" },
-        { id: 8, name: "Ayush Dwiedi", appId: 20, gender: "Male" },
-        { id: 9, name: "Saptarshi", appId: 20, gender: "Male" },
+        { Patient_id: 1, Name: "John Doe", AppointmentID: 35, Start: "2022-08-01" },
+
     ])
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -47,20 +40,20 @@ const PatientMedReport = () => {
         setFilteredPatients(filtered)
     }
 
-    const [appointments, setAppointments] = useState([
-        { id: 1, patientId: 1, time: "10:00 AM" },
-        { id: 2, patientId: 2, time: "11:00 AM" },
-        { id: 3, patientId: 3, time: "2:00 PM" },
-    ])
-
-    const getPatientName = (id) => {
-        const patient = patients.find((patient) => patient.id === id)
-        return patient ? patient.name : ""
-    }
-
-    const handleAppointmentClick = (id) => {
-        // handle button click for appointment with given id
-    }
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/appointmentDetails')
+            .then(response => {
+                console.log(response.data.List);
+                setPatients(response.data.List);
+                toast.success('Appointment List Updated Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error('Could not refresh appointment list',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+            });
+    }, []);
 
     const [showPopup, setShowPopup] = useState(false);
 
@@ -112,6 +105,7 @@ const PatientMedReport = () => {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Appointment ID</th>
+                        <th>Date</th>
 
                         <th>Medication</th>
                         <th>Report</th>

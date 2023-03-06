@@ -499,16 +499,22 @@ class GetRoomsView(UserView):
         UserView.authenticate(self, request)
         query = """Select *
                 from hm_system_room as R
-                where R.Unavailable=FALSE;"""
+                where R.Unavailable=0;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
-        except:
-            # TODO
-            return
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Unable to get rooms data'
+            }
+            return response
 
 # Query 9???
 
@@ -528,9 +534,15 @@ class GetReportsView(UserView):
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
-        except:
-            # TODO
-            return
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Unable to get reports'
+            }
+            return response
 
 # Query 13
 
@@ -547,34 +559,57 @@ class GetAdmittedView(UserView):
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
-        except:
-            # TODO
-            return
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Unable to get patients'
+            }
+            return response
 
 # Query 14 ????
 
 # Query 15
 
 
-class SetAvailableView(UserView):
-    def get(self, request):
+class DischargePatientView(UserView):
+    def post(self, request):
         UserView.authenticate(self, request)
-        query = """Update hm_system_room
-                Set Unavailable=FALSE
-                where Number=(Select S.Room
-                            from hm_system_stay as S
-                            where S.StayID=1);"""
+        StayID = request.data['stayid']
+        now = datetime.datetime.now()
+        End=now.strftime('%Y-%m-%d %H:%M:%S')
+        query = """Update hm_system_stay set End=%s where StayID=%s and End is NULL;"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query)
-                return Response({
-                    'List': UserView.cursorToDict(self, cursor)
+                cursor.execute(query,(End,StayID))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Unable to find patient in database'
+            }
+            return response
+
+        query = """Update hm_system_room
+                Set Unavailable=0
+                where Number=(Select S.Room_id
+                            from hm_system_stay as S
+                            where S.StayID=%s);"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query,(StayID,))
+                response.data = {
+                'detail': 'Unable to set room available'
+            }
+            return response
+        return Response({
+                    'detail': 'Discharged successfully'
                 })
-        except:
-            # TODO
-            return
-
-
+ 
 class GetUserProfile(UserView):
     def post(self, request):
         UserView.authenticate(self, request)
@@ -659,4 +694,3 @@ class DeleteUserView(UserView):
             'detail': 'User Deleted Successfully'
         }
         return response
-

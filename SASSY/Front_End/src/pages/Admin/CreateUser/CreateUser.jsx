@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { AuthFields, PersonalFields } from "../../../components"
 import { handleCreateUser, checkAuth, redirectUser } from "../../../actions"
 import "./CreateUser.scss"
@@ -18,14 +18,14 @@ const CreateUser = () => {
     address: "",
   }
   const [userDetails, setUserDetails] = useState(initialUserDetails)
+  const [loading, setLoading] = useState(true)
 
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const redirect = async () => {
-      await redirectUser(4)
-    }
-    redirect()
+    console.log("Create User")
+    redirectUser(4, navigate, setLoading)
   }, [location])
 
   function handleSubmit(event) {
@@ -45,21 +45,25 @@ const CreateUser = () => {
   }
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h1>Create user</h1>
-        <div className="form-container-div">
-          <AuthFields user={userDetails} setUser={setUserDetails} />
+    <>
+      {!loading && (
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h1>Create user</h1>
+            <div className="form-container-div">
+              <AuthFields user={userDetails} setUser={setUserDetails} />
+            </div>
+            <hr className="span-full fields-separator" />
+            <div className="form-container-div">
+              <PersonalFields user={userDetails} setUser={setUserDetails} />
+            </div>
+            <button type="submit" className="btn-primary-sm submit-btn">
+              Add user
+            </button>
+          </form>
         </div>
-        <hr className="span-full fields-separator" />
-        <div className="form-container-div">
-          <PersonalFields user={userDetails} setUser={setUserDetails} />
-        </div>
-        <button type="submit" className="btn-primary-sm submit-btn">
-          Add user
-        </button>
-      </form>
-    </div>
+      )}
+    </>
   )
 }
 

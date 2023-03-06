@@ -15,8 +15,8 @@ const handleError = (err, noredirect) => {
       if (noredirect) break
       toast.error(err.response.data.detail, toastOptions)
 
-      const checkAuth = async () => await redirectUser()
-      checkAuth()
+      // const checkAuth = async () => await redirectUser()
+      // checkAuth()
 
       break
     case 405:
@@ -34,22 +34,33 @@ export const checkAuth = async () => {
       response = res.data.response.user_type
     })
     .catch(err => {
-      handleError(err, true)
+      return
     })
 
   return response
 }
 
-export const redirectUser = async (userType) => {
+export const redirectUser = async (userType, navigate, setLoading) => {
   let response = await checkAuth()
+
   if (response === null) {
-    window.location.href = "/"
+    if (userType === null) {
+      console.log("response is", response, ":loading is set to false")
+      setLoading(false)
+      return
+    }
+
+    navigate("/")
     return
   }
 
-  if (userType === response) return
+  if (userType === response) {
+    console.log("loading is set to false")
+    setLoading(false)
+    return
+  }
 
-  window.location.href = `/${usermap[response]}`
+  navigate(`/${usermap[response]}`)
 }
 
 export const handleLogin = async (user) => {
@@ -94,6 +105,7 @@ export const handleListUsers = async (usertype, setUsers) => {
 }
 
 export const handleCreateUser = async (userData, initialData, resetData) => {
+  console.log(userData)
   await api.createUser(userData)
     .then(res => {
       toast.success("User created successfully.", toastOptions)

@@ -1,7 +1,6 @@
 import React from "react"
-import { DoctorDashboard } from "../pages"
 import { CreateUser, ListUsers } from "../pages/Admin"
-import { Appointments, PatientProfile, Patients } from "../pages/Doctor"
+import { Appointments, Patients } from "../pages/Doctor"
 
 export const usermap = {
   1: "front-desk-operator",
@@ -47,6 +46,6 @@ export const routeChildren = {
 }
 
 export const pages = [
-  { breadcrumb: "Doctor dashboard", usertype: 3, element: DoctorDashboard },
+  { breadcrumb: "Doctor dashboard", usertype: 3 },
   { breadcrumb: "Admin dashboard", usertype: 4 }
 ]

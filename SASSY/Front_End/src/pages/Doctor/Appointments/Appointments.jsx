@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { Table } from "../../../components"
-import {
-  handleListAppointments,
-  handleDeleteAppointment,
-} from "../../../actions"
+import { handleListAppointments, redirectUser } from "../../../actions"
 
 const Appointments = () => {
   const [loading, setLoading] = useState(true)
-  const [patients, setPatients] = useState([
-    {
-      username: "johnsnow",
-      name: "John Snow",
-      date_joined: "2021-01-01",
-      something: "no",
-    },
-    {
-      username: "janesmith",
-      name: "Jane Smith",
-      date_joined: "2021-01-01",
-    },
-    {
-      username: "bobjohnson",
-      name: "Bob Johnson",
-      date_joined: "2021-01-01",
-    },
-  ])
+  const [patients, setPatients] = useState([])
 
   const location = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
     console.log("Appointments")
-    handleListAppointments(setPatients, setLoading)
+    const handleQuery = async () => {
+      const res = await redirectUser(3, navigate)
+      if (res) return
+      handleListAppointments(setPatients, setLoading)
+    }
+
+    handleQuery()
   }, [location])
 
   function limitedData(users) {
@@ -40,7 +26,7 @@ const Appointments = () => {
 
     return users.map((user) => ({
       username: user.username,
-      name: user.name,
+      name: user.Name,
       date_joined: user.date_joined,
     }))
   }

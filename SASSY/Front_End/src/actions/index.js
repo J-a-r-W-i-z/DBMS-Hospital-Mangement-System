@@ -1,8 +1,8 @@
 import * as api from "../api"
 import { toast } from "react-toastify"
-import { toastOptions, usermap } from "../constants"
+import { toastOptions } from "../constants"
 
-const handleError = (err, noredirect) => {
+const handleError = (err) => {
   const defaultError = "Something went wrong. Please try again later."
 
   if (err === null || err.response === undefined) {
@@ -11,15 +11,7 @@ const handleError = (err, noredirect) => {
   }
 
   switch (err.response.status) {
-    case 401:
-      if (noredirect) break
-      toast.error(err.response.data.detail, toastOptions)
-
-      // const checkAuth = async () => await redirectUser()
-      // checkAuth()
-
-      break
-    case 405:
+    case 401, 405:
       toast.error(err.response.data.detail, toastOptions)
       break
     default:
@@ -45,21 +37,21 @@ export const redirectUser = async (userType, navigate, setLoading) => {
 
   if (response === null) {
     if (userType === null) {
-      setLoading(false)
+      setLoading && setLoading(false)
       return
     }
 
     navigate("/")
-    return
+    return true
   }
 
   if (userType === response) {
-    console.log("loading is set to false")
-    setLoading(false)
+    setLoading && setLoading(false)
     return
   }
 
-  navigate(`/${usermap[response]}`)
+  navigate(-1)
+  return true
 }
 
 export const handleLogin = async (user) => {
@@ -104,7 +96,6 @@ export const handleListUsers = async (usertype, setUsers, setLoading) => {
 }
 
 export const handleCreateUser = async (userData, initialData, resetData) => {
-  console.log(userData)
   await api.createUser(userData)
     .then(res => {
       toast.success("User created successfully.", toastOptions)

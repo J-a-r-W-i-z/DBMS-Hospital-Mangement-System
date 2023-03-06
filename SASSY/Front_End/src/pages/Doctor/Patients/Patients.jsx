@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { Table } from "../../../components"
-import { handleListPatients } from "../../../actions"
+import { handleListPatients, redirectUser } from "../../../actions"
 
 const Patients = () => {
   const [loading, setLoading] = useState(true)
@@ -12,8 +12,13 @@ const Patients = () => {
 
   useEffect(() => {
     console.log("Patients")
-    handleListPatients(setPatients, setLoading)
-    console.log(patients)
+    const handleQuery = async () => {
+      const res = await redirectUser(3, navigate)
+      if (res) return
+      handleListPatients(setPatients, setLoading)
+    }
+
+    handleQuery()
   }, [location])
 
   function limitedData(users) {

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { redirect, useLocation, useNavigate } from "react-router-dom"
 import { Table, Modal, UserDetails } from "../../../components"
-import { handleListUsers, handleDeleteUser } from "../../../actions"
+import {
+  handleListUsers,
+  handleDeleteUser,
+  redirectUser,
+} from "../../../actions"
 
 import { AnimatePresence } from "framer-motion"
 import "./ListUsers.scss"
@@ -12,9 +16,16 @@ const ListUsers = ({ title, userType }) => {
   const [userROI, setUserROI] = useState(-1)
 
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    handleListUsers(userType, setUsers, setLoading)
+    const handleQuery = async () => {
+      const res = await redirectUser(4, navigate)
+      if (res) return
+      handleListUsers(userType, setUsers, setLoading)
+    }
+
+    handleQuery()
   }, [location])
 
   function deleteAndFetch(key) {

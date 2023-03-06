@@ -30,9 +30,20 @@ const ListUsers = ({ title, userType }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // handleListUsers(userType, setUsers)
-    // console.log("useEffect", users)
+    handleListUsers(userType, setUsers)
+    console.log("useEffect", users)
   }, [location])
+
+  function deleteAndFetch(key) {
+    const status = async () => {
+      const response = await handleDeleteUser(key)
+      if (!response) return
+
+      await handleListUsers(userType, setUsers)
+    }
+
+    status()
+  }
 
   function tableData() {
     return [
@@ -63,17 +74,6 @@ const ListUsers = ({ title, userType }) => {
       name: user.name,
       date_joined: user.date_joined,
     }))
-  }
-
-  function deleteAndFetch(key) {
-    const status = async () => {
-      const response = await handleDeleteUser(key)
-      if (!response) return
-
-      await handleListUsers(userType, setUsers)
-    }
-
-    status()
   }
 
   return (

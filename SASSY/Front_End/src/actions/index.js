@@ -93,7 +93,7 @@ export const handleLogout = async () => {
 
 export const handleListUsers = async (usertype, setUsers) => {
   let response = []
-  await api.listUsers({ req_user_type: usertype })
+  await api.listUsers({ user_type: usertype })
     .then(res => {
       response = res.data
     })

@@ -769,7 +769,7 @@ class GetPatientDetails(UserView):
             }
         
         query="""select * from hm_system_report as U,hm_system_appointment as A,hm_system_test as T where
-                U.Appointment_id=A.AppointmentID and U.Treatment_id=T.TreatmentID and A.Patient_id=%s"""
+                U.Appointment_id=A.AppointmentID and U.Test_id=T.Code and A.Patient_id=%s"""
         report = None
         try:
             with connection.cursor() as cursor:

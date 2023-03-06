@@ -8,7 +8,7 @@ function FDAppointmentForm() {
     const [formData, setFormData] = useState({
         PatientID: '',
         DoctorID: '',
-        DateOfAppointment: '',
+        DateOfAppointment: '2023-03-17 00:00:00',
     });
 
     const handleInputChange = (event) => {
@@ -17,8 +17,12 @@ function FDAppointmentForm() {
     };
 
     const handleSubmit = (event) => {
-
+        console.log(event)
         event.preventDefault();
+        const dateStr = formData.DateOfAppointment; // assuming formData.date is the date string
+        const isoDate = new Date(dateStr).toISOString().slice(0, 19).replace('T', ' ');
+        console.log(isoDate);
+        setFormData({ ...formData, DateOfAppointment: isoDate })
         console.log(formData)
         axios.post('http://127.0.0.1:8000/api/appointmentPatient', formData)
             .then((response) => {
@@ -42,7 +46,7 @@ function FDAppointmentForm() {
         <div className="containerApp">
             <header>Appointment</header>
 
-            <form className='appform' action="#">
+            <form onSubmit={handleSubmit} className='appform' action="#">
                 <div className="form first">
                     <div className="details personal">
                         <span className="title">Appointment Details</span>
@@ -55,7 +59,7 @@ function FDAppointmentForm() {
 
                             <div className="input-field">
                                 <label>Date of Appointment</label>
-                                <input type="date" placeholder="Enter birth date" name="DateOfAppointment" value={formData.DateOfAppointment} onChange={handleInputChange} required />
+                                <input type="date" placeholder="Enter Appointment date" name="DateOfAppointment" value={formData.DateOfAppointment} onChange={handleInputChange} required />
                             </div>
 
                             <div className="input-field">

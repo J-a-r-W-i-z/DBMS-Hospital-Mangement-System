@@ -561,7 +561,8 @@ class GetUserProfile(UserView):
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
-        except:
+        except Exception as e:
+            print(e)
             response = Response()
             response.status_code = 405
             response.data = {

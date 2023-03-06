@@ -546,6 +546,8 @@ class GetUserProfile(UserView):
     def post(self, request):
         UserView.authenticate(self,request)
         user_type = request.data['user_type']
+        print(user_type)
+        query = ""
         if user_type=='1':
             query = """ Select * from hm_system_user natural join hm_system_fdoperator """
         elif user_type=='2':

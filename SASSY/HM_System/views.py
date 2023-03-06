@@ -472,23 +472,22 @@ class InsertUndergoesView(UserView):
 
 class GetPatientsView(UserView):
     def get(self, request):
-        UserView.authenticate(self, request)
-        query = """(Select distinct P.Name
-                From hm_system_patient as P, hm_system_appointment as A
-                where P.AadharID=A.Patient and A.Doctor=1 and A.Start>'2020-01-01 00:00')
-                union
-                (Select distinct P.Name
-                From hm_system_patient as P, hm_system_undergoes as U
-                where P.AadharID=U.Patient and U.Doctor=1);"""
+        payload = UserView.authenticate(self, request)
+        id = payload['id']
+        query = """Select * from hm_system_patient where Aadhar_Id in (Select Patient_id from hm_system_appointment where Doctor_id = %s) """
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query)
+                cursor.execute(query, (str(id),))
                 return Response({
                     'List': UserView.cursorToDict(self, cursor)
                 })
-        except:
-            # TODO
-            return
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
 
 # Query 6 ????????
 
@@ -660,3 +659,4 @@ class DeleteUserView(UserView):
             'detail': 'User Deleted Successfully'
         }
         return response
+

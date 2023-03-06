@@ -25,7 +25,7 @@ const Patients = () => {
     users = Array.from(users)
 
     return users.map((user) => ({
-      username: user.AadharId,
+      id: user.AadharId,
       name: user.Name,
       dob: user.DOB,
     }))
@@ -41,7 +41,7 @@ const Patients = () => {
         <div className="table-container">
           <Table
             title="Patients seen"
-            headers={["Username", "Name", "Date of birth"]}
+            headers={["Aadhar ID", "Name", "Date of birth"]}
             data={limitedData(patients)}
             searchKey="name"
             getInfo={(user) => getPatientDetails(user)}

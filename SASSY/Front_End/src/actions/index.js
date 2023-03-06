@@ -126,7 +126,7 @@ export const handleListAppointments = async (setPatients, setLoading) => {
   await api.listAppointments()
     .then(res => {
       setPatients(res.data.List)
-      console.log("appointments", res.data.list)
+      console.log(res.data.List)
       setLoading(false)
     })
     .catch(err => {

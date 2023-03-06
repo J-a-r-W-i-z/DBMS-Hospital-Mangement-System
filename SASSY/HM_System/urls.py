@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+
 urlpatterns = [
     path('home', RegisterView.as_view()),
     path('login', LoginView.as_view()),
@@ -17,7 +18,8 @@ urlpatterns = [
     path('delete-user', DeleteUserView.as_view()),
     path('list-patients', GetPatientsView.as_view()),
     path('dischargePatient',DischargePatientView.as_view()),
-    path('list-appointments',UpcomingAppointments.as_view())
+    path('list-appointments',UpcomingAppointments.as_view()),
+    path('show-patient',GetPatientDetails.as_view())
     # path('getProfile',), # get a request and send profile info for any user
     # path('insertPrescription',), # patient id,name,appointemt id,date  get appointment id,medication list and insert in table
     # path('insertTest',), # 

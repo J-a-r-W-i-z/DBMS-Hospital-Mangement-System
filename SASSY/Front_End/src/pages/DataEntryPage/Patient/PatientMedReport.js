@@ -130,7 +130,7 @@ const PatientMedReport = () => {
     const handleTestSubmit = (appID) => {
         const mess = {
             applicationid: appID.toString(),
-            MedicineList: todos,
+            Test: todos,
         };
         console.log(mess);
         axios.post('http://127.0.0.1:8000/api/insertTest', mess)
@@ -150,7 +150,7 @@ const PatientMedReport = () => {
     const handleTreatmentSubmit = (appID) => {
         const mess = {
             applicationid: appID.toString(),
-            MedicineList: todos,
+            Treatment: todos,
         };
         console.log(mess);
         axios.post('http://127.0.0.1:8000/api/insertTreatment', mess)

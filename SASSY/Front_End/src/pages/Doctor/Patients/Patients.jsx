@@ -20,14 +20,14 @@ const Patients = () => {
     users = Array.from(users)
 
     return users.map((user) => ({
-      username: user.username,
-      name: user.name,
-      date_joined: user.date_joined,
+      username: user.AadharId,
+      name: user.Name,
+      dob: user.DOB,
     }))
   }
 
   function getPatientDetails(index) {
-    navigate(`/doctor/patients/${users[index].username}`)
+    navigate(`/doctor/patients/${patients[index].AadharId}`)
   }
 
   return (
@@ -36,9 +36,9 @@ const Patients = () => {
         <div className="table-container">
           <Table
             title="Patients seen"
-            headers={["Username", "Name", "Date Joined"]}
+            headers={["Username", "Name", "Date of birth"]}
             data={limitedData(patients)}
-            searchKey="username"
+            searchKey="name"
             getInfo={(user) => getPatientDetails(user)}
           />
         </div>

@@ -579,11 +579,11 @@ class DischargePatientView(UserView):
         UserView.authenticate(self, request)
         StayID = request.data['stayid']
         now = datetime.datetime.now()
-        End=now.strftime('%Y-%m-%d %H:%M:%S')
+        End = now.strftime('%Y-%m-%d %H:%M:%S')
         query = """Update hm_system_stay set End=%s where StayID=%s and End is NULL;"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query,(End,StayID))
+                cursor.execute(query, (End, StayID))
         except Exception as e:
             print(e)
             response = Response()
@@ -601,15 +601,20 @@ class DischargePatientView(UserView):
                             where S.StayID=%s);"""
         try:
             with connection.cursor() as cursor:
-                cursor.execute(query,(StayID,))
-                response.data = {
+                cursor.execute(query, (StayID,))
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
                 'detail': 'Unable to set room available'
             }
             return response
         return Response({
-                    'detail': 'Discharged successfully'
-                })
- 
+            'detail': 'Discharged successfully'
+        })
+
+
 class GetUserProfile(UserView):
     def post(self, request):
         UserView.authenticate(self, request)

@@ -17,6 +17,6 @@ urlpatterns = [
     path('patientstay', GetAdmittedView.as_view()),
     path('list-users', GetUserProfile.as_view()),
     path('delete-user', DeleteUserView.as_view()),
-    path('list-patients', GetPatientsView.as_view()),
+    path('list-patients', GetPatientsView.as_view())
     path('dischargePatient', DischargePatientView.as_view())
 ]

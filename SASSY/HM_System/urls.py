@@ -20,9 +20,9 @@ urlpatterns = [
     path('dischargePatient', DischargePatientView.as_view()),
     # get a request and send profile info for any user
     path('getProfile', getProfileView.as_view()),
-    path('appointmentDetails',GetPatientAppointment.as_view())
-    # path('insertPrescription',), # patient id,name,appointemt id,date  get appointment id,medication list and insert in table
-    # path('insertTest',), #
-    # path('insertTreatment',) #
+    path('appointmentDetails',GetPatientAppointment.as_view()),
+    path('insertMedicine',InsertPrescribeView.as_view()),
+    path('insertTest',InsertReportView.as_view()), 
+    path('insertTreatment',InsertUndergoesView.as_view()) 
 
 ]

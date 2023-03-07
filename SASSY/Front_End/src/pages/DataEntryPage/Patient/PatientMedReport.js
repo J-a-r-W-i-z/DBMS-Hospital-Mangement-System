@@ -61,15 +61,19 @@ const PatientMedReport = () => {
     const [showPopup1, setShowPopup1] = useState(false);
     const [showPopup2, setShowPopup2] = useState(false);
     const [showPopup3, setShowPopup3] = useState(false);
+    const [appID,setAppID]=useState(0);
 
-    const handleButtonClick1 = () => {
+    const handleButtonClick1 = (appid) => {
         setShowPopup1(true);
+        setAppID(appid);
     };
-    const handleButtonClick2 = () => {
+    const handleButtonClick2 = (appid) => {
         setShowPopup2(true);
+        setAppID(appid);
     };
-    const handleButtonClick3 = () => {
+    const handleButtonClick3 = (appid) => {
         setShowPopup3(true);
+        setAppID(appid);
     };
 
     const [inputValue, setInputValue] = useState('');
@@ -108,9 +112,10 @@ const PatientMedReport = () => {
         }
     }
 
-    const handleMedicineSubmit = (appID) => {
+    const handleMedicineSubmit = () => {
+        console.log(appID+" is the appointment id");
         const mess = {
-            applicationid: appID.toString(),
+            appointmentid: appID.toString(),
             MedicineList: todos,
         };
         console.log(mess);
@@ -129,7 +134,7 @@ const PatientMedReport = () => {
     };
     const handleTestSubmit = (appID) => {
         const mess = {
-            applicationid: appID.toString(),
+            appointmentid: appID.toString(),
             Test: todos,
         };
         console.log(mess);
@@ -149,7 +154,7 @@ const PatientMedReport = () => {
     };
     const handleTreatmentSubmit = (appID) => {
         const mess = {
-            applicationid: appID.toString(),
+            appointmentid: appID.toString(),
             Treatment: todos,
         };
         console.log(mess);
@@ -202,9 +207,9 @@ const PatientMedReport = () => {
                                 <td>{patient.AppointmentID}</td>
                                 <td>{patient.Start}</td>
 
-                                <td> <button className="DischargeButton" onClick={handleButtonClick1}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={handleButtonClick2}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={handleButtonClick3}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick1(patient.AppointmentID)}}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick2(patient.AppointmentID)}}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick3(patient.AppointmentID)}}>Add</button></td>
                             </tr>
                         ))
                         : filteredPatients.map((patient) => (
@@ -214,9 +219,9 @@ const PatientMedReport = () => {
                                 <td>{patient.AppointmentID}</td>
                                 <td>{patient.Start}</td>
 
-                                <td> <button className="DischargeButton" onClick={handleButtonClick1}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={handleButtonClick2}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={handleButtonClick3}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick1(patient.AppointmentID)}}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick2(patient.AppointmentID)}}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick3(patient.AppointmentID)}}>Add</button></td>
                             </tr>
                         ))}
                 </tbody>

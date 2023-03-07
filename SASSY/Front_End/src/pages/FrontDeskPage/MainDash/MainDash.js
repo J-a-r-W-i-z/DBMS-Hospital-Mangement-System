@@ -6,6 +6,7 @@ import FDAdmitForm from "../FDAdmitForm/FDAdmitForm";
 import FDAppointmentForm from "../FDAppointmentForm/FDAppointmentForm";
 import FDDischarge from "../FDDischarge/FDDischarge";
 import ProfileCard from "../ProfilePage/Profile";
+import DocInfo from "../DocInfo/DocInfo";
 import "./MainDash.css";
 const MainDash = ({ page }) => {
   return (
@@ -15,7 +16,7 @@ const MainDash = ({ page }) => {
       {page === "Profile" && <ProfileCard />}
       {page === "Appointment" && <FDAppointmentForm />}
       {page === "Discharge" && <FDDischarge />}
-      {page === "Dashboard" && <FDRegForm />}
+      {page === "Doctorslot" && <DocInfo />}
     </div>
   );
 };

@@ -31,6 +31,18 @@ function DataEntryOperator() {
             icon: UilClipboardAlt,
             heading: "Patients",
         },
+        {
+            icon: UilClipboardAlt,
+            heading: "Medicine",
+        },
+        {
+            icon: UilClipboardAlt,
+            heading: "Test",
+        },
+        {
+            icon: UilClipboardAlt,
+            heading: "Treatment",
+        },
 
 
     ];

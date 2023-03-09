@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './FDRegForm.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -6,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function FDRegForm() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         Name: '',
         DOB: '',
@@ -15,6 +17,19 @@ function FDRegForm() {
         Address: '',
         AadharID: '',
     });
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/isAuth')
+            .then(response => {
+                console.log("hello coming")
+
+            })
+            .catch(error => {
+                console.log("hello coming 2")
+                console.log(error);
+                navigate('/')
+
+            });
+    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;

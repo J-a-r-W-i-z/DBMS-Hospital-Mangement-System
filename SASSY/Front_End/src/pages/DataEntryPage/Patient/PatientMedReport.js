@@ -69,7 +69,9 @@ const PatientMedReport = () => {
     };
     const handleButtonClick2 = (appid) => {
         setShowPopup2(true);
+        console.log("I am ghusing "+appid);
         setAppID(appid);
+        console.log("app id set as "+appID);
     };
     const handleButtonClick3 = (appid) => {
         setShowPopup3(true);
@@ -132,7 +134,7 @@ const PatientMedReport = () => {
                     { position: toast.POSITION.BOTTOM_CENTER });
             });
     };
-    const handleTestSubmit = (appID) => {
+    const handleTestSubmit = () => {
         const mess = {
             appointmentid: appID.toString(),
             Test: todos,
@@ -152,7 +154,7 @@ const PatientMedReport = () => {
             });
 
     };
-    const handleTreatmentSubmit = (appID) => {
+    const handleTreatmentSubmit = () => {
         const mess = {
             appointmentid: appID.toString(),
             Treatment: todos,
@@ -213,7 +215,7 @@ const PatientMedReport = () => {
                             </tr>
                         ))
                         : filteredPatients.map((patient) => (
-                            <tr key={patient.id}>
+                            <tr key={patient.Patient_id}>
                                 <td>{patient.Patient_id}</td>
                                 <td>{patient.Name}</td>
                                 <td>{patient.AppointmentID}</td>

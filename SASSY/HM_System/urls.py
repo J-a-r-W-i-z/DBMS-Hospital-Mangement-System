@@ -17,8 +17,9 @@ urlpatterns = [
     path('list-users', GetUserProfile.as_view()),
     path('delete-user', DeleteUserView.as_view()),
     path('list-patients', GetPatientsView.as_view()),
-    path('dischargePatient', DischargePatientView.as_view()),
-    # get a request and send profile info for any user
+    path('dischargePatient',DischargePatientView.as_view()),
+    path('list-appointments',UpcomingAppointments.as_view()),
+    path('show-patient',GetPatientDetails.as_view())
     path('getProfile', getProfileView.as_view()),
     path('appointmentDetails',GetPatientAppointment.as_view()),
     path('insertMedicine',InsertPrescribeView.as_view()),

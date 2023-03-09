@@ -775,6 +775,84 @@ class getProfileView(UserView):
             response.data = {
                 'detail': 'Could not retrive data'
             }
+            return response
+
+
+class GetPatientDetails(UserView):
+    def post(self, request):
+        UserView.authenticate(self, request)
+        id = request.data['id']
+        query = """Select * from hm_system_patient where  AadharId = %s"""
+        profile = None
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
+                profile =  UserView.cursorToDict(self, cursor)
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+            return response
+        query="""select A.AppointmentID,A.Doctor_id,T.TreatmentID,T.Name,U.Date from hm_system_undergoes as U,hm_system_appointment as A,hm_system_treatment as T where
+                U.Appointment_id=A.AppointmentID and U.Treatment_id=T.TreatmentID and A.Patient_id=%s"""
+        undergoes = None
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
+                undergoes =  UserView.cursorToDict(self, cursor)
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+            return response
+        
+        query="""select A.AppointmentID,A.Doctor_id,M.Code,M.Name,A.Start from hm_system_prescribes as P,hm_system_appointment as A,hm_system_Medication as M where
+                P.Appointment_id=A.AppointmentID and P.Medication_id=M.Code and A.Patient_id=%s"""
+        prescribes = None
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
+                prescribes =  UserView.cursorToDict(self, cursor)
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+            return response
+            
+        
+        query="""select * from hm_system_report as U,hm_system_appointment as A,hm_system_test as T where
+                U.Appointment_id=A.AppointmentID and U.Test_id=T.Code and A.Patient_id=%s"""
+        report = None
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query, (str(id),))
+                report =  UserView.cursorToDict(self, cursor)
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+            return response
+        
+        return Response({
+            'Profile': profile,
+            'Treatment': undergoes,
+            'Medication': prescribes ,
+            'Test': report
+        })
+
 
 class GetPatientAppointment(UserView):
     def get(self, request):
@@ -794,8 +872,8 @@ class GetPatientAppointment(UserView):
             print(e)
             response = Response()
             response.status_code = 405
-            response
             response.data = {
-                'detail': 'Unable to get patients'
+                'detail': 'Could not retrive data'
             }
-            return response
+        
+        

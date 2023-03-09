@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { redirect, useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Table, Modal, UserDetails } from "../../../components"
 import {
   handleListUsers,
   handleDeleteUser,
   redirectUser,
 } from "../../../actions"
+import { userModalData } from "../../../util"
 
 import { AnimatePresence } from "framer-motion"
 import "./ListUsers.scss"
@@ -104,8 +105,8 @@ const ListUsers = ({ title, userType }) => {
               <Modal
                 element={
                   <UserDetails
-                    name={users[userROI].name}
-                    userInfo={tableData()}
+                    name={users[userROI].Name}
+                    userInfo={userModalData(users[userROI])}
                   />
                 }
                 handleClick={() => setUserROI(-1)}

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import { Table } from "../../../components"
+import { Table, Modal, UserDetails } from "../../../components"
 import { handleListAppointments, redirectUser } from "../../../actions"
+import { patientModalData, genderMap } from "../../../util"
+
+import { AnimatePresence } from "framer-motion"
 
 const Appointments = () => {
   const [loading, setLoading] = useState(true)
   const [patients, setPatients] = useState([])
+  const [patientROI, setPatientROI] = useState(-1)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -25,38 +29,40 @@ const Appointments = () => {
     users = Array.from(users)
 
     return users.map((user) => ({
-      username: user.username,
       name: user.Name,
-      date_joined: user.date_joined,
+      dob: user.DOB,
+      gender: genderMap(user.Gender),
+      email: user.Email,
     }))
-  }
-
-  function deleteAndFetch(id) {
-    // handleDeleteAppointment(id)
-    // setUsers(handleListAppointments())
-  }
-
-  function getPatientDetails(index) {
-    console.log(index)
-    navigate(`/doctor/patients/${users[index].username}`)
   }
 
   return (
     <>
       {!loading && (
-        <div className="table-container">
-          <Table
-            title="Pending appointments"
-            headers={["Username", "Name", "Date Joined", "Action"]}
-            data={limitedData(patients)}
-            searchKey="username"
-            getInfo={(user) => getPatientDetails(user)}
-            handleAction={(key) => deleteAndFetch(key)}
-            buttonLabel="Close"
-            buttonClass="btn-primary-sm"
-            clickKey="username"
-          />
-        </div>
+        <>
+          <div className="table-container">
+            <Table
+              title="Pending appointments"
+              headers={["Name", "Date of Birth", "Gender", "Email ID"]}
+              data={limitedData(patients)}
+              searchKey="name"
+              getInfo={(patient) => setPatientROI(patient)}
+            />
+          </div>
+          <AnimatePresence>
+            {patientROI !== -1 && (
+              <Modal
+                element={
+                  <UserDetails
+                    name={patients[patientROI].Name}
+                    userInfo={patientModalData(patients[patientROI])}
+                  />
+                }
+                handleClick={() => setPatientROI(-1)}
+              />
+            )}
+          </AnimatePresence>
+        </>
       )}
     </>
   )

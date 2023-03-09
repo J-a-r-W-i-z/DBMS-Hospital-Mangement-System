@@ -37,7 +37,7 @@ const ProfileCard = () => {
         <div className="containerPro">
             <div className="col-lg-6">
                 <h1 className="dark-color">{profileinfo.Name}</h1>
-                <h3 className="theme-color lead">Front Desk Operator</h3>
+                <h3 className="theme-color lead">Data Entry Operator</h3>
             </div>
             <div className="about-text go-to">
                 {/* <p>I <mark>design and develop</mark> services for customers of all sizes, specializing in creating stylish, modern websites, web services and online stores. My passion is to design digital user experiences through the bold interface and meaningful interactions.</p> */}

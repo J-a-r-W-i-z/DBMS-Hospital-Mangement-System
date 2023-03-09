@@ -31,6 +31,18 @@ function DataEntryOperator() {
             icon: UilClipboardAlt,
             heading: "Patients",
         },
+        {
+            icon: UilClipboardAlt,
+            heading: "Medicine",
+        },
+        {
+            icon: UilClipboardAlt,
+            heading: "Test",
+        },
+        {
+            icon: UilClipboardAlt,
+            heading: "Treatment",
+        },
 
 
     ];
@@ -79,7 +91,7 @@ function DataEntryOperator() {
                         <div className="logo">
                             <img src={Logo} alt="logo" />
                             <span>
-                                Sou<span>v</span>ik
+                                SA<span>S</span>SY
                             </span>
                         </div>
 

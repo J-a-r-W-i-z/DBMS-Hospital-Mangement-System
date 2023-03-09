@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const DocInfo = () => {
     const [doctors, setPatients] = useState([
-        { id: "1", name: "John Doe", slots: 4 },
-        { id: "2", name: "Jane Smith", slots: 8 },
+        { id: "1", name: "John Doe" },
+        { id: "2", name: "Jane Smith" },
 
     ])
 
@@ -70,7 +70,6 @@ const DocInfo = () => {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Slots Available</th>
 
                     </tr>
                 </thead>
@@ -80,7 +79,6 @@ const DocInfo = () => {
                             <tr key={doctor.name}>
                                 <td>{doctor.id}</td>
                                 <td>{doctor.name}</td>
-                                <td>{doctor.slots}</td>
 
                             </tr>
                         ))
@@ -88,7 +86,6 @@ const DocInfo = () => {
                             <tr key={doctor.name}>
                                 <td>{doctor.id}</td>
                                 <td>{doctor.name}</td>
-                                <td>{doctor.slots}</td>
                             </tr>
                         ))}
                 </tbody>

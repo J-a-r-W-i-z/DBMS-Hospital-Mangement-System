@@ -24,6 +24,9 @@ urlpatterns = [
     path('appointmentDetails',GetPatientAppointment.as_view()),
     path('insertMedicine',InsertPrescribeView.as_view()),
     path('insertTest',InsertReportView.as_view()), 
-    path('insertTreatment',InsertUndergoesView.as_view()) 
-
+    path('insertTreatment',InsertUndergoesView.as_view()) ,
+    path('docslot',AvailableDoctorView.as_view()),
+    path('getMedicine',GetMedication.as_view()),
+    path('getTestreport',GetTest.as_view()),
+    path('getTreatment',GetTreatment.as_view())
 ]

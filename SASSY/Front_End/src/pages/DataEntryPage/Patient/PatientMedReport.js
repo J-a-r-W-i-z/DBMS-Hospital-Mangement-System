@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./PatientMedReport.css"
 import { ToastContainer, toast } from 'react-toastify';
@@ -27,6 +28,7 @@ const ff = ({ onClose, handleFormSubmit, handleInputChange, inputValue }) => {
     );
 };
 const PatientMedReport = () => {
+    const navigate = useNavigate()
     const [patients, setPatients] = useState([
         { Patient_id: 1, Name: "John Doe", AppointmentID: 35, Start: "2022-08-01" },
 
@@ -53,15 +55,21 @@ const PatientMedReport = () => {
             })
             .catch(error => {
                 console.log(error);
-                toast.error('Could not refresh appointment list',
-                    { position: toast.POSITION.BOTTOM_CENTER })
+                if (error.response.status == 401) {
+                    navigate('/')
+                }
+                else {
+
+                    toast.error('Could not refresh appointment list',
+                        { position: toast.POSITION.BOTTOM_CENTER })
+                }
             });
     }, []);
 
     const [showPopup1, setShowPopup1] = useState(false);
     const [showPopup2, setShowPopup2] = useState(false);
     const [showPopup3, setShowPopup3] = useState(false);
-    const [appID,setAppID]=useState(0);
+    const [appID, setAppID] = useState(0);
 
     const handleButtonClick1 = (appid) => {
         setShowPopup1(true);
@@ -115,7 +123,7 @@ const PatientMedReport = () => {
     }
 
     const handleMedicineSubmit = () => {
-        console.log(appID+" is the appointment id");
+        console.log(appID + " is the appointment id");
         const mess = {
             appointmentid: appID.toString(),
             MedicineList: todos,
@@ -209,9 +217,9 @@ const PatientMedReport = () => {
                                 <td>{patient.AppointmentID}</td>
                                 <td>{patient.Start}</td>
 
-                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick1(patient.AppointmentID)}}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick2(patient.AppointmentID)}}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick3(patient.AppointmentID)}}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={() => { handleButtonClick1(patient.AppointmentID) }}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={() => { handleButtonClick2(patient.AppointmentID) }}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={() => { handleButtonClick3(patient.AppointmentID) }}>Add</button></td>
                             </tr>
                         ))
                         : filteredPatients.map((patient) => (
@@ -221,9 +229,9 @@ const PatientMedReport = () => {
                                 <td>{patient.AppointmentID}</td>
                                 <td>{patient.Start}</td>
 
-                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick1(patient.AppointmentID)}}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick2(patient.AppointmentID)}}>Add</button></td>
-                                <td> <button className="DischargeButton" onClick={()=>{handleButtonClick3(patient.AppointmentID)}}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={() => { handleButtonClick1(patient.AppointmentID) }}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={() => { handleButtonClick2(patient.AppointmentID) }}>Add</button></td>
+                                <td> <button className="DischargeButton" onClick={() => { handleButtonClick3(patient.AppointmentID) }}>Add</button></td>
                             </tr>
                         ))}
                 </tbody>

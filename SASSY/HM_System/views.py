@@ -875,5 +875,83 @@ class GetPatientAppointment(UserView):
             response.data = {
                 'detail': 'Could not retrive data'
             }
-        
-        
+
+class AvailableDoctorView(UserView):
+    def post(self, request):
+            UserView.authenticate(self, request)
+            Date = request.data['Date']
+
+            query = """select EmployeeId_id as id,Name as name 
+                    from hm_system_doctor where EmployeeId_id not in 
+                    (select Doctor_id from hm_system_appointment as A 
+                    where CAST(A.Start as DATE)=%s 
+                    group by Doctor_id having count(*)>=10);"""
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute(query, (Date,))
+                    return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                    })
+            except Exception as e:
+                print(e)
+                response = Response()
+                response.status_code = 405
+                response.data = {
+                    'detail': 'Could not get doctors'
+                }
+                return response
+
+
+class GetMedication(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Select * from hm_system_medication;"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+
+class GetTest(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Select * from hm_system_test;"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }
+
+class GetTreatment(UserView):
+    def get(self, request):
+        UserView.authenticate(self, request)
+        query = """Select * from hm_system_treatment;"""
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                return Response({
+                    'List': UserView.cursorToDict(self, cursor)
+                })
+        except Exception as e:
+            print(e)
+            response = Response()
+            response.status_code = 405
+            response.data = {
+                'detail': 'Could not retrive data'
+            }

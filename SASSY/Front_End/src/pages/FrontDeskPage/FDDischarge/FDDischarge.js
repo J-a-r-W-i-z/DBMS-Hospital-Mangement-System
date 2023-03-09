@@ -10,22 +10,22 @@ const FDDischarge = () => {
         { id: "2", name: "Jane Smith", stayID: 42, gender: 1 },
 
     ])
-    const updateList = ()=>{
+    const updateList = () => {
         axios.get('http://127.0.0.1:8000/api/patientstay')
-        .then(response => {
-            console.log(response.data.List);
-            setPatients(response.data.List);
-            toast.success('Patient List Updated Successfully!',
-                { position: toast.POSITION.BOTTOM_CENTER })
-        })
-        .catch(error => {
-            console.log(error);
-            toast.error('Could not refresh patient list',
-                { position: toast.POSITION.BOTTOM_CENTER })
-        });
+            .then(response => {
+                console.log(response.data.List);
+                setPatients(response.data.List);
+                toast.success('Patient List Updated Successfully!',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+            })
+            .catch(error => {
+                console.log(error);
+                toast.error('Could not refresh patient list',
+                    { position: toast.POSITION.BOTTOM_CENTER })
+            });
     }
     useEffect(() => {
-       updateList();
+        updateList();
     }, []);
 
     const [searchTerm, setSearchTerm] = useState("")
@@ -40,17 +40,17 @@ const FDDischarge = () => {
     }
     // const [mess,setMess]=useState({stayid:0});
     const handleDischarge = (stayId) => {
-        const dischargedPatient=patients.filter(obj => {
+        const dischargedPatient = patients.filter(obj => {
             return obj.stayID === stayId;
-        }).name;
+        }).Name;
         console.log(stayId + "is the stay id to discharge");
-        const mess={stayid:stayId.toString()};
+        const mess = { stayid: stayId.toString() };
         console.log(mess);
-        axios.post('http://127.0.0.1:8000/api/dischargePatient',mess)
+        axios.post('http://127.0.0.1:8000/api/dischargePatient', mess)
             .then((response) => {
                 updateList();
                 console.log(response.status)
-                toast.success( dischargedPatient+ ' discharged Successfully!',
+                toast.success(dischargedPatient + ' discharged Successfully!',
                     { position: toast.POSITION.BOTTOM_CENTER })
                 console.log("Discharged successfully!");                // setTimeout(() => window.location.reload(), 3000); // Refresh page after 3 seconds
             })

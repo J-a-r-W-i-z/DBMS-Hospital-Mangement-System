@@ -25,10 +25,6 @@ function FrontDeskOperator() {
     const [page, setPage] = useState("Register");
     const SidebarData = [
         {
-            icon: UilEstate,
-            heading: "Dashboard",
-        },
-        {
             icon: UilClipboardAlt,
             heading: "Profile",
         },
@@ -41,6 +37,10 @@ function FrontDeskOperator() {
             heading: "Admit",
         },
         {
+            icon: UilEstate,
+            heading: "Doctorslot",
+        },
+        {
             icon: UilClipboardAlt,
             heading: "Appointment",
         },
@@ -50,8 +50,9 @@ function FrontDeskOperator() {
         },
 
 
+
     ];
-    const [selected, setSelected] = useState(0);
+    const [selected, setSelected] = useState(1);
 
     const [expanded, setExpaned] = useState(true)
 

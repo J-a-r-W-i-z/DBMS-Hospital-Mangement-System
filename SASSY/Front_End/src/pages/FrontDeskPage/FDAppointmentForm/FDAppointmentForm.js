@@ -54,7 +54,7 @@ function FDAppointmentForm() {
 
                         <div className="fields">
                             <div className="input-field">
-                                <label>Full Name</label>
+                                <label>Patient ID</label>
                                 <input type="text" placeholder="Enter Patient ID" name="PatientID" value={formData.PatientID} onChange={handleInputChange} required />
                             </div>
 

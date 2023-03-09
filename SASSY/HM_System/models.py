@@ -138,7 +138,6 @@ class Medication(models.Model):
     Brand = models.TextField()
     Description = models.TextField()
 
-
 class Prescribes(models.Model):
     Appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
     Medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
@@ -149,7 +148,6 @@ class Prescribes(models.Model):
             models.UniqueConstraint(
                 fields=['Appointment', 'Medication'], name='first_constraint'),
         ]
-
 
 class Room(models.Model):
     Number = models.IntegerField(primary_key=True)
@@ -164,7 +162,7 @@ class Stay(models.Model):
     Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     Room = models.ForeignKey(Room, on_delete=models.CASCADE)
     Start = models.DateTimeField()
-    End = models.DateTimeField(null=True)
+    End = models.DateTimeField(null=True) 
 
 
 class Treatment(models.Model):

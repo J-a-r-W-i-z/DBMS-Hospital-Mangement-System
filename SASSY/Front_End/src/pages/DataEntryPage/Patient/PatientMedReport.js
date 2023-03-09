@@ -77,7 +77,9 @@ const PatientMedReport = () => {
     };
     const handleButtonClick2 = (appid) => {
         setShowPopup2(true);
+        console.log("I am ghusing "+appid);
         setAppID(appid);
+        console.log("app id set as "+appID);
     };
     const handleButtonClick3 = (appid) => {
         setShowPopup3(true);

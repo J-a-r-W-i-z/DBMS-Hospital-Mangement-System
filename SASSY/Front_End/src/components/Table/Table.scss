@@ -11,17 +11,18 @@
 }
 
 .table-search-input {
+  width: 100%;
   background-color: inherit;
+  font-size: inherit;
 
   padding: 0.5rem;
 
-  border-radius: 0;
   border: none;
   border-bottom: $border-width solid var(--green);
+  transition: all $transition;
 
   &:focus {
     outline: none;
-    border: none;
     box-shadow: 0px 15px 10px -15px var(--shadow-color);
     border-bottom: $border-width solid var(--dark-green);
   }

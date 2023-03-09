@@ -6,7 +6,7 @@ const UserDetails = ({ name, userInfo }) => {
   return (
     <div className="user-details-container">
       <Table
-        title={`${name}'s details`}
+        title={name && `${name}'s details`}
         headers={["Fields", "Values"]}
         data={userInfo}
         noShrink

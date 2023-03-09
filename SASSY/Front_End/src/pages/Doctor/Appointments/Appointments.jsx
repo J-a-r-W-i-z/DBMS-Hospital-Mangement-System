@@ -40,7 +40,7 @@ const Appointments = () => {
     <>
       {!loading && (
         <>
-          <div className="table-container">
+          <div>
             <Table
               title="Pending appointments"
               headers={["Name", "Date of Birth", "Gender", "Email ID"]}

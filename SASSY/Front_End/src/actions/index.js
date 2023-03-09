@@ -157,15 +157,16 @@ export const handleListPatients = async (setPatients, setLoading) => {
     })
 }
 
-export const handleShowPatient = async (username) => {
-  let response = null
-  await api.showPatient({ req_user_name: username })
+export const handleShowPatient = async (id, setPatient, setLoading) => {
+  setLoading(true)
+
+  await api.showPatient({ id: id })
     .then(res => {
-      response = res.data
+      console.log(res.data)
+      setPatient(res.data)
+      setLoading(false)
     })
     .catch(err => {
       handleError(err)
     })
-
-  return response
 }

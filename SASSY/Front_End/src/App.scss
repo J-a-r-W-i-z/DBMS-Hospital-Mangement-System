@@ -195,6 +195,32 @@ button,
     padding: $padding-md;
   }
 
+  & form {
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 1rem 0.5rem;
+      border-radius: $border-radius-sm;
+
+      border: $border-width solid var(--green);
+      outline: none;
+      font-size: inherit;
+
+      transition: all $transition;
+      font-family: inherit;
+
+      &:focus {
+        border: $border-width solid var(--dark-green);
+        box-shadow: 0px 0px 10px 0 var(--shadow-color);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+    }
+  }
+
   & h1 {
     text-align: center;
     margin-bottom: 2rem;
@@ -223,28 +249,4 @@ button,
   & .form-container-div-sm {
     gap: 1rem;
   }
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 1rem 0.5rem;
-  border-radius: $border-radius-sm;
-
-  border: $border-width solid var(--green);
-  outline: none;
-  font-size: inherit;
-
-  transition: all $transition;
-  font-family: inherit;
-
-  &:focus {
-    border: $border-width solid var(--dark-green);
-    box-shadow: 0px 0px 10px 0 var(--shadow-color);
-  }
-}
-
-textarea {
-  resize: vertical;
 }

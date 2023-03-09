@@ -44,27 +44,6 @@ const ListUsers = ({ title, userType }) => {
     status(filteredUser)
   }
 
-  function tableData() {
-    return [
-      {
-        key: "Username",
-        value: users[userROI].username,
-      },
-      {
-        key: "Name",
-        value: users[userROI].name,
-      },
-      {
-        key: "Date Joined",
-        value: users[userROI].date_joined,
-      },
-      {
-        key: "Email",
-        value: users[userROI].email,
-      },
-    ]
-  }
-
   function limitedData(users) {
     users = Array.from(users)
     console.log(users)

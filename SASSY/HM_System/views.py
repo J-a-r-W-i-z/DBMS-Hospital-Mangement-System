@@ -879,7 +879,7 @@ class GetPatientAppointment(UserView):
 class AvailableDoctorView(UserView):
     def post(self, request):
             UserView.authenticate(self, request)
-            Date = request.data['Date']
+            Date = request.data['date']
 
             query = """select EmployeeId_id as id,Name as name 
                     from hm_system_doctor where EmployeeId_id not in 
@@ -905,7 +905,7 @@ class AvailableDoctorView(UserView):
 class GetMedication(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = """Select * from hm_system_medication;"""
+        query = """Select Code as medicine_id,Name from hm_system_medication;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -923,7 +923,7 @@ class GetMedication(UserView):
 class GetTest(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = """Select * from hm_system_test;"""
+        query = """Select Code as test_id,Name from hm_system_test;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)
@@ -941,7 +941,7 @@ class GetTest(UserView):
 class GetTreatment(UserView):
     def get(self, request):
         UserView.authenticate(self, request)
-        query = """Select * from hm_system_treatment;"""
+        query = """Select TreatmentID as treatment_id,Name from hm_system_treatment;"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(query)

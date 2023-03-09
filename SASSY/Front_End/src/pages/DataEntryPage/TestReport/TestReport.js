@@ -27,7 +27,7 @@ const Treatment = () => {
             .then(response => {
                 console.log(response.data.List);
                 setTestreports(response.data.List);
-                toast.success('Medicine List Updated Successfully!',
+                toast.success('Test List Updated Successfully!',
                     { position: toast.POSITION.BOTTOM_CENTER })
             })
             .catch(error => {
